@@ -352,22 +352,24 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
     private void jButtonLoadExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadExitActionPerformed
         // TODO add your handling code here:
-        debugMsg("EXITING FROM LOAD PANEL BUTTON");
+        debugMsg("EXITING FROM panelLoad EXIT BUTTON");
         exitProgram();
 
     }//GEN-LAST:event_jButtonLoadExitActionPerformed
 
     private void jButtonLoadNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadNewActionPerformed
         // TODO add your handling code here:
+        debugMsg("panelLoad:  CREATE NEW VAULT BUTTON PRESSED");
     }//GEN-LAST:event_jButtonLoadNewActionPerformed
 
     private void jButtonLoadOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadOpenActionPerformed
         // TODO add your handling code here:
+        debugMsg("panelLoad:  OPEN EXISTING VAULT BUTTON PRESSED");
     }//GEN-LAST:event_jButtonLoadOpenActionPerformed
 
     private void jButtonLoadSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadSubmitActionPerformed
         // TODO add your handling code here:
-        if (successOrFail("panelLoad", "")) {
+        if (isSuccessful("panelLoad", "")) {
             changeCard("panelAuth");
             jMenuItemVaultLoad.setEnabled(false);
             jMenuItemVaultClose.setEnabled(true);
@@ -380,6 +382,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
     private void jButtonFailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFailActionPerformed
         // TODO add your handling code here:
+        debugMsg("FAILURE ACCEPTED");
         changeCard(goBackToCard);
     }//GEN-LAST:event_jButtonFailActionPerformed
 
@@ -393,21 +396,6 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         changeCard("panelLoad");
     }//GEN-LAST:event_jMenuItemVaultCloseActionPerformed
 
-    
-    private void changeCard(String cardName) {
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, cardName);
-        debugMsg("CHANGING TO CARD:  " + cardName);
-    }
-    
-    
-    private void showFailure(String reason, String goBackTo) {
-        jLabelFailReason.setText(reason);
-        goBackToCard = goBackTo;
-        changeCard("panelFail");
-        
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -479,33 +467,56 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     // CUSTOM VARS
     private String goBackToCard = "panelLoad";
 
+    
+    // CHANGES CARD IN mainPanel TO cardName   
+    private void changeCard(String cardName) {
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, cardName);
+        debugMsg("CHANGING TO CARD:  " + cardName);
+    }
+    
+    
+    // DISPLAYS CUSTOM ERROR MESSAGE WITH BACK BUTTON
+    private void showFailure(String reason, String goBackTo) {
+        jLabelFailReason.setText(reason);
+        goBackToCard = goBackTo;
+        changeCard("panelFail");
         
-    private boolean successOrFail(String originator, String args)
+    }
+    
+    // 
+    private boolean isSuccessful(String caller, String args)
     {
+
+        debugMsg("RAN SOF FROM:  " + caller);
+
+
         // INIT RESULT
         boolean result = false;
         String reason = "ERROR...";
 
         // NOTE: SWITCH OVER STRING NOT UNIVERSALLY COMPATIBLE
         // USE IF/ELSE INSTEAD
-        if (originator.equals("panelLoad")) {
-            debugMsg("RAN SOF FOR MODE:  LOAD");
+        if (caller.equals("panelLoad")) {
+            debugMsg(caller + ":  SUBMITTED VAULT NAME:  " + jTextFieldLoadTextName.getText());
+            debugMsg(caller + ":  SUBMITTED VAULT PATH:  " + jTextFieldLoadTextPath.getText());
+
             result = true;
 //            showFailure(reason, originator);
         }
-        else if (originator.equals("panelAuth")) {
-            debugMsg("RAN SOF FOR MODE:  AUTH");
+        else if (caller.equals("panelAuth")) {
             result = true;
         }
         else {
-            debugMsg("RAN SOF FOR MODE:  INVALID MODE");
-            showFailure(reason, originator);
+            showFailure(reason, caller);
         }
 
         // RETURN RESULT
         return result;
     }
 
+    
+    
     
     private void exitProgram() {
         debugMsg("PROGRAM EXECUTION TERMINATED");

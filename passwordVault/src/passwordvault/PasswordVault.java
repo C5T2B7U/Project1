@@ -28,6 +28,9 @@ public class PasswordVault {
         
         // USE Debug CLASS TO OUTPUT MESSAGE TO CONSOLE IF DEBUG ENABLED
         debugMsg("Test");
+        
+        // NO IMPORT FOR Debug CLASS NEEDED FOR THIS FORM:
+        Debug.debugMsg("Also test");
     }
     
 }

@@ -6,6 +6,7 @@
 package passwordvault;
 
 import java.awt.CardLayout;
+import static passwordvault.Debug.debugMsg;
 
 /**
  *
@@ -13,13 +14,6 @@ import java.awt.CardLayout;
  */
 public class PasswordVaultUI extends javax.swing.JFrame {
 
-    
-    // DEBUG MODE:  CHOOSE ONE OF THE FOLLOWING
-    static boolean ENABLE_DEBUG = true;
-//  static boolean ENABLE_DEBUG = false;
-
-    
-    
     
     /**
      * Creates new form PasswordVaultUI
@@ -30,12 +24,6 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     }
 
 
-    public static void debugMsg(String msg) {
-        if (ENABLE_DEBUG)
-            System.out.println("DEBUG:  " + msg);
-    }
-
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,286 +36,281 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         panelLoad = new javax.swing.JPanel();
         jPanelLoadButtons = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldVaultName = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        jButtonLoadExit = new javax.swing.JButton();
+        jButtonLoadNew = new javax.swing.JButton();
+        jButtonLoadOpen = new javax.swing.JButton();
+        jButtonLoadSubmit = new javax.swing.JButton();
+        jPanelLoadText = new javax.swing.JPanel();
+        jLabelLoadTextName = new javax.swing.JLabel();
+        jTextFieldLoadTextName = new javax.swing.JTextField();
+        jLabelLoadTextPath = new javax.swing.JLabel();
+        jTextFieldLoadTextPath = new javax.swing.JTextField();
         panelAuth = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         panelFail = new javax.swing.JPanel();
         jLabelFailReason = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonFail = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuVault = new javax.swing.JMenu();
         jMenuItemVaultLoad = new javax.swing.JMenuItem();
         jMenuItemVaultClose = new javax.swing.JMenuItem();
-        jSeparatorVault1 = new javax.swing.JPopupMenu.Separator();
+        jSeparatorMenuVault1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemVaultExit = new javax.swing.JMenuItem();
         jMenuAbout = new javax.swing.JMenu();
-        if (ENABLE_DEBUG) {
-            jMenuDebug = new javax.swing.JMenu();
-            jMenuDebugSelPanel = new javax.swing.JMenu();
-            jMenuItemDebugSelPanelLoad = new javax.swing.JMenuItem();
-            jMenuItemDebugSelPanelAuth = new javax.swing.JMenuItem();
-            jMenuItemDebugSelPanelFail = new javax.swing.JMenuItem();
+        jMenuDebug = new javax.swing.JMenu();
+        jMenuDebugSelPanel = new javax.swing.JMenu();
+        jMenuItemDebugSelPanelLoad = new javax.swing.JMenuItem();
+        jMenuItemDebugSelPanelAuth = new javax.swing.JMenuItem();
+        jMenuItemDebugSelPanelFail = new javax.swing.JMenuItem();
 
-            setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-            addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent evt) {
-                    exitProgramEvent(evt);
-                }
-            });
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                exitProgramEvent(evt);
+            }
+        });
 
-            mainPanel.setLayout(new java.awt.CardLayout());
+        mainPanel.setLayout(new java.awt.CardLayout());
 
-            jButton4.setText("Exit");
-            jButton4.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton4ActionPerformed(evt);
-                }
-            });
+        jButtonLoadExit.setText("Exit");
+        jButtonLoadExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoadExitActionPerformed(evt);
+            }
+        });
 
-            jButton5.setText("Create New Vault");
-            jButton5.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton5ActionPerformed(evt);
-                }
-            });
+        jButtonLoadNew.setText("Create New Vault");
+        jButtonLoadNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoadNewActionPerformed(evt);
+            }
+        });
 
-            jButton6.setText("Select Existing Vault");
-            jButton6.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton6ActionPerformed(evt);
-                }
-            });
+        jButtonLoadOpen.setText("Select Existing Vault");
+        jButtonLoadOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoadOpenActionPerformed(evt);
+            }
+        });
 
-            jButton7.setText("Submit");
-            jButton7.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton7ActionPerformed(evt);
-                }
-            });
+        jButtonLoadSubmit.setText("Submit");
+        jButtonLoadSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoadSubmitActionPerformed(evt);
+            }
+        });
 
-            javax.swing.GroupLayout jPanelLoadButtonsLayout = new javax.swing.GroupLayout(jPanelLoadButtons);
-            jPanelLoadButtons.setLayout(jPanelLoadButtonsLayout);
-            jPanelLoadButtonsLayout.setHorizontalGroup(
-                jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelLoadButtonsLayout.createSequentialGroup()
-                    .addComponent(jButton4)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton5)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton6)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton7)
-                    .addGap(0, 0, Short.MAX_VALUE))
-            );
-            jPanelLoadButtonsLayout.setVerticalGroup(
-                jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelLoadButtonsLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton4)
-                        .addComponent(jButton5)
-                        .addComponent(jButton6)
-                        .addComponent(jButton7))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            );
+        javax.swing.GroupLayout jPanelLoadButtonsLayout = new javax.swing.GroupLayout(jPanelLoadButtons);
+        jPanelLoadButtons.setLayout(jPanelLoadButtonsLayout);
+        jPanelLoadButtonsLayout.setHorizontalGroup(
+            jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLoadButtonsLayout.createSequentialGroup()
+                .addComponent(jButtonLoadExit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonLoadNew)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonLoadOpen)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonLoadSubmit)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanelLoadButtonsLayout.setVerticalGroup(
+            jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLoadButtonsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonLoadExit)
+                    .addComponent(jButtonLoadNew)
+                    .addComponent(jButtonLoadOpen)
+                    .addComponent(jButtonLoadSubmit))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-            jLabel1.setText("Vault Filename:");
+        jLabelLoadTextName.setText("Vault Filename:");
 
-            jTextFieldVaultName.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jTextFieldVaultNameActionPerformed(evt);
-                }
-            });
+        jTextFieldLoadTextName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldLoadTextNameActionPerformed(evt);
+            }
+        });
 
-            jLabel4.setText("Vault Directory Path:");
+        jLabelLoadTextPath.setText("Vault Directory Path:");
 
-            javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-            jPanel2.setLayout(jPanel2Layout);
-            jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTextFieldVaultName)
-                .addComponent(jTextField1)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addComponent(jLabel4)
-                    .addGap(0, 0, Short.MAX_VALUE))
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addComponent(jLabel3)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGap(307, 307, 307))
-            );
-            jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTextFieldVaultName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                    .addComponent(jLabel4)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-            );
+        javax.swing.GroupLayout jPanelLoadTextLayout = new javax.swing.GroupLayout(jPanelLoadText);
+        jPanelLoadText.setLayout(jPanelLoadTextLayout);
+        jPanelLoadTextLayout.setHorizontalGroup(
+            jPanelLoadTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTextFieldLoadTextName)
+            .addComponent(jTextFieldLoadTextPath)
+            .addGroup(jPanelLoadTextLayout.createSequentialGroup()
+                .addComponent(jLabelLoadTextPath)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanelLoadTextLayout.createSequentialGroup()
+                .addGap(0, 6, Short.MAX_VALUE)
+                .addComponent(jLabelLoadTextName)
+                .addGap(307, 307, 307))
+        );
+        jPanelLoadTextLayout.setVerticalGroup(
+            jPanelLoadTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLoadTextLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabelLoadTextName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldLoadTextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jLabelLoadTextPath)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldLoadTextPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-            javax.swing.GroupLayout panelLoadLayout = new javax.swing.GroupLayout(panelLoad);
-            panelLoad.setLayout(panelLoadLayout);
-            panelLoadLayout.setHorizontalGroup(
-                panelLoadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelLoadLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(panelLoadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanelLoadButtons, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap())
-            );
-            panelLoadLayout.setVerticalGroup(
-                panelLoadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelLoadLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(30, 30, 30)
-                    .addComponent(jPanelLoadButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-            );
+        javax.swing.GroupLayout panelLoadLayout = new javax.swing.GroupLayout(panelLoad);
+        panelLoad.setLayout(panelLoadLayout);
+        panelLoadLayout.setHorizontalGroup(
+            panelLoadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLoadLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelLoadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelLoadText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelLoadButtons, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelLoadLayout.setVerticalGroup(
+            panelLoadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLoadLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelLoadText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jPanelLoadButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-            mainPanel.add(panelLoad, "panelLoad");
+        mainPanel.add(panelLoad, "panelLoad");
 
-            jLabel2.setText("auth");
+        jLabel2.setText("auth");
 
-            javax.swing.GroupLayout panelAuthLayout = new javax.swing.GroupLayout(panelAuth);
-            panelAuth.setLayout(panelAuthLayout);
-            panelAuthLayout.setHorizontalGroup(
-                panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 406, Short.MAX_VALUE)
-                .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAuthLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-            );
-            panelAuthLayout.setVerticalGroup(
-                panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 279, Short.MAX_VALUE)
-                .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAuthLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-            );
+        javax.swing.GroupLayout panelAuthLayout = new javax.swing.GroupLayout(panelAuth);
+        panelAuth.setLayout(panelAuthLayout);
+        panelAuthLayout.setHorizontalGroup(
+            panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 406, Short.MAX_VALUE)
+            .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelAuthLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        panelAuthLayout.setVerticalGroup(
+            panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelAuthLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
-            mainPanel.add(panelAuth, "panelAuth");
+        mainPanel.add(panelAuth, "panelAuth");
 
-            jLabelFailReason.setText("...");
+        jLabelFailReason.setText("...");
 
-            jButton1.setText("OK");
-            jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-            jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-            jButton1.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton1ActionPerformed(evt);
-                }
-            });
+        jButtonFail.setText("OK");
+        jButtonFail.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonFail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonFail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFailActionPerformed(evt);
+            }
+        });
 
-            javax.swing.GroupLayout panelFailLayout = new javax.swing.GroupLayout(panelFail);
-            panelFail.setLayout(panelFailLayout);
-            panelFailLayout.setHorizontalGroup(
-                panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelFailLayout = new javax.swing.GroupLayout(panelFail);
+        panelFail.setLayout(panelFailLayout);
+        panelFailLayout.setHorizontalGroup(
+            panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFailLayout.createSequentialGroup()
+                .addGap(179, 179, 179)
+                .addComponent(jButtonFail)
+                .addContainerGap(180, Short.MAX_VALUE))
+            .addGroup(panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelFailLayout.createSequentialGroup()
-                    .addGap(179, 179, 179)
-                    .addComponent(jButton1)
-                    .addContainerGap(180, Short.MAX_VALUE))
-                .addGroup(panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelFailLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabelFailReason)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-            );
-            panelFailLayout.setVerticalGroup(
-                panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFailLayout.createSequentialGroup()
-                    .addContainerGap(158, Short.MAX_VALUE)
-                    .addComponent(jButton1)
-                    .addGap(98, 98, 98))
-                .addGroup(panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelFailLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabelFailReason)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-            );
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelFailReason)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        panelFailLayout.setVerticalGroup(
+            panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFailLayout.createSequentialGroup()
+                .addContainerGap(158, Short.MAX_VALUE)
+                .addComponent(jButtonFail)
+                .addGap(98, 98, 98))
+            .addGroup(panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelFailLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelFailReason)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
-            mainPanel.add(panelFail, "panelFail");
+        mainPanel.add(panelFail, "panelFail");
 
-            jMenuVault.setText("Vault");
+        jMenuVault.setText("Vault");
 
-            jMenuItemVaultLoad.setText("Open Vault");
-            jMenuVault.add(jMenuItemVaultLoad);
+        jMenuItemVaultLoad.setText("Open Vault");
+        jMenuVault.add(jMenuItemVaultLoad);
 
-            jMenuItemVaultClose.setText("Close Vault");
-            jMenuItemVaultClose.setEnabled(false);
-            jMenuItemVaultClose.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItemVaultCloseActionPerformed(evt);
-                }
-            });
-            jMenuVault.add(jMenuItemVaultClose);
-            jMenuVault.add(jSeparatorVault1);
+        jMenuItemVaultClose.setText("Close Vault");
+        jMenuItemVaultClose.setEnabled(false);
+        jMenuItemVaultClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemVaultCloseActionPerformed(evt);
+            }
+        });
+        jMenuVault.add(jMenuItemVaultClose);
+        jMenuVault.add(jSeparatorMenuVault1);
 
-            jMenuItemVaultExit.setText("Exit");
-            jMenuItemVaultExit.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItemVaultExitActionPerformed(evt);
-                }
-            });
-            jMenuVault.add(jMenuItemVaultExit);
+        jMenuItemVaultExit.setText("Exit");
+        jMenuItemVaultExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemVaultExitActionPerformed(evt);
+            }
+        });
+        jMenuVault.add(jMenuItemVaultExit);
 
-            jMenuBar.add(jMenuVault);
+        jMenuBar.add(jMenuVault);
 
-            jMenuAbout.setText("About");
-            jMenuBar.add(jMenuAbout);
+        jMenuAbout.setText("About");
+        jMenuBar.add(jMenuAbout);
 
-            jMenuDebug.setText("DEBUG");
+        jMenuDebug.setText("DEBUG");
 
-            jMenuDebugSelPanel.setText("SELECT PANEL");
+        jMenuDebugSelPanel.setText("SELECT PANEL");
 
-            jMenuItemDebugSelPanelLoad.setText("panelLoad");
-            jMenuItemDebugSelPanelLoad.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItemDebugSelPanelLoadActionPerformed(evt);
-                }
-            });
-            jMenuDebugSelPanel.add(jMenuItemDebugSelPanelLoad);
+        jMenuItemDebugSelPanelLoad.setText("panelLoad");
+        jMenuItemDebugSelPanelLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDebugSelPanelLoadActionPerformed(evt);
+            }
+        });
+        jMenuDebugSelPanel.add(jMenuItemDebugSelPanelLoad);
 
-            jMenuItemDebugSelPanelAuth.setText("panelAuth");
-            jMenuItemDebugSelPanelAuth.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItemDebugSelPanelAuthActionPerformed(evt);
-                }
-            });
-            jMenuDebugSelPanel.add(jMenuItemDebugSelPanelAuth);
+        jMenuItemDebugSelPanelAuth.setText("panelAuth");
+        jMenuItemDebugSelPanelAuth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDebugSelPanelAuthActionPerformed(evt);
+            }
+        });
+        jMenuDebugSelPanel.add(jMenuItemDebugSelPanelAuth);
 
-            jMenuItemDebugSelPanelFail.setText("panelFail");
-            jMenuItemDebugSelPanelFail.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItemDebugSelPanelFailActionPerformed(evt);
-                }
-            });
-            jMenuDebugSelPanel.add(jMenuItemDebugSelPanelFail);
+        jMenuItemDebugSelPanelFail.setText("panelFail");
+        jMenuItemDebugSelPanelFail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDebugSelPanelFailActionPerformed(evt);
+            }
+        });
+        jMenuDebugSelPanel.add(jMenuItemDebugSelPanelFail);
 
-            jMenuDebug.add(jMenuDebugSelPanel);
+        jMenuDebug.add(jMenuDebugSelPanel);
 
-            jMenuBar.add(jMenuDebug);
-        }
+        jMenuBar.add(jMenuDebug);
 
         setJMenuBar(jMenuBar);
 
@@ -367,38 +350,41 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         exitProgram();
     }//GEN-LAST:event_exitProgramEvent
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonLoadExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadExitActionPerformed
         // TODO add your handling code here:
-        debugMsg("EXITING FROM LOAD PANEL BUTTON");
+        debugMsg("EXITING FROM panelLoad EXIT BUTTON");
         exitProgram();
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonLoadExitActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButtonLoadNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadNewActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+        debugMsg("panelLoad:  CREATE NEW VAULT BUTTON PRESSED");
+    }//GEN-LAST:event_jButtonLoadNewActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jButtonLoadOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadOpenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+        debugMsg("panelLoad:  OPEN EXISTING VAULT BUTTON PRESSED");
+    }//GEN-LAST:event_jButtonLoadOpenActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void jButtonLoadSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadSubmitActionPerformed
         // TODO add your handling code here:
-        if (successOrFail("panelLoad", "")) {
+        if (isSuccessful("panelLoad", "")) {
             changeCard("panelAuth");
             jMenuItemVaultLoad.setEnabled(false);
             jMenuItemVaultClose.setEnabled(true);
         }
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_jButtonLoadSubmitActionPerformed
 
-    private void jTextFieldVaultNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldVaultNameActionPerformed
+    private void jTextFieldLoadTextNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldLoadTextNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldVaultNameActionPerformed
+    }//GEN-LAST:event_jTextFieldLoadTextNameActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonFailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFailActionPerformed
         // TODO add your handling code here:
+        debugMsg("FAILURE ACCEPTED");
         changeCard(goBackToCard);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonFailActionPerformed
 
     private void jMenuItemDebugSelPanelFailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSelPanelFailActionPerformed
         // TODO add your handling code here:
@@ -410,21 +396,6 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         changeCard("panelLoad");
     }//GEN-LAST:event_jMenuItemVaultCloseActionPerformed
 
-    
-    private void changeCard(String cardName) {
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, cardName);
-        debugMsg("CHANGING TO CARD:  " + cardName);
-    }
-    
-    
-    private void showFailure(String reason, String goBackTo) {
-        jLabelFailReason.setText(reason);
-        goBackToCard = goBackTo;
-        changeCard("panelFail");
-        
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -462,16 +433,15 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButtonFail;
+    private javax.swing.JButton jButtonLoadExit;
+    private javax.swing.JButton jButtonLoadNew;
+    private javax.swing.JButton jButtonLoadOpen;
+    private javax.swing.JButton jButtonLoadSubmit;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelFailReason;
+    private javax.swing.JLabel jLabelLoadTextName;
+    private javax.swing.JLabel jLabelLoadTextPath;
     private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuDebug;
@@ -483,11 +453,11 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemVaultExit;
     private javax.swing.JMenuItem jMenuItemVaultLoad;
     private javax.swing.JMenu jMenuVault;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelLoadButtons;
-    private javax.swing.JPopupMenu.Separator jSeparatorVault1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextFieldVaultName;
+    private javax.swing.JPanel jPanelLoadText;
+    private javax.swing.JPopupMenu.Separator jSeparatorMenuVault1;
+    private javax.swing.JTextField jTextFieldLoadTextName;
+    private javax.swing.JTextField jTextFieldLoadTextPath;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelAuth;
     private javax.swing.JPanel panelFail;
@@ -497,33 +467,56 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     // CUSTOM VARS
     private String goBackToCard = "panelLoad";
 
+    
+    // CHANGES CARD IN mainPanel TO cardName   
+    private void changeCard(String cardName) {
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, cardName);
+        debugMsg("CHANGING TO CARD:  " + cardName);
+    }
+    
+    
+    // DISPLAYS CUSTOM ERROR MESSAGE WITH BACK BUTTON
+    private void showFailure(String reason, String goBackTo) {
+        jLabelFailReason.setText(reason);
+        goBackToCard = goBackTo;
+        changeCard("panelFail");
         
-    private boolean successOrFail(String originator, String args)
+    }
+    
+    // 
+    private boolean isSuccessful(String caller, String args)
     {
+
+        debugMsg("RAN SOF FROM:  " + caller);
+
+
         // INIT RESULT
         boolean result = false;
         String reason = "ERROR...";
 
         // NOTE: SWITCH OVER STRING NOT UNIVERSALLY COMPATIBLE
         // USE IF/ELSE INSTEAD
-        if (originator.equals("panelLoad")) {
-            debugMsg("RAN SOF FOR MODE:  LOAD");
+        if (caller.equals("panelLoad")) {
+            debugMsg(caller + ":  SUBMITTED VAULT NAME:  " + jTextFieldLoadTextName.getText());
+            debugMsg(caller + ":  SUBMITTED VAULT PATH:  " + jTextFieldLoadTextPath.getText());
+
             result = true;
 //            showFailure(reason, originator);
         }
-        else if (originator.equals("panelAuth")) {
-            debugMsg("RAN SOF FOR MODE:  AUTH");
+        else if (caller.equals("panelAuth")) {
             result = true;
         }
         else {
-            debugMsg("RAN SOF FOR MODE:  INVALID MODE");
-            showFailure(reason, originator);
+            showFailure(reason, caller);
         }
 
         // RETURN RESULT
         return result;
     }
 
+    
+    
     
     private void exitProgram() {
         debugMsg("PROGRAM EXECUTION TERMINATED");

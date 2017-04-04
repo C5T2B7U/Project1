@@ -86,12 +86,17 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         panelRetrieve = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
-        jMenuVault = new javax.swing.JMenu();
-        jMenuItemVaultLoad = new javax.swing.JMenuItem();
-        jMenuItemVaultClose = new javax.swing.JMenuItem();
-        jSeparatorMenuVault1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItemVaultExit = new javax.swing.JMenuItem();
-        jMenuAbout = new javax.swing.JMenu();
+        jMenuFile = new javax.swing.JMenu();
+        jMenuItemFileLoad = new javax.swing.JMenuItem();
+        jMenuItemFileClose = new javax.swing.JMenuItem();
+        jSeparatorMenuFile1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemFileSettings = new javax.swing.JMenuItem();
+        jSeparatorMenuFile2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemFileExit = new javax.swing.JMenuItem();
+        jMenuHelp = new javax.swing.JMenu();
+        jMenuItemHelpHelp = new javax.swing.JMenuItem();
+        jSeparatorMenuHelp1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemHelpAbout = new javax.swing.JMenuItem();
         jMenuDebug = new javax.swing.JMenu();
         jMenuDebugSelPanel = new javax.swing.JMenu();
         jMenuItemDebugSelPanelLoad = new javax.swing.JMenuItem();
@@ -523,38 +528,50 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         mainPanel.add(panelRetrieve, "panelRetrieve");
 
-        jMenuVault.setText("Vault");
+        jMenuFile.setText("File");
 
-        jMenuItemVaultLoad.setText("Open Vault");
-        jMenuItemVaultLoad.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemFileLoad.setText("Open Vault");
+        jMenuItemFileLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemVaultLoadActionPerformed(evt);
+                jMenuItemFileLoadActionPerformed(evt);
             }
         });
-        jMenuVault.add(jMenuItemVaultLoad);
+        jMenuFile.add(jMenuItemFileLoad);
 
-        jMenuItemVaultClose.setText("Close Vault");
-        jMenuItemVaultClose.setEnabled(false);
-        jMenuItemVaultClose.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemFileClose.setText("Close Vault");
+        jMenuItemFileClose.setEnabled(false);
+        jMenuItemFileClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemVaultCloseActionPerformed(evt);
+                jMenuItemFileCloseActionPerformed(evt);
             }
         });
-        jMenuVault.add(jMenuItemVaultClose);
-        jMenuVault.add(jSeparatorMenuVault1);
+        jMenuFile.add(jMenuItemFileClose);
+        jMenuFile.add(jSeparatorMenuFile1);
 
-        jMenuItemVaultExit.setText("Exit");
-        jMenuItemVaultExit.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemFileSettings.setText("Settings");
+        jMenuFile.add(jMenuItemFileSettings);
+        jMenuFile.add(jSeparatorMenuFile2);
+
+        jMenuItemFileExit.setText("Exit");
+        jMenuItemFileExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemVaultExitActionPerformed(evt);
+                jMenuItemFileExitActionPerformed(evt);
             }
         });
-        jMenuVault.add(jMenuItemVaultExit);
+        jMenuFile.add(jMenuItemFileExit);
 
-        jMenuBar.add(jMenuVault);
+        jMenuBar.add(jMenuFile);
 
-        jMenuAbout.setText("About");
-        jMenuBar.add(jMenuAbout);
+        jMenuHelp.setText("Info");
+
+        jMenuItemHelpHelp.setText("Help");
+        jMenuHelp.add(jMenuItemHelpHelp);
+        jMenuHelp.add(jSeparatorMenuHelp1);
+
+        jMenuItemHelpAbout.setText("About");
+        jMenuHelp.add(jMenuItemHelpAbout);
+
+        jMenuBar.add(jMenuHelp);
 
         jMenuDebug.setText("DEBUG");
 
@@ -622,7 +639,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -638,11 +655,11 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         changeCard("panelAuth");
     }//GEN-LAST:event_jMenuItemDebugSelPanelAuthActionPerformed
 
-    private void jMenuItemVaultExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVaultExitActionPerformed
+    private void jMenuItemFileExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileExitActionPerformed
         // TODO add your handling code here:
         debugMsg("EXITING FROM MENU ITEM");
         exitProgram();
-    }//GEN-LAST:event_jMenuItemVaultExitActionPerformed
+    }//GEN-LAST:event_jMenuItemFileExitActionPerformed
 
     private void exitProgramEvent(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitProgramEvent
         // TODO add your handling code here:
@@ -670,8 +687,8 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (isSuccessful("panelLoad", "")) {
             changeCard("panelAuth");
-            jMenuItemVaultLoad.setEnabled(false);
-            jMenuItemVaultClose.setEnabled(true);
+            jMenuItemFileLoad.setEnabled(false);
+            jMenuItemFileClose.setEnabled(true);
         }
     }//GEN-LAST:event_jButtonLoadSubmitActionPerformed
 
@@ -690,12 +707,12 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         changeCard("panelFail");
     }//GEN-LAST:event_jMenuItemDebugSelPanelFailActionPerformed
 
-    private void jMenuItemVaultCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVaultCloseActionPerformed
+    private void jMenuItemFileCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileCloseActionPerformed
         debugMsg("CLOSING VAULT FROM MENU ITEM");
-            jMenuItemVaultLoad.setEnabled(true);
-            jMenuItemVaultClose.setEnabled(false);
+            jMenuItemFileLoad.setEnabled(true);
+            jMenuItemFileClose.setEnabled(false);
         changeCard("panelLoad");
-    }//GEN-LAST:event_jMenuItemVaultCloseActionPerformed
+    }//GEN-LAST:event_jMenuItemFileCloseActionPerformed
 
     private void jMenuItemDebugSelPanelFeaturedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSelPanelFeaturedActionPerformed
         // TODO add your handling code here:
@@ -758,9 +775,9 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         changeCard("panelLoad");
     }//GEN-LAST:event_jButtonAuthCancelActionPerformed
 
-    private void jMenuItemVaultLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVaultLoadActionPerformed
+    private void jMenuItemFileLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileLoadActionPerformed
         changeCard("panelLoad");
-    }//GEN-LAST:event_jMenuItemVaultLoadActionPerformed
+    }//GEN-LAST:event_jMenuItemFileLoadActionPerformed
 
     private void jButtonAuthChooseKeyfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthChooseKeyfileActionPerformed
         int returnVal = jFileChooser.showOpenDialog(this);
@@ -850,26 +867,31 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFailReason;
     private javax.swing.JLabel jLabelLoadTextName;
     private javax.swing.JLabel jLabelLoadTextPath;
-    private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuDebug;
     private javax.swing.JMenu jMenuDebugSelPanel;
+    private javax.swing.JMenu jMenuFile;
+    private javax.swing.JMenu jMenuHelp;
     private javax.swing.JMenuItem jMenuItemDebugSelPanelAuth;
     private javax.swing.JMenuItem jMenuItemDebugSelPanelFail;
     private javax.swing.JMenuItem jMenuItemDebugSelPanelFeatured;
     private javax.swing.JMenuItem jMenuItemDebugSelPanelLoad;
     private javax.swing.JMenuItem jMenuItemDebugSelPanelRetrieve;
     private javax.swing.JMenuItem jMenuItemDebugSelPanelStore;
-    private javax.swing.JMenuItem jMenuItemVaultClose;
-    private javax.swing.JMenuItem jMenuItemVaultExit;
-    private javax.swing.JMenuItem jMenuItemVaultLoad;
-    private javax.swing.JMenu jMenuVault;
+    private javax.swing.JMenuItem jMenuItemFileClose;
+    private javax.swing.JMenuItem jMenuItemFileExit;
+    private javax.swing.JMenuItem jMenuItemFileLoad;
+    private javax.swing.JMenuItem jMenuItemFileSettings;
+    private javax.swing.JMenuItem jMenuItemHelpAbout;
+    private javax.swing.JMenuItem jMenuItemHelpHelp;
     private javax.swing.JPanel jPanelAuthButtons;
     private javax.swing.JPanel jPanelDEBUGMSGButtons;
     private javax.swing.JPanel jPanelLoadButtons;
     private javax.swing.JPanel jPanelLoadText;
     private javax.swing.JPasswordField jPasswordFieldAuthPW;
-    private javax.swing.JPopupMenu.Separator jSeparatorMenuVault1;
+    private javax.swing.JPopupMenu.Separator jSeparatorMenuFile1;
+    private javax.swing.JPopupMenu.Separator jSeparatorMenuFile2;
+    private javax.swing.JPopupMenu.Separator jSeparatorMenuHelp1;
     private javax.swing.JTextField jTextFieldAuthKeyfilePath;
     private javax.swing.JTextField jTextFieldLoadTextName;
     private javax.swing.JTextField jTextFieldLoadTextPath;

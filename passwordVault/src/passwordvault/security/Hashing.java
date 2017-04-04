@@ -1,4 +1,4 @@
-package hashing;
+package passwordvault.security;
 import java.security.MessageDigest;
 import java.util.Scanner;
 import javax.xml.bind.DatatypeConverter;
@@ -6,9 +6,9 @@ import java.io.*;
 
 public class Hashing {
 
-    public static void main(String[] args) {
-        simpleUI();
-    }
+//    public static void main(String[] args) {
+//        simpleUI();
+//    }
     
     private static void simpleUI(){
         // GET STRING TO HASH
@@ -31,7 +31,7 @@ public class Hashing {
         System.out.println("This is the hash for both tokens combined using SHA-256!");
         System.out.println(hash3);
     }
-    private String getStrHash(String password){
+    public static String getStrHash(String password){
         String result = null;
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -42,7 +42,8 @@ public class Hashing {
         }
         return result;
     }
-    private String getFileHash(String filename){
+    
+    public static String getFileHash(String filename){
         String result = null;
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

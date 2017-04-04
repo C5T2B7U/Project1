@@ -549,6 +549,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jMenuFile.add(jSeparatorMenuFile1);
 
         jMenuItemFileSettings.setText("Settings");
+        jMenuItemFileSettings.setEnabled(false);
         jMenuFile.add(jMenuItemFileSettings);
         jMenuFile.add(jSeparatorMenuFile2);
 
@@ -562,7 +563,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         jMenuBar.add(jMenuFile);
 
-        jMenuHelp.setText("Info");
+        jMenuHelp.setText("Help");
 
         jMenuItemHelpHelp.setText("Help");
         jMenuHelp.add(jMenuItemHelpHelp);

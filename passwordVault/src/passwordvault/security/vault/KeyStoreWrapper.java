@@ -1,4 +1,10 @@
-package passwordvault.security;
+/*
+ * This class' responsibility is to abstract the KeyStore away from the Vault's code.
+ * This way, if KeyStore is changed, only one class needs to be modified.
+ ***************************
+ * Intended for this vault package's use ONLY.
+ */
+package passwordvault.security.vault;
 
 import java.io.Closeable;
 import java.io.File;
@@ -55,7 +61,7 @@ class KeyStoreWrapper implements Closeable {
         // Make a new KeyStore
         try {
             keyStore = KeyStore.getInstance(KEYSTORE_TYPE);
-            System.out.println("Using KeyStore type: "+ keyStore.getType());
+//            System.out.println("Using KeyStore type: "+ keyStore.getType()); // DEBUG
         } catch (KeyStoreException ex) { // If no implementation. (shouldn't happen)
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -94,25 +100,19 @@ class KeyStoreWrapper implements Closeable {
      * @param alias Key
      * @param contents Value
      */
-    public void addKey(String alias, String contents) {
+    public void addKey(String alias, char[] contents) {
         byte[] salt = "Some salt".getBytes();
         try {
-            System.out.println(contents.getBytes("UTF-8").length);
 //            SecretKeySpec spec = new SecretKeySpec(contents.getBytes("UTF-8"), KEY_TYPE);
-            PBEKeySpec spec = new PBEKeySpec(contents.toCharArray(), salt, 1000);
+            PBEKeySpec spec = new PBEKeySpec(contents, salt, 1000);
             SecretKey key = keyFactory.generateSecret(spec);
             keyStore.setEntry(alias, new KeyStore.SecretKeyEntry(key), contentProtection);
             
-//            System.out.print("\tinput bytes:");
-//            System.out.println(new String(contents.getBytes("UTF-8"), "UTF-8"));
-            System.out.print("\tspec (decoded):");
-            System.out.println(spec.getPassword());
-            System.out.print("\tkey (encoded):");
-            System.out.println(new String(key.getEncoded(), "UTF-8"));
-            
-            PBEKeySpec regenSpec = ((PBEKeySpec) keyFactory.getKeySpec(key, PBEKeySpec.class));
-            System.out.print("\tre-decoded:");
-            System.out.println(new String(regenSpec.getPassword()));
+//            // DEBUG
+//            System.out.print("\tspec (decoded):");
+//            System.out.println(spec.getPassword());
+//            System.out.print("\tkey (encoded):");
+//            System.out.println(new String(key.getEncoded(), "UTF-8"));
             
         } catch (InvalidKeySpecException ex) { // Failed to make key
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,23 +120,36 @@ class KeyStoreWrapper implements Closeable {
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
 //        } catch (InvalidKeyException ex) { // Key is too short
 //            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (UnsupportedEncodingException ex) { // DEBUG
+//            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    /**
+     * Wraps the addKey() method for KeyEntry's ids.
+     * Use: Remove lots of duplicated calls to convert char[] into ids (integers).
+     * @param alias
+     * @param id 
+     */
+    public void addIdKey(String alias, int id) {
+        addKey(alias, String.valueOf(id).toCharArray());
+    }
     
-    public char[] getKey(String alias) {
+    public char[] getKey(String alias) throws InstanceNotFoundException {
         try {
-            SecretKey key = ((KeyStore.SecretKeyEntry) keyStore.getEntry(alias, contentProtection)).getSecretKey();
+            KeyStore.Entry entry = keyStore.getEntry(alias, contentProtection);
+            if (entry == null) // If Entry not found, entry == null...
+                throw new InstanceNotFoundException();
+            SecretKey key = ((KeyStore.SecretKeyEntry) entry).getSecretKey();
 //            SecretKey key = (SecretKey) keyStore.getKey(alias, password);
             PBEKeySpec spec = (PBEKeySpec) keyFactory.getKeySpec(key, PBEKeySpec.class);
             
-            System.out.print("alg:"+key.getAlgorithm()+"__");
-            System.out.print("\tencoded: ");
-            System.out.println(new String(key.getEncoded(), "UTF-8"));
-            System.out.print("\tdecoded > ");
-            System.out.println(spec.getPassword());
-            System.out.println("\tspec class: "+ keyFactory.getKeySpec(key, PBEKeySpec.class).getClass());
+//            // DEBUG
+//            System.out.print("alg:"+key.getAlgorithm()+"__");
+//            System.out.print("\tencoded: ");
+//            System.out.println(new String(key.getEncoded(), "UTF-8"));
+//            System.out.print("\tdecoded > ");
+//            System.out.println(spec.getPassword());
+//            System.out.println("\tspec class: "+ keyFactory.getKeySpec(key, PBEKeySpec.class).getClass());
             
             return spec.getPassword();
         } catch (KeyStoreException ex) {
@@ -149,10 +162,19 @@ class KeyStoreWrapper implements Closeable {
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidKeySpecException ex) {
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (UnsupportedEncodingException ex) { // DEBUG
+//            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    /**
+     * Wraps getKey() method for KeyEntry's id.
+     * Use: Remove lots of duplicated calls to convert char[] into ids (integers).
+     * @param alias
+     * @return id
+     */
+    public int getIdKey(String alias) throws InstanceNotFoundException {
+        return Integer.parseInt(new String(getKey(alias)));
     }
     
     public void save() {

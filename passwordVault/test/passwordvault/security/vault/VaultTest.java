@@ -7,8 +7,6 @@ package passwordvault.security.vault;
 
 import java.io.File;
 import java.security.UnrecoverableKeyException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,7 +15,7 @@ import static org.junit.Assert.*;
  * @author oKevi
  */
 public class VaultTest {
-    public static final String TEST_FILENAME = "build\\key.st";
+    public static final String TEST_FILENAME = "build\\VaultTest.st";
     public static final File TEST_FILE = new File(TEST_FILENAME);
     public static final char[] PASSWORD = "pass".toCharArray();
     
@@ -60,8 +58,8 @@ public class VaultTest {
     public void testGetKeyFile() {
         System.out.println("getKeyFile");
         Vault instance = null;
-        File expResult = null;
-        File result = instance.getKeyFile();
+        String expResult = "";
+        String result = instance.getKeyFile();
         assertEquals(expResult, result);
         fail("The test case is a prototype.");
     }
@@ -69,13 +67,59 @@ public class VaultTest {
     @Test
     public void testSetKeyFile() {
         System.out.println("setKeyFile");
-        File keyFile = null;
+        String keyFile = "";
         Vault instance = null;
         instance.setKeyFile(keyFile);
         fail("The test case is a prototype.");
     }
-    */
 
+    @Test
+    public void testSave() {
+        System.out.println("save");
+        Vault instance = null;
+        instance.save();
+        fail("The test case is a prototype.");
+    }
+
+    @Test
+    public void testGetFirstEntryId() {
+        System.out.println("getFirstEntryId");
+        Vault instance = null;
+        int expResult = 0;
+        int result = instance.getFirstEntryId();
+        assertEquals(expResult, result);
+        fail("The test case is a prototype.");
+    }
+
+    @Test
+    public void testGetLastEntryId() {
+        System.out.println("getLastEntryId");
+        Vault instance = null;
+        int expResult = 0;
+        int result = instance.getLastEntryId();
+        assertEquals(expResult, result);
+        fail("The test case is a prototype.");
+    }
+
+    @Test
+    public void testSetFirstEntryId() {
+        System.out.println("setFirstEntryId");
+        int id = 0;
+        Vault instance = null;
+        instance.setFirstEntryId(id);
+        fail("The test case is a prototype.");
+    }
+
+    @Test
+    public void testSetLastEntryId() {
+        System.out.println("setLastEntryId");
+        int id = 0;
+        Vault instance = null;
+        instance.setLastEntryId(id);
+        fail("The test case is a prototype.");
+    }
+    */
+    
     @Test
     public void testSaveEmpty() {
         System.out.println("save empty vault");
@@ -83,8 +127,8 @@ public class VaultTest {
             TEST_FILE.delete();
         try {
             Vault vault = new Vault(TEST_FILENAME, PASSWORD);
-            assertTrue("firstEntry == MISSING_ID?", vault.firstEntryId == VaultEntry.MISSING_ID);
-            assertTrue("lastEntry == MISSING_ID?", vault.lastEntryId == VaultEntry.MISSING_ID);
+            assertTrue("firstEntry == NULL?", vault.getFirstEntry() == null);
+            assertTrue("lastEntry == NULL?", vault.getLastEntry() == null);
             
             vault.save();
             assertTrue("vault saved?", TEST_FILE.isFile());

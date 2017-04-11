@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -96,7 +96,6 @@ class KeyStoreWrapper implements Closeable {
     
     /**
      * Add a key to the KeyStore.
-     * TODO: Convert this into private method.
      * @param alias Key
      * @param contents Value
      */
@@ -175,6 +174,19 @@ class KeyStoreWrapper implements Closeable {
      */
     public int getIdKey(String alias) throws InstanceNotFoundException {
         return Integer.parseInt(new String(getKey(alias)));
+    }
+    
+    /**
+     * Deletes a key from the key store.
+     * If key isn't found, nothing happens.
+     * @param alias 
+     */
+    public void deleteKey(String alias) {
+        try {
+            keyStore.deleteEntry(alias);
+        } catch (KeyStoreException ex) {
+            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void save() {

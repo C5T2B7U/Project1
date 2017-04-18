@@ -2,6 +2,12 @@
  * This class' responsibility is to abstract away the indicies/values inside
  * the KeyStore.
  * It's also the interface the end-user employs to modify the Vault.
+ *
+ * Sites:
+ * VaultEntry.reserveFreeId() inspiration
+ *      http://stackoverflow.com/questions/11758440/initialize-final-variable-within-constructor-in-another-method#11758483
+ * Overridding equals()
+ *      http://stackoverflow.com/a/27609
  */
 package passwordvault.security.vault;
 
@@ -11,6 +17,8 @@ import java.util.logging.Logger;
 /**
  * This class holds one entry in the Vault.
  * Each VaultEntry has a username and a password.
+ * Remember: vaultEntry1 == vaultEntry2 checks if both objects point to the same address.
+ *      To check if both objects are the same VaultEntry, use vaultEntry1.equals(vaultEntry2)
  * 
  * Probably NOT thread-safe. Multiple threads might write to the Vault at once.
  * TODO: thread safety? For now, low priority
@@ -28,6 +36,7 @@ public class VaultEntry {
     private boolean alertChanges = true; // Used to alertListener()
     
     static final int MISSING_ID = -1; // Id to use when something doesn't exist
+    static final int STARTING_ID = 0; // First id to use
     
     // These are used as a prefix for alias...
     // so actual alias would be: <alias_...><id>
@@ -74,12 +83,11 @@ public class VaultEntry {
         // nextId is shared between all members of VaultEntry...
         synchronized(LOCK_NEXT_FREE_ID) {
             // Each vault may have a different free id, so this value is also stored in vault
-            int nextFreeId = MISSING_ID;
+            int nextFreeId = STARTING_ID;
             try {
                 nextFreeId = vault.keyStore.getIdKey(NEXT_FREE_ID_ALIAS);
             } catch (InstanceNotFoundException ex) {
                 // TODO: manually search for free id?
-                Logger.getLogger(VaultEntry.class.getName()).log(Level.SEVERE, null, ex);
             }
             // Increment free id
             vault.keyStore.addIdKey(NEXT_FREE_ID_ALIAS, nextFreeId+1);
@@ -170,20 +178,33 @@ public class VaultEntry {
      *     TODO: remove ability to change VaultEntry after deleted
      */
     public void delete() {
-        vault.keyStore.deleteKey(aliasUser);
-        vault.keyStore.deleteKey(aliasPassword);
-        
-        // Fix pointers before deleting this key
+        // Fix vault pointers
         VaultEntry prevEntry = getPreviousEntry();
+        VaultEntry nextEntry = getNextEntry();
+        if (vault.getFirstEntry().equals(this)) {
+            if (nextEntry != null)
+                vault.setFirstEntryId(nextEntry.getId());
+            else
+                vault.setFirstEntryId(MISSING_ID);
+        }
+        if (vault.getLastEntry().equals(this)) {
+            if (prevEntry != null)
+                vault.setLastEntryId(prevEntry.getId());
+            else
+                vault.setLastEntryId(MISSING_ID);
+        }
+        
+        // Fix entry pointers before deleting this key
         if (prevEntry != null)
             prevEntry.setNextEntryId( getNextEntryId() );
-        VaultEntry nextEntry = getNextEntry();
         if (nextEntry != null)
              nextEntry.setPreviousEntryId( getPreviousEntryId() );
-        vault.keyStore.deleteKey(aliasNextEntry);
-        vault.keyStore.deleteKey(aliasPrevEntry);
         
         alertListenerOnRemove();
+        vault.keyStore.deleteKey(aliasUser);
+        vault.keyStore.deleteKey(aliasPassword);
+        vault.keyStore.deleteKey(aliasNextEntry);
+        vault.keyStore.deleteKey(aliasPrevEntry);
         vault = null;
     }
     
@@ -232,6 +253,21 @@ public class VaultEntry {
     }
     void setNextEntryId(int id) {
         vault.keyStore.addIdKey(aliasNextEntry, id);
+    }
+    
+    //**************************/
+    
+    // Multiple objects can reference the same entry
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof VaultEntry))
+            return false;
+        return (id == ((VaultEntry) obj).id);
+    }
+    // ... and since equals() was overridden, hashCode must be also.
+    @Override
+    public int hashCode() {
+        return id;
     }
     
     //**************************/

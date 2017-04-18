@@ -80,6 +80,7 @@ public class Vault {
     }
     /**
      * Get a VaultEntry by its id.
+     * WARNING: Entries are not sorted by id numbers!
      * If it doesn't exist, returns null.
      * @param id
      * @return 

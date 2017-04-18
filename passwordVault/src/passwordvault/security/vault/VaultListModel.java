@@ -4,6 +4,12 @@
  *
  * Warning: Class hasn't been tested!
  * TODO: test???
+ *
+ * Sites:
+ * ListModel
+ *      https://docs.oracle.com/javase/tutorial/uiswing/components/list.html
+ * Weak References
+ *      https://docs.oracle.com/javase/7/docs/api/java/lang/ref/WeakReference.html
  */
 package passwordvault.security.vault;
 
@@ -62,8 +68,7 @@ public class VaultListModel extends AbstractListModel implements VaultListener {
     @Override
     public void onKeyChanged(VaultEntry entry) {
         for (int index = 0; index < entries.size(); ++index) {
-            // Can't just use the entry, since multiple objects can point to the same aliases
-            if (entries.get(index).getId() == entry.getId())
+            if (entries.get(index).equals(entry))
                 this.fireContentsChanged(this, index, index);
         }
     }
@@ -71,8 +76,7 @@ public class VaultListModel extends AbstractListModel implements VaultListener {
     @Override
     public void onKeyRemoved(VaultEntry entry) {
         for (int index = 0; index < entries.size(); ++index) {
-            // Can't just use the entry, since multiple objects can point to the same aliases
-            if (entries.get(index).getId() == entry.getId()) {
+            if (entries.get(index).equals(entry)) {
                 this.fireIntervalRemoved(this, index, index);
                 entries.remove(index);
             }

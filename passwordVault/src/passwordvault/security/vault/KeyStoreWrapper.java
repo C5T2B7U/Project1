@@ -3,6 +3,15 @@
  * This way, if KeyStore is changed, only one class needs to be modified.
  ***************************
  * Intended for this vault package's use ONLY.
+ *
+ * Sites:
+ *      http://docs.oracle.com/javase/7/docs/technotes/guides/security/index.html
+ *      https://docs.oracle.com/javase/7/docs/api/overview-summary.html
+ *
+ * Keystore type
+ *      http://stackoverflow.com/questions/18243248/java-keystore-setentry-using-an-aes-secretkey#comment26751703_18243248
+ * Printing bytes
+ *      http://stackoverflow.com/questions/21250330/decryption-of-aes-encrypted-field-in-java#21250773
  */
 package passwordvault.security.vault;
 

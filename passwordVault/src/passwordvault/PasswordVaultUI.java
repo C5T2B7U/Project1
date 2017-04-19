@@ -8,6 +8,8 @@ package passwordvault;
 
 import java.awt.CardLayout;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import static passwordvault.Debug.debugMsg;
 import static passwordvault.security.Hashing.getStrHash;
@@ -54,6 +56,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jLabelLoadTextPath = new javax.swing.JLabel();
         jTextFieldLoadTextPath = new javax.swing.JTextField();
         jLabelLoadTextName = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         panelDEBUGMSG = new javax.swing.JPanel();
         jLabelDEBUGMSG1 = new javax.swing.JLabel();
         jLabelDEBUGMSG2 = new javax.swing.JLabel();
@@ -82,28 +85,21 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jLabelFailReason = new javax.swing.JLabel();
         jButtonFail = new javax.swing.JButton();
         panelHome = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
-        jLabel7 = new javax.swing.JLabel();
-        panelStore = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        panelRetrieve = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelHomeButtons = new javax.swing.JPanel();
+        jButtonHomeNew = new javax.swing.JButton();
+        jButtonHomeEdit = new javax.swing.JButton();
+        jButtonHomeDelete = new javax.swing.JButton();
+        jButtonHomeClose = new javax.swing.JButton();
+        jPanelHomeTextFields = new javax.swing.JPanel();
+        jLabelHomeEntryLabel = new javax.swing.JLabel();
+        jTextFieldHomeEntryLabel = new javax.swing.JTextField();
+        jLabelHomeEntryUsername = new javax.swing.JLabel();
+        jTextFieldHomeEntryUsername = new javax.swing.JTextField();
+        jLabelHomeEntryPW = new javax.swing.JLabel();
+        jTextFieldHomeEntryPW = new javax.swing.JTextField();
+        jScrollPaneHomeEntryList = new javax.swing.JScrollPane();
+        jListHomeEntryList = new javax.swing.JList<>();
+        jLabelHomeEntryList = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemFileLoad = new javax.swing.JMenuItem();
@@ -262,6 +258,19 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         );
 
         mainPanel.add(panelLoad, "panelLoad");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 406, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 401, Short.MAX_VALUE)
+        );
+
+        mainPanel.add(jPanel2, "card10");
 
         jLabelDEBUGMSG1.setText("DEBUGMSG1");
 
@@ -491,95 +500,96 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         mainPanel.add(panelFail, "panelFail");
 
-        jButton3.setText("New Entry");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonHomeNew.setText("New Entry");
+        jButtonHomeNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonHomeNewActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Edit Entry");
+        jButtonHomeEdit.setText("Edit Entry");
 
-        jButton6.setText("Delete Entry");
+        jButtonHomeDelete.setText("Delete Entry");
 
-        jButton1.setText("Close Vault");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonHomeClose.setText("Close Vault");
+        jButtonHomeClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonHomeCloseActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelHomeButtonsLayout = new javax.swing.GroupLayout(jPanelHomeButtons);
+        jPanelHomeButtons.setLayout(jPanelHomeButtonsLayout);
+        jPanelHomeButtonsLayout.setHorizontalGroup(
+            jPanelHomeButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHomeButtonsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelHomeButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonHomeClose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonHomeDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonHomeEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonHomeNew, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanelHomeButtonsLayout.setVerticalGroup(
+            jPanelHomeButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHomeButtonsLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jButton3)
+                .addComponent(jButtonHomeNew)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(jButtonHomeEdit)
                 .addGap(18, 18, 18)
-                .addComponent(jButton6)
+                .addComponent(jButtonHomeDelete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jButtonHomeClose)
                 .addContainerGap())
         );
 
-        jLabel1.setText("Vault Entry Label:");
+        jLabelHomeEntryLabel.setText("Vault Entry Label:");
 
-        jLabel5.setText("Vault Entry Account Username:");
+        jLabelHomeEntryUsername.setText("Vault Entry Account Username:");
 
-        jLabel6.setText("Vault Entry Account Password:");
+        jLabelHomeEntryPW.setText("Vault Entry Account Password:");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3)
-            .addComponent(jTextField2)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+        javax.swing.GroupLayout jPanelHomeTextFieldsLayout = new javax.swing.GroupLayout(jPanelHomeTextFields);
+        jPanelHomeTextFields.setLayout(jPanelHomeTextFieldsLayout);
+        jPanelHomeTextFieldsLayout.setHorizontalGroup(
+            jPanelHomeTextFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTextFieldHomeEntryPW)
+            .addComponent(jTextFieldHomeEntryUsername)
+            .addGroup(jPanelHomeTextFieldsLayout.createSequentialGroup()
+                .addGroup(jPanelHomeTextFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelHomeEntryLabel)
+                    .addComponent(jLabelHomeEntryUsername)
+                    .addComponent(jLabelHomeEntryPW))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jTextField4)
+            .addComponent(jTextFieldHomeEntryLabel)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel1)
+        jPanelHomeTextFieldsLayout.setVerticalGroup(
+            jPanelHomeTextFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHomeTextFieldsLayout.createSequentialGroup()
+                .addComponent(jLabelHomeEntryLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldHomeEntryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(jLabelHomeEntryUsername)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldHomeEntryUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
+                .addComponent(jLabelHomeEntryPW)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTextFieldHomeEntryPW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
+        jListHomeEntryList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Sample: Facebook", "Sample: Google Account 1", "Sample: Google Account 2", "Sample: Canvas", "Sample: Yahoo", "Sample: Windows Computer 1", "Sample: Windows Computer 2", "Sample: iPad" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane3.setViewportView(jList3);
+        jListHomeEntryList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPaneHomeEntryList.setViewportView(jListHomeEntryList);
 
-        jLabel7.setText("Vault Entries:");
+        jLabelHomeEntryList.setText("Vault Entries:");
 
         javax.swing.GroupLayout panelHomeLayout = new javax.swing.GroupLayout(panelHome);
         panelHome.setLayout(panelHomeLayout);
@@ -588,109 +598,33 @@ public class PasswordVaultUI extends javax.swing.JFrame {
             .addGroup(panelHomeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelHomeTextFields, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelHomeLayout.createSequentialGroup()
                         .addGroup(panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                            .addComponent(jScrollPaneHomeEntryList, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                             .addGroup(panelHomeLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(jLabelHomeEntryList)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanelHomeButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panelHomeLayout.setVerticalGroup(
             panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHomeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelHomeTextFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelHomeButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHomeLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(jLabelHomeEntryList)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3)
+                        .addComponent(jScrollPaneHomeEntryList)
                         .addContainerGap())))
         );
 
         mainPanel.add(panelHome, "panelHome");
-
-        jLabel3.setText("Store Data Menu");
-
-        javax.swing.GroupLayout panelStoreLayout = new javax.swing.GroupLayout(panelStore);
-        panelStore.setLayout(panelStoreLayout);
-        panelStoreLayout.setHorizontalGroup(
-            panelStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
-            .addGroup(panelStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelStoreLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        panelStoreLayout.setVerticalGroup(
-            panelStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
-            .addGroup(panelStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelStoreLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-
-        mainPanel.add(panelStore, "panelStore");
-
-        jLabel4.setText("Retrieve Data Menu");
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
-        javax.swing.GroupLayout panelRetrieveLayout = new javax.swing.GroupLayout(panelRetrieve);
-        panelRetrieve.setLayout(panelRetrieveLayout);
-        panelRetrieveLayout.setHorizontalGroup(
-            panelRetrieveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRetrieveLayout.createSequentialGroup()
-                .addContainerGap(231, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-            .addGroup(panelRetrieveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelRetrieveLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel4)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        panelRetrieveLayout.setVerticalGroup(
-            panelRetrieveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRetrieveLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
-            .addGroup(panelRetrieveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelRetrieveLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel4)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-
-        mainPanel.add(panelRetrieve, "panelRetrieve");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
-        );
-
-        mainPanel.add(jPanel2, "card10");
 
         jMenuFile.setText("File");
 
@@ -866,8 +800,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
     private void jMenuItemFileCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileCloseActionPerformed
         debugMsg("CLOSING VAULT FROM MENU ITEM");
-            jMenuItemFileLoad.setEnabled(true);
-            jMenuItemFileClose.setEnabled(false);
+        closeVault();
         changeCard("panelBase");
     }//GEN-LAST:event_jMenuItemFileCloseActionPerformed
 
@@ -891,23 +824,38 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         
         
         // DEBUG
+//        if (isKeyFileValid) {
+
+        try {
+            File file = new File(jTextFieldAuthKeyfilePath.getText());
+            FileInputStream keyFile = new FileInputStream(file);
+            isKeyFileValid = true;
+
+            String tempPW = new String(jPasswordFieldAuthPW.getPassword());
+            String keyFilePath = jTextFieldAuthKeyfilePath.getText();
+
+            jLabelDEBUGMSG1.setText("*** PASSWORD INPUT = ***");
+            jLabelDEBUGMSG2.setText(tempPW);
+            jLabelDEBUGMSG3.setText("*** PASSWORD HASH = ***");
+            jLabelDEBUGMSG4.setText(getCharHash(jPasswordFieldAuthPW.getPassword()));
+            jLabelDEBUGMSG5.setText("*** KEYFILE PATH = ***");
+            jLabelDEBUGMSG6.setText(keyFilePath);
+            jLabelDEBUGMSG7.setText("*** KEYFILE HASH = ***");
+            jLabelDEBUGMSG8.setText(getFileHash(keyFilePath));
+            jLabelDEBUGMSG9.setText("*** COMBINED PASSWORD+KEYFILE REHASH = ***");
+            jLabelDEBUGMSG10.setText(getStrHash(getCharHash(jPasswordFieldAuthPW.getPassword()) + getFileHash(keyFilePath)));
+
+            goBackToCard = "panelAuth";
+            changeCard("panelDEBUGMSG");
+            tempPW = "";
+
+            keyFile.close();
         
-        String tempPW = new String(jPasswordFieldAuthPW.getPassword());
-        String keyFilePath = jTextFieldAuthKeyfilePath.getText();
-        jLabelDEBUGMSG1.setText("*** PASSWORD INPUT = ***");
-        jLabelDEBUGMSG2.setText(tempPW);
-        jLabelDEBUGMSG3.setText("*** PASSWORD HASH = ***");
-        jLabelDEBUGMSG4.setText(getCharHash(jPasswordFieldAuthPW.getPassword()));
-        jLabelDEBUGMSG5.setText("*** KEYFILE PATH = ***");
-        jLabelDEBUGMSG6.setText(keyFilePath);
-        jLabelDEBUGMSG7.setText("*** KEYFILE HASH = ***");
-        jLabelDEBUGMSG8.setText(getFileHash(keyFilePath));
-        jLabelDEBUGMSG9.setText("*** COMBINED PASSWORD+KEYFILE REHASH = ***");
-        jLabelDEBUGMSG10.setText(getStrHash(getCharHash(jPasswordFieldAuthPW.getPassword()) + getFileHash(keyFilePath)));
-        
-        goBackToCard = "panelAuth";
-        changeCard("panelDEBUGMSG");
-        tempPW = "";
+        } catch (IOException ex) {
+            showFailure("panelAuth:  KEYFILE ERROR:  " + jTextFieldAuthKeyfilePath.getText(), "panelAuth");
+            debugMsg("panelAuth:  KEYFILE ERROR:  " + jTextFieldAuthKeyfilePath.getText());
+        }
+
     }//GEN-LAST:event_jButtonAuthSubmitActionPerformed
 
     private void jButtonDEBUGMSGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDEBUGMSGActionPerformed
@@ -943,29 +891,29 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = jFileChooser.getSelectedFile();
 //            try {
-//              // What to do with the file, e.g. display it in a TextArea
-//              textarea.read( new FileReader( file.getAbsolutePath() ), null );
+//                FileInputStream keyFile = new FileInputStream(jFileChooser.getSelectedFile());
+//                isKeyFileValid = true;
 //            } catch (IOException ex) {
-//              System.out.println("problem accessing file"+file.getAbsolutePath());
+//              debugMsg("panelAuth:  KEYFILE ERROR:  "+file.getAbsolutePath());
 //            }
-            debugMsg("SUCCESSFULLLY OPENED FILE");
-            debugMsg("FILE DIRECTORY = " + jFileChooser.getCurrentDirectory());
-            debugMsg("FILE NAME = " + jFileChooser.getName(file));
-            debugMsg("FILE PATH = " + file.getAbsolutePath());
+//            debugMsg("SUCCESSFULLLY OPENED FILE");
+//            debugMsg("FILE DIRECTORY = " + jFileChooser.getCurrentDirectory());
+//            debugMsg("FILE NAME = " + jFileChooser.getName(file));
+//            debugMsg("FILE PATH = " + file.getAbsolutePath());
             String keyFilePath = file.getAbsolutePath();
             jTextFieldAuthKeyfilePath.setText(keyFilePath);
-        } else {
-            debugMsg("File access cancelled by user.");
+         } else {
+            debugMsg("panelAuth:  KEYFILE SELECTION CANCELLED");
         }
     }//GEN-LAST:event_jButtonAuthChooseKeyfileActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonHomeNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeNewActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonHomeNewActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonHomeCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeCloseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonHomeCloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1004,10 +952,6 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonAuthCancel;
     private javax.swing.JButton jButtonAuthChooseKeyfile;
     private javax.swing.JButton jButtonAuthSubmit;
@@ -1016,15 +960,13 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBaseOpen;
     private javax.swing.JButton jButtonDEBUGMSG;
     private javax.swing.JButton jButtonFail;
+    private javax.swing.JButton jButtonHomeClose;
+    private javax.swing.JButton jButtonHomeDelete;
+    private javax.swing.JButton jButtonHomeEdit;
+    private javax.swing.JButton jButtonHomeNew;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JFileChooser jFileChooser;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelAuthKeyfilePath;
     private javax.swing.JLabel jLabelAuthPW;
     private javax.swing.JLabel jLabelBase;
@@ -1039,10 +981,13 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDEBUGMSG8;
     private javax.swing.JLabel jLabelDEBUGMSG9;
     private javax.swing.JLabel jLabelFailReason;
+    private javax.swing.JLabel jLabelHomeEntryLabel;
+    private javax.swing.JLabel jLabelHomeEntryList;
+    private javax.swing.JLabel jLabelHomeEntryPW;
+    private javax.swing.JLabel jLabelHomeEntryUsername;
     private javax.swing.JLabel jLabelLoadTextName;
     private javax.swing.JLabel jLabelLoadTextPath;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList3;
+    private javax.swing.JList<String> jListHomeEntryList;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuDebug;
     private javax.swing.JMenu jMenuDebugSelPanel;
@@ -1061,23 +1006,22 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemHelpAbout;
     private javax.swing.JMenuItem jMenuItemHelpHelp;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelAuthButtons;
     private javax.swing.JPanel jPanelBase;
     private javax.swing.JPanel jPanelBaseButtons;
     private javax.swing.JPanel jPanelDEBUGMSGButtons;
+    private javax.swing.JPanel jPanelHomeButtons;
+    private javax.swing.JPanel jPanelHomeTextFields;
     private javax.swing.JPanel jPanelLoadText;
     private javax.swing.JPasswordField jPasswordFieldAuthPW;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPaneHomeEntryList;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuFile1;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuFile2;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuHelp1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldAuthKeyfilePath;
+    private javax.swing.JTextField jTextFieldHomeEntryLabel;
+    private javax.swing.JTextField jTextFieldHomeEntryPW;
+    private javax.swing.JTextField jTextFieldHomeEntryUsername;
     private javax.swing.JTextField jTextFieldLoadTextName;
     private javax.swing.JTextField jTextFieldLoadTextPath;
     private javax.swing.JPanel mainPanel;
@@ -1086,13 +1030,13 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelFail;
     private javax.swing.JPanel panelHome;
     private javax.swing.JPanel panelLoad;
-    private javax.swing.JPanel panelRetrieve;
-    private javax.swing.JPanel panelStore;
     // End of variables declaration//GEN-END:variables
 
     // CUSTOM VARS
     private String goBackToCard = "panelBase";
 //    private String keyFilePath = "";
+    private boolean isVaultOpen = false;
+    private boolean isKeyFileValid = false;
 
     
     // CHANGES CARD IN mainPanel TO cardName   
@@ -1143,9 +1087,29 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     }
 
     
+    private void openVault() {
+        if (!isVaultOpen) {
+            debugMsg("OPENING VAULT");
+            isVaultOpen = true;
+            jMenuItemFileLoad.setEnabled(false);
+            jMenuItemFileClose.setEnabled(true);
+        }
+    }
+
+    private void closeVault() {
+        if (isVaultOpen) {
+            debugMsg("CLOSING VAULT");
+            isVaultOpen = false;
+            isKeyFileValid = false;
+            jMenuItemFileLoad.setEnabled(true);
+            jMenuItemFileClose.setEnabled(false);
+        }
+        
+    }
     
     
     private void exitProgram() {
+        closeVault();
         debugMsg("PROGRAM EXECUTION TERMINATED");
         System.exit(0);
     }

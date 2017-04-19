@@ -11,6 +11,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import static passwordvault.Debug.debugMsg;
 import static passwordvault.security.Hashing.getStrHash;
+import static passwordvault.security.Hashing.getCharHash;
 import static passwordvault.security.Hashing.getFileHash;
 
 
@@ -41,12 +42,13 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         jFileChooser = new javax.swing.JFileChooser();
         mainPanel = new javax.swing.JPanel();
+        jPanelBase = new javax.swing.JPanel();
+        jLabelBase = new javax.swing.JLabel();
+        jPanelBaseButtons = new javax.swing.JPanel();
+        jButtonBaseExit = new javax.swing.JButton();
+        jButtonBaseNew = new javax.swing.JButton();
+        jButtonBaseOpen = new javax.swing.JButton();
         panelLoad = new javax.swing.JPanel();
-        jPanelLoadButtons = new javax.swing.JPanel();
-        jButtonLoadExit = new javax.swing.JButton();
-        jButtonLoadNew = new javax.swing.JButton();
-        jButtonLoadOpen = new javax.swing.JButton();
-        jButtonLoadSubmit = new javax.swing.JButton();
         jPanelLoadText = new javax.swing.JPanel();
         jTextFieldLoadTextName = new javax.swing.JTextField();
         jLabelLoadTextPath = new javax.swing.JLabel();
@@ -67,7 +69,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jButtonDEBUGMSG = new javax.swing.JButton();
         panelAuth = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabelAuthPW = new javax.swing.JLabel();
         jPasswordFieldAuthPW = new javax.swing.JPasswordField();
         jPanelAuthButtons = new javax.swing.JPanel();
         jButtonAuthCancel = new javax.swing.JButton();
@@ -79,12 +81,24 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         panelFail = new javax.swing.JPanel();
         jLabelFailReason = new javax.swing.JLabel();
         jButtonFail = new javax.swing.JButton();
-        panelFeatured = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        panelHome = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
+        jPanel3 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         panelStore = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         panelRetrieve = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jPanel2 = new javax.swing.JPanel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemFileLoad = new javax.swing.JMenuItem();
@@ -115,58 +129,79 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        jButtonLoadExit.setText("Exit");
-        jButtonLoadExit.addActionListener(new java.awt.event.ActionListener() {
+        jLabelBase.setText("Welcome to <insert program name>");
+
+        jButtonBaseExit.setText("Exit");
+        jButtonBaseExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLoadExitActionPerformed(evt);
+                jButtonBaseExitActionPerformed(evt);
             }
         });
 
-        jButtonLoadNew.setText("Create New Vault");
-        jButtonLoadNew.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBaseNew.setText("Create New Vault");
+        jButtonBaseNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLoadNewActionPerformed(evt);
+                jButtonBaseNewActionPerformed(evt);
             }
         });
 
-        jButtonLoadOpen.setText("Select Existing Vault");
-        jButtonLoadOpen.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBaseOpen.setText("Select Existing Vault");
+        jButtonBaseOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLoadOpenActionPerformed(evt);
+                jButtonBaseOpenActionPerformed(evt);
             }
         });
 
-        jButtonLoadSubmit.setText("Submit");
-        jButtonLoadSubmit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLoadSubmitActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelLoadButtonsLayout = new javax.swing.GroupLayout(jPanelLoadButtons);
-        jPanelLoadButtons.setLayout(jPanelLoadButtonsLayout);
-        jPanelLoadButtonsLayout.setHorizontalGroup(
-            jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLoadButtonsLayout.createSequentialGroup()
-                .addComponent(jButtonLoadExit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLoadNew)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLoadOpen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLoadSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanelBaseButtonsLayout = new javax.swing.GroupLayout(jPanelBaseButtons);
+        jPanelBaseButtons.setLayout(jPanelBaseButtonsLayout);
+        jPanelBaseButtonsLayout.setHorizontalGroup(
+            jPanelBaseButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBaseButtonsLayout.createSequentialGroup()
+                .addComponent(jButtonBaseExit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonBaseNew)
+                .addGap(29, 29, 29)
+                .addComponent(jButtonBaseOpen)
+                .addContainerGap())
         );
-        jPanelLoadButtonsLayout.setVerticalGroup(
-            jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLoadButtonsLayout.createSequentialGroup()
+        jPanelBaseButtonsLayout.setVerticalGroup(
+            jPanelBaseButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBaseButtonsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelLoadButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonLoadExit)
-                    .addComponent(jButtonLoadNew)
-                    .addComponent(jButtonLoadOpen)
-                    .addComponent(jButtonLoadSubmit))
+                .addGroup(jPanelBaseButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBaseExit)
+                    .addComponent(jButtonBaseNew)
+                    .addComponent(jButtonBaseOpen))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        javax.swing.GroupLayout jPanelBaseLayout = new javax.swing.GroupLayout(jPanelBase);
+        jPanelBase.setLayout(jPanelBaseLayout);
+        jPanelBaseLayout.setHorizontalGroup(
+            jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelBaseButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelBaseLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelBase)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanelBaseLayout.setVerticalGroup(
+            jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBaseLayout.createSequentialGroup()
+                .addGap(0, 349, Short.MAX_VALUE)
+                .addComponent(jPanelBaseButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelBaseLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabelBase)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        mainPanel.add(jPanelBase, "panelBase");
 
         jTextFieldLoadTextName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,7 +241,6 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelLoadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelLoadText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelLoadButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelLoadLayout.createSequentialGroup()
                         .addComponent(jLabelLoadTextName)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -219,8 +253,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                 .addComponent(jLabelLoadTextName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelLoadText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
-                .addComponent(jPanelLoadButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(257, Short.MAX_VALUE))
         );
 
         mainPanel.add(panelLoad, "panelLoad");
@@ -312,7 +345,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                 .addComponent(jLabelDEBUGMSG9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDEBUGMSG10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                 .addComponent(jPanelDEBUGMSGButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -320,7 +353,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         jLabel2.setText("auth");
 
-        jLabel5.setText("Enter Password:");
+        jLabelAuthPW.setText("Enter Password:");
 
         jButtonAuthCancel.setText("Cancel");
         jButtonAuthCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -387,7 +420,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                         .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBox1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel5)
+                            .addComponent(jLabelAuthPW)
                             .addComponent(jLabelAuthKeyfilePath))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -398,7 +431,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(56, 56, 56)
-                .addComponent(jLabel5)
+                .addComponent(jLabelAuthPW)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordFieldAuthPW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -407,7 +440,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                 .addComponent(jTextFieldAuthKeyfilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
                 .addComponent(jPanelAuthButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -441,7 +474,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         panelFailLayout.setVerticalGroup(
             panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFailLayout.createSequentialGroup()
-                .addContainerGap(262, Short.MAX_VALUE)
+                .addContainerGap(273, Short.MAX_VALUE)
                 .addComponent(jButtonFail)
                 .addGap(98, 98, 98))
             .addGroup(panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,30 +486,107 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         mainPanel.add(panelFail, "panelFail");
 
-        jLabel1.setText("Featured Menu");
+        jButton1.setText("Close Vault");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout panelFeaturedLayout = new javax.swing.GroupLayout(panelFeatured);
-        panelFeatured.setLayout(panelFeaturedLayout);
-        panelFeaturedLayout.setHorizontalGroup(
-            panelFeaturedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
-            .addGroup(panelFeaturedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelFeaturedLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
-        panelFeaturedLayout.setVerticalGroup(
-            panelFeaturedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
-            .addGroup(panelFeaturedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelFeaturedLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
         );
 
-        mainPanel.add(panelFeatured, "panelFeatured");
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList2);
+
+        jButton3.setText("Create New Entry");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("View Entry");
+
+        jButton5.setText("Edit Entry");
+
+        jButton6.setText("Delete Entry");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton4)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelHomeLayout = new javax.swing.GroupLayout(panelHome);
+        panelHome.setLayout(panelHomeLayout);
+        panelHomeLayout.setHorizontalGroup(
+            panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelHomeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelHomeLayout.setVerticalGroup(
+            panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHomeLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
+                .addGap(167, 167, 167)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        mainPanel.add(panelHome, "panelHome");
 
         jLabel3.setText("Store Data Menu");
 
@@ -493,7 +603,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         );
         panelStoreLayout.setVerticalGroup(
             panelStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
+            .addGap(0, 394, Short.MAX_VALUE)
             .addGroup(panelStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelStoreLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -505,11 +615,21 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         jLabel4.setText("Retrieve Data Menu");
 
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
         javax.swing.GroupLayout panelRetrieveLayout = new javax.swing.GroupLayout(panelRetrieve);
         panelRetrieve.setLayout(panelRetrieveLayout);
         panelRetrieveLayout.setHorizontalGroup(
             panelRetrieveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRetrieveLayout.createSequentialGroup()
+                .addContainerGap(231, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
             .addGroup(panelRetrieveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelRetrieveLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -518,7 +638,10 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         );
         panelRetrieveLayout.setVerticalGroup(
             panelRetrieveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
+            .addGroup(panelRetrieveLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
             .addGroup(panelRetrieveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelRetrieveLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -527,6 +650,19 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         );
 
         mainPanel.add(panelRetrieve, "panelRetrieve");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 406, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+
+        mainPanel.add(jPanel2, "card10");
 
         jMenuFile.setText("File");
 
@@ -668,30 +804,21 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         exitProgram();
     }//GEN-LAST:event_exitProgramEvent
 
-    private void jButtonLoadExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadExitActionPerformed
+    private void jButtonBaseExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBaseExitActionPerformed
         // TODO add your handling code here:
-        debugMsg("EXITING FROM panelLoad EXIT BUTTON");
+        debugMsg("EXITING FROM panelBase EXIT BUTTON");
         exitProgram();
-    }//GEN-LAST:event_jButtonLoadExitActionPerformed
+    }//GEN-LAST:event_jButtonBaseExitActionPerformed
 
-    private void jButtonLoadNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadNewActionPerformed
+    private void jButtonBaseNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBaseNewActionPerformed
         // TODO add your handling code here:
-        debugMsg("panelLoad:  CREATE NEW VAULT BUTTON PRESSED");
-    }//GEN-LAST:event_jButtonLoadNewActionPerformed
+        debugMsg("panelBase:  CREATE NEW VAULT BUTTON PRESSED");
+    }//GEN-LAST:event_jButtonBaseNewActionPerformed
 
-    private void jButtonLoadOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadOpenActionPerformed
+    private void jButtonBaseOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBaseOpenActionPerformed
         // TODO add your handling code here:
-        debugMsg("panelLoad:  OPEN EXISTING VAULT BUTTON PRESSED");
-    }//GEN-LAST:event_jButtonLoadOpenActionPerformed
-
-    private void jButtonLoadSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadSubmitActionPerformed
-        // TODO add your handling code here:
-        if (isSuccessful("panelLoad", "")) {
-            changeCard("panelAuth");
-            jMenuItemFileLoad.setEnabled(false);
-            jMenuItemFileClose.setEnabled(true);
-        }
-    }//GEN-LAST:event_jButtonLoadSubmitActionPerformed
+        debugMsg("panelBase:  OPEN EXISTING VAULT BUTTON PRESSED");
+    }//GEN-LAST:event_jButtonBaseOpenActionPerformed
 
     private void jTextFieldLoadTextNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldLoadTextNameActionPerformed
         // TODO add your handling code here:
@@ -712,7 +839,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         debugMsg("CLOSING VAULT FROM MENU ITEM");
             jMenuItemFileLoad.setEnabled(true);
             jMenuItemFileClose.setEnabled(false);
-        changeCard("panelLoad");
+        changeCard("panelBase");
     }//GEN-LAST:event_jMenuItemFileCloseActionPerformed
 
     private void jMenuItemDebugSelPanelFeaturedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSelPanelFeaturedActionPerformed
@@ -735,17 +862,19 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         
         
         // DEBUG
+        
         String tempPW = new String(jPasswordFieldAuthPW.getPassword());
+        String keyFilePath = jTextFieldAuthKeyfilePath.getText();
         jLabelDEBUGMSG1.setText("*** PASSWORD INPUT = ***");
         jLabelDEBUGMSG2.setText(tempPW);
         jLabelDEBUGMSG3.setText("*** PASSWORD HASH = ***");
-        jLabelDEBUGMSG4.setText(getStrHash(tempPW));
+        jLabelDEBUGMSG4.setText(getCharHash(jPasswordFieldAuthPW.getPassword()));
         jLabelDEBUGMSG5.setText("*** KEYFILE PATH = ***");
         jLabelDEBUGMSG6.setText(keyFilePath);
         jLabelDEBUGMSG7.setText("*** KEYFILE HASH = ***");
         jLabelDEBUGMSG8.setText(getFileHash(keyFilePath));
         jLabelDEBUGMSG9.setText("*** COMBINED PASSWORD+KEYFILE REHASH = ***");
-        jLabelDEBUGMSG10.setText(getStrHash(tempPW + getFileHash(keyFilePath)));
+        jLabelDEBUGMSG10.setText(getStrHash(getCharHash(jPasswordFieldAuthPW.getPassword()) + getFileHash(keyFilePath)));
         
         goBackToCard = "panelAuth";
         changeCard("panelDEBUGMSG");
@@ -772,12 +901,12 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         debugMsg("panelAuth:  CANCELLING AUTHENTICATION");
         // RESET INPUTS
         jPasswordFieldAuthPW.setText("");
-        // GO BACK TO LOAD
-        changeCard("panelLoad");
+        // GO BACK TO BASE
+        changeCard("panelBase");
     }//GEN-LAST:event_jButtonAuthCancelActionPerformed
 
     private void jMenuItemFileLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileLoadActionPerformed
-        changeCard("panelLoad");
+        changeCard("panelBase");
     }//GEN-LAST:event_jMenuItemFileLoadActionPerformed
 
     private void jButtonAuthChooseKeyfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthChooseKeyfileActionPerformed
@@ -794,12 +923,20 @@ public class PasswordVaultUI extends javax.swing.JFrame {
             debugMsg("FILE DIRECTORY = " + jFileChooser.getCurrentDirectory());
             debugMsg("FILE NAME = " + jFileChooser.getName(file));
             debugMsg("FILE PATH = " + file.getAbsolutePath());
-            keyFilePath = file.getAbsolutePath();
+            String keyFilePath = file.getAbsolutePath();
             jTextFieldAuthKeyfilePath.setText(keyFilePath);
         } else {
             debugMsg("File access cancelled by user.");
         }
     }//GEN-LAST:event_jButtonAuthChooseKeyfileActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -838,23 +975,28 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonAuthCancel;
     private javax.swing.JButton jButtonAuthChooseKeyfile;
     private javax.swing.JButton jButtonAuthSubmit;
+    private javax.swing.JButton jButtonBaseExit;
+    private javax.swing.JButton jButtonBaseNew;
+    private javax.swing.JButton jButtonBaseOpen;
     private javax.swing.JButton jButtonDEBUGMSG;
     private javax.swing.JButton jButtonFail;
-    private javax.swing.JButton jButtonLoadExit;
-    private javax.swing.JButton jButtonLoadNew;
-    private javax.swing.JButton jButtonLoadOpen;
-    private javax.swing.JButton jButtonLoadSubmit;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JFileChooser jFileChooser;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelAuthKeyfilePath;
+    private javax.swing.JLabel jLabelAuthPW;
+    private javax.swing.JLabel jLabelBase;
     private javax.swing.JLabel jLabelDEBUGMSG1;
     private javax.swing.JLabel jLabelDEBUGMSG10;
     private javax.swing.JLabel jLabelDEBUGMSG2;
@@ -868,6 +1010,8 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFailReason;
     private javax.swing.JLabel jLabelLoadTextName;
     private javax.swing.JLabel jLabelLoadTextPath;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuDebug;
     private javax.swing.JMenu jMenuDebugSelPanel;
@@ -885,11 +1029,17 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemFileSettings;
     private javax.swing.JMenuItem jMenuItemHelpAbout;
     private javax.swing.JMenuItem jMenuItemHelpHelp;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelAuthButtons;
+    private javax.swing.JPanel jPanelBase;
+    private javax.swing.JPanel jPanelBaseButtons;
     private javax.swing.JPanel jPanelDEBUGMSGButtons;
-    private javax.swing.JPanel jPanelLoadButtons;
     private javax.swing.JPanel jPanelLoadText;
     private javax.swing.JPasswordField jPasswordFieldAuthPW;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuFile1;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuFile2;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuHelp1;
@@ -900,15 +1050,15 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelAuth;
     private javax.swing.JPanel panelDEBUGMSG;
     private javax.swing.JPanel panelFail;
-    private javax.swing.JPanel panelFeatured;
+    private javax.swing.JPanel panelHome;
     private javax.swing.JPanel panelLoad;
     private javax.swing.JPanel panelRetrieve;
     private javax.swing.JPanel panelStore;
     // End of variables declaration//GEN-END:variables
 
     // CUSTOM VARS
-    private String goBackToCard = "panelLoad";
-    private String keyFilePath = "";
+    private String goBackToCard = "panelBase";
+//    private String keyFilePath = "";
 
     
     // CHANGES CARD IN mainPanel TO cardName   

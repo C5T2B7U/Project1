@@ -1,4 +1,4 @@
-package hashing; 
+package passwordvault.security; 
 
 import java.security.MessageDigest;
 import java.util.Scanner;

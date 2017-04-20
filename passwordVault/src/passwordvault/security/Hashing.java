@@ -7,10 +7,11 @@ import java.io.*;
 import java.util.*;
 import java.nio.*;
 import java.nio.charset.*;
+import java.lang.*;
 
 public class Hashing {
 
- /*   public static void main(String[] args) {
+    public static void main(String[] args) {
         simpleUI();
     }
     
@@ -23,49 +24,64 @@ public class Hashing {
         System.out.println("Please enter a filename for your file authentication");
         String file1 = new String();
         file1 = sn.next();
-        //CALL HASHING FUNCTIONM1
-        //PRINT RESULTS
-        System.out.println("This is the hash for your string using SHA-256!");
-        String hash1 = new String();
-        hash1 = getCharHash(password1);
-        System.out.println(hash1);
-        System.out.println("this is the hash for your file using SHA-256!");
-        String hash2 = new String();
-        hash2 = getFileHash(file1);
-        System.out.println(hash2);
-        System.out.println("This is the final hash using SHA-256!");
-        String hash3 = new String();
-        hash3 = hash1 + hash2;
-        hash3 = getStrHash(hash3);
-        System.out.println(hash3);
+        char[] temp = getHash(password1, file1);
     }
- */   
-    public static String getCharHash(char[] password){
-        String result = null;
+    //----------------------------------------------------------------------------------
+    // getHash FUNCTION
+    // Precondition: char[] password is passed in, and String filename is passed in
+    // Postcondition: Hashes the 2 items 
+    // Returns: char[] containing the hash
+    // Comments: Just pass in password and filename to get a char[] hash.
+    //----------------------------------------------------------------------------------
+    public static char[] getHash(char[] password, String filename){
+        char[] rtrn = new char[50];
+        byte[] hash1 = new byte[32];
+        byte[] hash2 = new byte[32];
+        byte[] hash3 = new byte[64];
+        
+        hash1 = getCharHash(password);
+        hash2 = getFileHash(filename);
+        //concatenate the 2 hashes and hash it again
+        System.arraycopy(hash1, 0, hash3, 0, hash1.length);
+        System.arraycopy(hash2, 0, hash3, hash1.length, hash2.length);
+        try{
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash4 = digest.digest(hash3);
+        //Convert the hash to a char[] and return it. 
+        char rtrnHash[] = DatatypeConverter.printHexBinary(hash4).toCharArray();
+        System.out.println(rtrnHash);
+        return rtrnHash;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return rtrn;
+    }
+    public static byte[] getCharHash(char[] password){
+        byte[] result = null;
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] pwbytes = toBytes(password); 
             byte[] hash = digest.digest(pwbytes);
             Arrays.fill(pwbytes, (byte) 0); // clear sensitive data
-            return DatatypeConverter.printHexBinary(hash);
+            return hash;
         }catch(Exception ex){
            ex.printStackTrace();
         }
         return result;
     }//*/
     
-    public static String getFileHash(String filename){
-        String result = null;
+    public static byte[] getFileHash(String filename){
+        byte[] result = null;
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             FileInputStream fis = new FileInputStream(filename);
-            byte[] hash = new byte[1024];
+            byte[] hash = new byte[32];
             int x = 0;
             while ((x = fis.read(hash)) != -1){
                 digest.update(hash, 0 , x);
             }
             byte[] hash2 = digest.digest();
-            return DatatypeConverter.printHexBinary(hash2);
+            return hash2;
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -80,6 +96,7 @@ public class Hashing {
     Arrays.fill(byteBuffer.array(), (byte) 0); // clear sensitive data
     return bytes;
 }
+
     public static String getStrHash(String password){
         String result = null;
         try{

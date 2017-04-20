@@ -35,15 +35,14 @@ public class Hashing {
     //----------------------------------------------------------------------------------
     public static char[] getHash(char[] password, String filename){
         char[] rtrn = new char[50];
-        byte[] hash1 = new byte[32];
-        byte[] hash2 = new byte[32];
+        byte[] hash1 = getCharHash(password);
+        byte[] hash2 = getFileHash(filename);
         byte[] hash3 = new byte[64];
         
-        hash1 = getCharHash(password);
-        hash2 = getFileHash(filename);
         //concatenate the 2 hashes and hash it again
         System.arraycopy(hash1, 0, hash3, 0, hash1.length);
         System.arraycopy(hash2, 0, hash3, hash1.length, hash2.length);
+        Arrays.fill(password, '\u0000'); // clear sensitive data
         Arrays.fill(hash1, (byte) 0); // clear sensitive data
         Arrays.fill(hash2, (byte) 0); // clear sensitive data
         try{
@@ -101,15 +100,4 @@ public class Hashing {
     return bytes;
 }
 
-    public static String getStrHash(String password){
-        String result = null;
-        try{
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes("UTF-8"));
-            return DatatypeConverter.printHexBinary(hash);
-        }catch(Exception ex){
-           ex.printStackTrace();
-        }
-    return result;
-    }
 }

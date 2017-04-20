@@ -23,7 +23,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.ref.WeakReference;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -46,6 +45,7 @@ class KeyStoreWrapper implements Closeable {
     private char password[]; // TODO: Encrypt password
     private KeyStore.ProtectionParameter contentProtection;
     
+    private static final String PASSWORD_FAIL_MESSAGE = "Keystore was tampered with, or password was incorrect";
     private static final String KEYSTORE_TYPE = "JCEKS"; // Default type: JKS only holds private keys!
     private static final String KEY_TYPE = "PBE";
     // Used to encrypt/decrypt keys
@@ -66,7 +66,7 @@ class KeyStoreWrapper implements Closeable {
      */
     public KeyStoreWrapper(File file, char password[]) throws UnrecoverableKeyException {
         this.file = file;
-        this.password = password;
+        setPassword(password);
         // Make a new KeyStore
         try {
             keyStore = KeyStore.getInstance(KEYSTORE_TYPE);
@@ -82,14 +82,19 @@ class KeyStoreWrapper implements Closeable {
                 try {
                     keyStore.load(istream, password);
                 } catch(IOException ioex) {
-                    ioex.printStackTrace();
+                    // If password failed...
+                    if (ioex.getCause() instanceof UnrecoverableKeyException) {
+                        throw (UnrecoverableKeyException) ioex.getCause();
+                    // For some reason, this KeyStore doesn't set the cause properly
+                    } else if (ioex.getMessage().equals(PASSWORD_FAIL_MESSAGE)) {
+                        System.out.println("Used alternate detection: password failed.");
+                        throw new UnrecoverableKeyException();
+                    } else { // Read fail?
+                        throw ioex;
+                    }
                 }
             } catch(FileNotFoundException ex) { // File doesn't exist
-                try {
-                    keyStore.load(null);
-                } catch(IOException ioex) {
-                    ioex.printStackTrace();
-                }
+                keyStore.load(null);
             }
         } catch (IOException ex) { // Read fail
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
@@ -198,17 +203,31 @@ class KeyStoreWrapper implements Closeable {
         }
     }
     
-    public void save() {
+    //*******************************************/
+    
+    /**
+     * Change the KeyStore's password
+     * @param password New password
+     */
+    public void setPassword(char[] password) {
+        this.password = password;
+        // TODO: Also re-encrypt all entries with this password
+    }
+    
+    /**
+     * Tries to save the file.
+     * @throws IOException If failed to save the file for some reason.
+     *      Might be an instance of FileNotFoundException.
+     */
+    public void save() throws IOException {
         try {
-            keyStore.isKeyEntry(""); // Throw KeySToreException BEFORE trying to save file
+            keyStore.isKeyEntry(""); // Throw KeyStoreException BEFORE trying to save file
             
             try(OutputStream ostream = new FileOutputStream(file)) {
                 keyStore.store(ostream, password);
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
             } catch (CertificateException ex) { // Login fail
-                Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
                 Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (KeyStoreException ex) { // KeyStore not loaded
@@ -218,12 +237,15 @@ class KeyStoreWrapper implements Closeable {
 
     /**
      * Calls save()
-     * @throws IOException 
      */
     @Override
     public void close() {
-        if (keyStore != null)
-            save();
+        try {
+            if (keyStore != null)
+                save();
+        } catch (IOException ex) {
+            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
         keyStore = null;
     }
 }

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  * This class holds one entry in the Vault.
- * Each VaultEntry has a username and a password.
+ * Each VaultEntry has a label, username, and password.
  * Remember: vaultEntry1 == vaultEntry2 checks if both objects point to the same address.
  *      To check if both objects are the same VaultEntry, use vaultEntry1.equals(vaultEntry2)
  * 
@@ -27,6 +27,7 @@ public class VaultEntry {
     private final int id; // The identifier that links VaultEntry to KeyStore aliases.
     private Vault vault; // TODO: Make sure vault exists when writing/getting
     // Not to self: Since id is final, alias shouldn't change either
+    private final String aliasLabel;
     private final String aliasUser;
     private final String aliasPassword;
     private final String aliasNextEntry;
@@ -40,6 +41,7 @@ public class VaultEntry {
     
     // These are used as a prefix for alias...
     // so actual alias would be: <alias_...><id>
+    private static final String ALIAS_LABEL = "label";
     private static final String ALIAS_USER = "user";
     private static final String ALIAS_PASSWORD = "pass";
     private static final String ALIAS_NEXT_ENTRY = "nextEnt";
@@ -54,9 +56,10 @@ public class VaultEntry {
      * @param username
      * @param password 
      */
-    public VaultEntry(Vault vault, String username, char password[]) {
+    public VaultEntry(Vault vault, String label, String username, char password[]) {
         this(vault, reserveFreeId(vault));
         alertChanges = false;
+        setLabel(label);
         setUsername(username);
         setPassword(password);
         
@@ -102,6 +105,7 @@ public class VaultEntry {
      */
     private VaultEntry(Vault vault, int id) {
         this.id = id;
+        aliasLabel = ALIAS_LABEL + id;
         aliasUser = ALIAS_USER + id;
         aliasPassword = ALIAS_PASSWORD + id;
         aliasNextEntry = ALIAS_NEXT_ENTRY + id;
@@ -115,6 +119,19 @@ public class VaultEntry {
      */
     public int getId() {
         return id;
+    }
+    /**
+     * Returns the label stored in this entry.
+     * @return Label inside this VaultEntry
+     */
+    public String getLabel() {
+        try {
+            return new String(vault.keyStore.getKey(aliasLabel));
+        } catch (InstanceNotFoundException ex) {
+            // Since entry exists, label is expected to exist
+            Logger.getLogger(VaultEntry.class.getName()).log(Level.SEVERE, null, ex);
+            return "ERROR: MISSING LABEL";
+        }
     }
     /**
      * Returns the username stored in this entry.
@@ -155,6 +172,14 @@ public class VaultEntry {
         return vault.getEntry(nextId);
     }
     
+    /**
+     * Changes the label associated with this entry.
+     * @param label 
+     */
+    public void setLabel(String label) {
+        vault.keyStore.addKey(aliasLabel, label.toCharArray());
+        alertListenerOnChange();
+    }
     /**
      * Changes the username associated with this entry.
      * @param username 
@@ -201,6 +226,7 @@ public class VaultEntry {
              nextEntry.setPreviousEntryId( getPreviousEntryId() );
         
         alertListenerOnRemove();
+        vault.keyStore.deleteKey(aliasLabel);
         vault.keyStore.deleteKey(aliasUser);
         vault.keyStore.deleteKey(aliasPassword);
         vault.keyStore.deleteKey(aliasNextEntry);
@@ -222,6 +248,7 @@ public class VaultEntry {
             return null;
         VaultEntry entry = new VaultEntry(vault, id);
         try {
+            vault.keyStore.getKey(entry.aliasLabel);
             vault.keyStore.getKey(entry.aliasUser);
             vault.keyStore.getKey(entry.aliasPassword);
             vault.keyStore.getKey(entry.aliasPrevEntry);

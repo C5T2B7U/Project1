@@ -12,6 +12,7 @@
 package passwordvault.security.vault;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.security.UnrecoverableKeyException;
 
@@ -118,8 +119,9 @@ public class Vault {
     
     /**
      * Save the vault to a file.
+     * @throws IOException If failed to save for some reason.
      */
-    public void save() {
+    public void save() throws IOException {
         keyStore.save();
     }
     

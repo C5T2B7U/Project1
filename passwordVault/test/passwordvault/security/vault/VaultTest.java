@@ -6,6 +6,7 @@
 package passwordvault.security.vault;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.UnrecoverableKeyException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -43,7 +44,7 @@ public class VaultTest {
         
         try {
             Vault vault = new Vault(TEST_FILENAME, PASSWORD);
-            VaultEntry firstEntry = new VaultEntry(vault, "user1", "pass1".toCharArray());
+            VaultEntry firstEntry = new VaultEntry(vault, "label1", "user1", "pass1".toCharArray());
             VaultEntry vEntry = vault.getFirstEntry();
             assertTrue("vault's firstEntry set?", vault.getFirstEntry().equals(firstEntry));
             assertTrue("vault's lastEntry set?", vault.getLastEntry().equals(firstEntry));
@@ -55,7 +56,7 @@ public class VaultTest {
             assertTrue("getEntry(first) found?", vault.getEntry(firstId).equals(firstEntry));
             assertTrue("getEntry(second) not set?", vault.getEntry(firstId +1) == null);
             
-            VaultEntry secondEntry = new VaultEntry(vault, "u2", "2".toCharArray());
+            VaultEntry secondEntry = new VaultEntry(vault, "l2", "u2", "2".toCharArray());
             assertTrue("vault's firstEntry kept?", vault.getFirstEntry().equals(firstEntry));
             assertTrue("vault's lastEntry == second?", vault.getLastEntry().equals(secondEntry));
             assertTrue("firstEntry's prev == null?", firstEntry.getPreviousEntry() == null);
@@ -69,7 +70,7 @@ public class VaultTest {
             assertTrue("getEntry(second) found?", vault.getEntry(secondId).equals(secondEntry));
             assertTrue("getEntry(third) not set?", vault.getEntry(secondId +1) == null);
             
-            VaultEntry thirdEntry = new VaultEntry(vault, "the third user", "password 3 SPACE".toCharArray());
+            VaultEntry thirdEntry = new VaultEntry(vault, "the third label", "the third user", "password 3 SPACE".toCharArray());
             assertTrue("vault's firstEntry kept?", vault.getFirstEntry().equals(firstEntry));
             assertTrue("vault's lastEntry == third?", vault.getLastEntry().equals(thirdEntry));
             assertTrue("firstEntry's prev == null?", firstEntry.getPreviousEntry() == null);
@@ -89,14 +90,15 @@ public class VaultTest {
             vault.save();
             assertTrue("vault saved?", TEST_FILE.isFile());
             return vault;
-        } catch (UnrecoverableKeyException ex) {
-            fail("UnrecoverableKeyException: "+ ex.getMessage());
+        } catch (UnrecoverableKeyException | IOException ex) {
+            fail(ex.getClass().getName() +": "+ ex.getMessage());
             return null;
         }
     }
     
     @Test
     public void testDeleteEntries() {
+        System.out.println("test delete entries");
         // Delete first entry
         if (TEST_FILE.isFile()) // Remake the test vault
             TEST_FILE.delete();
@@ -118,6 +120,7 @@ public class VaultTest {
         assertTrue("thirdEntry's prev == null?", thirdEntry.getPreviousEntry() == null);
         assertTrue("thirdEntry's next kept?", thirdEntry.getNextEntry() == null);
         // And delete the third
+        thirdEntry.delete();
         assertTrue("vault's firstEntry == null?", vault.getFirstEntry() == null);
         assertTrue("vault's lastEntry == null?", vault.getLastEntry() == null);
         
@@ -219,8 +222,42 @@ public class VaultTest {
             
             vault.save();
             assertTrue("vault saved?", TEMP_TEST_FILE.isFile());
-        } catch (UnrecoverableKeyException ex) {
-            fail("UnrecoverableKeyException: "+ ex.getMessage());
+        } catch (UnrecoverableKeyException | IOException ex) {
+            fail(ex.getClass().getName() +": "+ ex.getMessage());
         }
     }
+    
+    /*
+    // FAILS BECAUSE KEYSTORE ENTRIES ARE ENCRYPTED WITH OLD PASSWORD ALSO
+    @Test
+    public void testChangePassword() {
+        System.out.println("change vault password");
+        char[] newPass = (PASSWORD +"__NEW").toCharArray();
+        
+        if (TEMP_TEST_FILE.isFile())
+            TEMP_TEST_FILE.delete();
+        
+        try {
+            // Open vault...
+            Vault vault = new Vault(TEMP_TEST_FILENAME, PASSWORD);
+            // And change the password
+            vault.keyStore.setPassword(newPass);
+            vault.save();
+            
+            // Then try to open it
+            try {
+                // First with the old one
+                Vault vault2 = new Vault(TEMP_TEST_FILENAME, PASSWORD);
+                fail("vault password hasn't changed");
+            } catch (UnrecoverableKeyException ex) {
+                // Then with the new one
+                Vault vault2 = new Vault(TEMP_TEST_FILENAME, newPass);
+                assertTrue("vault opened with new password?", true); // If this line was reached, test succeeded
+            }
+            
+        } catch (UnrecoverableKeyException | IOException ex) {
+            fail(ex.getClass().getName() +": "+ ex.getMessage());
+        }
+    }
+*/
 }

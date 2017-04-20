@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import static passwordvault.Debug.debugMsg;
-import static passwordvault.security.Hashing.getStrHash;
+import static passwordvault.security.Hashing.getHash;
 import static passwordvault.security.Hashing.getCharHash;
 import static passwordvault.security.Hashing.getFileHash;
 
@@ -80,7 +80,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jButtonAuthSubmit = new javax.swing.JButton();
         jLabelAuthKeyfilePath = new javax.swing.JLabel();
         jTextFieldAuthKeyfilePath = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBoxAuthUseKeyfile = new javax.swing.JCheckBox();
         panelFail = new javax.swing.JPanel();
         jLabelFailReason = new javax.swing.JLabel();
         jButtonFail = new javax.swing.JButton();
@@ -426,9 +426,8 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
         jLabelAuthKeyfilePath.setText("Keyfile Path:");
 
-        jCheckBox1.setSelected(true);
-        jCheckBox1.setText("Use Keyfile for Two-Factor Authentication");
-        jCheckBox1.setEnabled(false);
+        jCheckBoxAuthUseKeyfile.setSelected(true);
+        jCheckBoxAuthUseKeyfile.setText("Use Keyfile for Two-Factor Authentication");
 
         javax.swing.GroupLayout panelAuthLayout = new javax.swing.GroupLayout(panelAuth);
         panelAuth.setLayout(panelAuthLayout);
@@ -442,7 +441,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                     .addComponent(jTextFieldAuthKeyfilePath)
                     .addGroup(panelAuthLayout.createSequentialGroup()
                         .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
+                            .addComponent(jCheckBoxAuthUseKeyfile)
                             .addComponent(jLabel2)
                             .addComponent(jLabelAuthPW)
                             .addComponent(jLabelAuthKeyfilePath))
@@ -463,7 +462,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldAuthKeyfilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(jCheckBoxAuthUseKeyfile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(jPanelAuthButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -901,30 +900,47 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 //        if (isKeyFileValid) {
 
         try {
-            File file = new File(jTextFieldAuthKeyfilePath.getText());
-            FileInputStream keyFile = new FileInputStream(file);
-            isKeyFileValid = true;
 
-            String tempPW = new String(jPasswordFieldAuthPW.getPassword());
-            String keyFilePath = jTextFieldAuthKeyfilePath.getText();
+            if (jCheckBoxAuthUseKeyfile.isSelected())
+                
+            {
 
-            jLabelDEBUGMSG1.setText("*** PASSWORD INPUT = ***");
-            jLabelDEBUGMSG2.setText(tempPW);
-            jLabelDEBUGMSG3.setText("*** PASSWORD HASH = ***");
-            jLabelDEBUGMSG4.setText(getCharHash(jPasswordFieldAuthPW.getPassword()));
-            jLabelDEBUGMSG5.setText("*** KEYFILE PATH = ***");
-            jLabelDEBUGMSG6.setText(keyFilePath);
-            jLabelDEBUGMSG7.setText("*** KEYFILE HASH = ***");
-            jLabelDEBUGMSG8.setText(getFileHash(keyFilePath));
-            jLabelDEBUGMSG9.setText("*** COMBINED PASSWORD+KEYFILE REHASH = ***");
-            jLabelDEBUGMSG10.setText(getStrHash(getCharHash(jPasswordFieldAuthPW.getPassword()) + getFileHash(keyFilePath)));
+                File file = new File(jTextFieldAuthKeyfilePath.getText());
+                FileInputStream keyFile = new FileInputStream(file);
+                isKeyFileValid = true;
 
-            goBackToCard = "panelAuth";
-            changeCard("panelDEBUGMSG");
-            tempPW = "";
+                String keyFilePath = jTextFieldAuthKeyfilePath.getText();
+//                String tempHashKF = new String(getFileHash(keyFilePath));
 
-            keyFile.close();
-        
+                System.err.println("PASSWORD + KEYFILE HASH = ");
+                System.out.println(getHash(jPasswordFieldAuthPW.getPassword(), keyFilePath));
+                keyFile.close();
+            } else {
+                System.err.println("PASSWORD + PASSWORD HASH = ");
+                System.out.println(getHash(jPasswordFieldAuthPW.getPassword()));
+            }
+                
+//                String tempPW = new String(jPasswordFieldAuthPW.getPassword());
+//                String tempHashPW = new String(getCharHash(jPasswordFieldAuthPW.getPassword()));
+//
+//                jLabelDEBUGMSG1.setText("*** PASSWORD INPUT = ***");
+//                jLabelDEBUGMSG2.setText(tempPW);
+//                jLabelDEBUGMSG3.setText("*** PASSWORD HASH = ***");
+//                jLabelDEBUGMSG4.setText(tempHashPW);
+//                jLabelDEBUGMSG5.setText("*** KEYFILE PATH = ***");
+//                jLabelDEBUGMSG6.setText(keyFilePath);
+//                jLabelDEBUGMSG7.setText("*** KEYFILE HASH = ***");
+//                jLabelDEBUGMSG8.setText(tempHashKF);
+//                jLabelDEBUGMSG9.setText("*** COMBINED PASSWORD+KEYFILE REHASH = ***");
+//    //            jLabelDEBUGMSG10.setText(getStrHash(getCharHash(jPasswordFieldAuthPW.getPassword()) + getFileHash(keyFilePath)));
+//                jLabelDEBUGMSG10.setText(tempHashPW + tempHashKF);
+//                goBackToCard = "panelAuth";
+//                changeCard("panelDEBUGMSG");
+//                tempPW = "";
+
+            
+            
+            
         } catch (IOException ex) {
             showFailure("panelAuth:  KEYFILE ERROR:  \n" + jTextFieldAuthKeyfilePath.getText(), "panelAuth");
             debugMsg("panelAuth:  KEYFILE ERROR:  " + jTextFieldAuthKeyfilePath.getText());
@@ -1059,7 +1075,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonHomeClose;
     private javax.swing.JButton jButtonHomeDelete;
     private javax.swing.JButton jButtonHomeUpdate;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBoxAuthUseKeyfile;
     private javax.swing.JFileChooser jFileChooser;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelAuthKeyfilePath;

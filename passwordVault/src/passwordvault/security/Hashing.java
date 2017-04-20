@@ -44,11 +44,15 @@ public class Hashing {
         //concatenate the 2 hashes and hash it again
         System.arraycopy(hash1, 0, hash3, 0, hash1.length);
         System.arraycopy(hash2, 0, hash3, hash1.length, hash2.length);
+        Arrays.fill(hash1, (byte) 0); // clear sensitive data
+        Arrays.fill(hash2, (byte) 0); // clear sensitive data
         try{
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash4 = digest.digest(hash3);
         //Convert the hash to a char[] and return it. 
         char rtrnHash[] = DatatypeConverter.printHexBinary(hash4).toCharArray();
+        Arrays.fill(hash3, (byte) 0); // clear sensitive data
+        Arrays.fill(hash4, (byte) 0); // clear sensitive data
         System.out.println(rtrnHash);
         return rtrnHash;
         }catch(Exception ex){

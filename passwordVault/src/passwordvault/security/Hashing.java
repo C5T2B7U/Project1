@@ -25,6 +25,7 @@ public class Hashing {
         String file1 = new String();
         file1 = sn.next();
         char[] temp = getHash(password1, file1);
+        System.out.println(temp);
     }
     //----------------------------------------------------------------------------------
     // getHash FUNCTION
@@ -38,7 +39,7 @@ public class Hashing {
         byte[] hash1 = getCharHash(password);
         byte[] hash2 = getFileHash(filename);
         byte[] hash3 = new byte[64];
-        
+        //if filename == null... password concated to itself. 
         //concatenate the 2 hashes and hash it again
         System.arraycopy(hash1, 0, hash3, 0, hash1.length);
         System.arraycopy(hash2, 0, hash3, hash1.length, hash2.length);
@@ -46,13 +47,30 @@ public class Hashing {
         Arrays.fill(hash1, (byte) 0); // clear sensitive data
         Arrays.fill(hash2, (byte) 0); // clear sensitive data
         try{
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] hash4 = digest.digest(hash3);
         //Convert the hash to a char[] and return it. 
-        char rtrnHash[] = DatatypeConverter.printHexBinary(hash4).toCharArray();
+        char rtrnHash[] = DatatypeConverter.printHexBinary(hash3).toCharArray();
+        Arrays.fill(hash3, (byte) 0); // clear sensitive data\
+        return rtrnHash;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return rtrn;
+    }
+        //OVERLOADED getHash
+        public static char[] getHash(char[] password){
+        char[] rtrn = new char[50];
+        byte[] hash1 = getCharHash(password);
+        byte[] hash3 = new byte[64];
+        //if filename == null... password concated to itself. 
+        //concatenate the 2 hashes and hash it again
+        System.arraycopy(hash1, 0, hash3, 0, hash1.length);
+        System.arraycopy(hash1, 0, hash3, hash1.length, hash1.length);
+        Arrays.fill(password, '\u0000'); // clear sensitive data
+        Arrays.fill(hash1, (byte) 0); // clear sensitive data
+        try{
+        //Convert the hash to a char[] and return it. 
+        char rtrnHash[] = DatatypeConverter.printHexBinary(hash3).toCharArray();
         Arrays.fill(hash3, (byte) 0); // clear sensitive data
-        Arrays.fill(hash4, (byte) 0); // clear sensitive data
-        System.out.println(rtrnHash);
         return rtrnHash;
         }catch(Exception ex){
             ex.printStackTrace();

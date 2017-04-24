@@ -63,7 +63,7 @@ public class Vault {
             keyStore.addIdKey(LAST_ENTRY_ALIAS, lastEntryId);
         }
 
-        debugMsg("VAULT CONSTRUCTED SUCCESSFULLY");
+        debugMsg("VAULT CONSTRUCTED AS:  " + filename);
     }
     
     /**

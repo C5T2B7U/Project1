@@ -2,6 +2,9 @@
  * This class' responsibility is to abstract away the indicies/values inside
  * the KeyStore.
  * It's also the interface the end-user employs to modify the Vault.
+ * TODO: Throw errors if vault, label, username, pass == null
+ *      Currently, you can make Entries with null...
+ *      but calling other methods causes a crash.
  *
  * Sites:
  * VaultEntry.reserveFreeId() inspiration

@@ -10,6 +10,7 @@ import java.awt.CardLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.UnrecoverableKeyException;
 import javax.swing.JFileChooser;
 import static passwordvault.Debug.debugMsg;
 import static passwordvault.security.Hashing.getHash;
@@ -943,56 +944,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private void jButtonAuthSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthSubmitActionPerformed
         // TODO add your handling code here:
         
-        
-        // DEBUG
-//        if (isKeyFileValid) {
-
-        try {
-
-            if (jCheckBoxAuthUseKeyfile.isSelected())
-                
-            {
-
-                File file = new File(jTextFieldAuthKeyfilePath.getText());
-                FileInputStream keyFile = new FileInputStream(file);
-                isKeyFileValid = true;
-
-                String keyFilePath = jTextFieldAuthKeyfilePath.getText();
-//                String tempHashKF = new String(getFileHash(keyFilePath));
-
-                System.err.println("PASSWORD + KEYFILE HASH = ");
-                System.out.println(getHash(jPasswordFieldAuthPW.getPassword(), keyFilePath));
-                keyFile.close();
-            } else {
-                System.err.println("PASSWORD + PASSWORD HASH = ");
-                System.out.println(getHash(jPasswordFieldAuthPW.getPassword()));
-            }
-                
-//                String tempPW = new String(jPasswordFieldAuthPW.getPassword());
-//                String tempHashPW = new String(getCharHash(jPasswordFieldAuthPW.getPassword()));
-//
-//                jLabelDEBUGMSG1.setText("*** PASSWORD INPUT = ***");
-//                jLabelDEBUGMSG2.setText(tempPW);
-//                jLabelDEBUGMSG3.setText("*** PASSWORD HASH = ***");
-//                jLabelDEBUGMSG4.setText(tempHashPW);
-//                jLabelDEBUGMSG5.setText("*** KEYFILE PATH = ***");
-//                jLabelDEBUGMSG6.setText(keyFilePath);
-//                jLabelDEBUGMSG7.setText("*** KEYFILE HASH = ***");
-//                jLabelDEBUGMSG8.setText(tempHashKF);
-//                jLabelDEBUGMSG9.setText("*** COMBINED PASSWORD+KEYFILE REHASH = ***");
-//    //            jLabelDEBUGMSG10.setText(getStrHash(getCharHash(jPasswordFieldAuthPW.getPassword()) + getFileHash(keyFilePath)));
-//                jLabelDEBUGMSG10.setText(tempHashPW + tempHashKF);
-//                goBackToCard = "panelAuth";
-//                changeCard("panelDEBUGMSG");
-//                tempPW = "";
-
-            openVault();
-            
-            
-        } catch (IOException ex) {
-            showFailure("panelAuth:  KEYFILE ERROR:  \n" + jTextFieldAuthKeyfilePath.getText(), "panelAuth");
-            debugMsg("panelAuth:  KEYFILE ERROR:  " + jTextFieldAuthKeyfilePath.getText());
-        }
+        tryOpenVault();
 
     }//GEN-LAST:event_jButtonAuthSubmitActionPerformed
 
@@ -1214,12 +1166,59 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     }
 
     
-    private void openVault() {
+    private void tryOpenVault() {
         if (!isVaultOpen) {
             debugMsg("OPENING VAULT");
+
+            String tempVaultFilename = "";
+
+        try {
+
+            if (jCheckBoxAuthUseKeyfile.isSelected())
+                
+            {
+
+                File file = new File(jTextFieldAuthKeyfilePath.getText());
+                FileInputStream keyFile = new FileInputStream(file);
+                isKeyFileValid = true;
+
+                String keyFilePath = jTextFieldAuthKeyfilePath.getText();
+//                String tempHashKF = new String(getFileHash(keyFilePath));
+
+                System.err.println("PASSWORD + KEYFILE HASH = ");
+                System.out.println(getHash(jPasswordFieldAuthPW.getPassword(), keyFilePath));
+                keyFile.close();
+
+                // TRY OPEN VAULT
+                vaultRef = new Vault(tempVaultFilename, getHash(jPasswordFieldAuthPW.getPassword(), keyFilePath));
+
+            } else {
+                System.err.println("PASSWORD + PASSWORD HASH = ");
+                System.out.println(getHash(jPasswordFieldAuthPW.getPassword()));
+
+                // TRY OPEN VAULT
+                vaultRef = new Vault(tempVaultFilename, getHash(jPasswordFieldAuthPW.getPassword()));
+
+            }
+                
+            // RUN IF VAULT OPENED SUCCESSFULLY
             isVaultOpen = true;
             jMenuItemFileLoad.setEnabled(false);
             jMenuItemFileClose.setEnabled(true);
+
+        
+        } catch (UnrecoverableKeyException ex) {
+
+            // EXCEPTION THROWN IF VAULT NOT AUTHENTICATED PROPERLY
+            showFailure("AUTHENTICATION ERROR", "panelAuth");
+            debugMsg("panelAuth:  AUTHENTICATION ERROR");
+        
+        } catch (IOException ex) {
+            showFailure("panelAuth:  KEYFILE ERROR:  \n" + jTextFieldAuthKeyfilePath.getText(), "panelAuth");
+            debugMsg("panelAuth:  KEYFILE ERROR:  " + jTextFieldAuthKeyfilePath.getText());
+        }
+
+
         }
     }
 

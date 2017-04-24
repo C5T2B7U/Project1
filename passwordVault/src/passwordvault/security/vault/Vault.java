@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.security.UnrecoverableKeyException;
+import static passwordvault.Debug.debugMsg;
 
 /**
  * This class opens a KeyStore from a file. Once opened, it lets people view the
@@ -61,6 +62,8 @@ public class Vault {
             lastEntryId = VaultEntry.MISSING_ID;
             keyStore.addIdKey(LAST_ENTRY_ALIAS, lastEntryId);
         }
+
+        debugMsg("VAULT CONSTRUCTED SUCCESSFULLY");
     }
     
     /**

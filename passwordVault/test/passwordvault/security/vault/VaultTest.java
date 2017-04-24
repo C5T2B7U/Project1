@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.security.UnrecoverableKeyException;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import passwordvault.security.Hashing;
 
 /**
  * This class runs various tests on the Vault.
@@ -19,7 +20,7 @@ public class VaultTest {
     public static final String TEST_FILENAME = "build\\VaultTest.st";
     public static final File TEST_FILE = new File(TEST_FILENAME);
     public static final String PASSWORD_STR = "pass";
-    public static final char[] PASSWORD = PASSWORD_STR.toCharArray();
+    public static final char[] PASSWORD = Hashing.getHash(PASSWORD_STR.toCharArray());
     
     public static final String TEMP_TEST_FILENAME = "build\\TempVaultTest.st";
     public static final File TEMP_TEST_FILE = new File(TEMP_TEST_FILENAME);

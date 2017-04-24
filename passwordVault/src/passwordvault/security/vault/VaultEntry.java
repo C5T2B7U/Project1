@@ -160,6 +160,14 @@ public class VaultEntry {
             return "ERROR: MISSING PASSWORD".toCharArray();
         }
     }
+    /**
+     * WARNING: SHOULD NOT CALL THIS METHOD. THIS IS JUST FOR QUICKLY MAKING THE UI.
+     * TODO: Properly get password from the UI
+     * @return Password, as a string
+     */
+    public String getPasswordAsStr() {
+        return new String(getPassword());
+    }
     
     // For now, I'm planning on having VaultEntries be a doubly-linked list.
     public VaultEntry getPreviousEntry() {

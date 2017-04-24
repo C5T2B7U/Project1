@@ -147,6 +147,12 @@ class KeyStoreWrapper implements Closeable {
         addKey(alias, String.valueOf(id).toCharArray());
     }
     
+    /**
+     * Get a key from the KeyStore.
+     * @param alias Alias of the KeyStore
+     * @return The key, if it is found
+     * @throws InstanceNotFoundException When key isn't found
+     */
     public char[] getKey(String alias) throws InstanceNotFoundException {
         try {
             KeyStore.Entry entry = keyStore.getEntry(alias, contentProtection);

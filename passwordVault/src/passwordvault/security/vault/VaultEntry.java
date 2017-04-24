@@ -78,6 +78,19 @@ public class VaultEntry {
         alertChanges = true;
     }
     /**
+     * WARNING: SHOULD NOT CALL THIS METHOD. THIS IS JUST FOR QUICKLY MAKING THE UI.
+     * Makes a new VaultEntry inside the Vault.
+     * TODO: Properly set password from the UI
+     * @param vault
+     * @param label
+     * @param username
+     * @param password 
+     */
+    public VaultEntry(Vault vault, String label, String username, String password) {
+        this(vault, label, username, password.toCharArray());
+    }
+    
+    /**
      * Reserve the next open id for use. The id returned will not be used by
      * other VaultEntries.
      * @return Id that can be used for this VaultEntry

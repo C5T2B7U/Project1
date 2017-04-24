@@ -184,7 +184,8 @@ public class Vault {
          */
         void onEntryChanged(VaultEntry entry);
         /**
-         * This method is called after an entry is removed from the Vault.
+         * This method is called while an entry is being removed from the Vault.
+         * entry.getNextEntry & entry.getPreviousEntry will return null.
          * @param entry Entry that was removed
          */
         void onEntryRemoved(VaultEntry entry);

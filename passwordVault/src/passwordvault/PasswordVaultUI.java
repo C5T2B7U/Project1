@@ -15,6 +15,7 @@ import static passwordvault.Debug.debugMsg;
 import static passwordvault.security.Hashing.getHash;
 import static passwordvault.security.Hashing.getCharHash;
 import static passwordvault.security.Hashing.getFileHash;
+import passwordvault.security.vault.Vault;
 
 
 /**
@@ -32,7 +33,54 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         initComponents();
     }
 
+    
+    // CUSTOM VARS
+    private String goBackToCard = "panelBase";
+//    private String keyFilePath = "";
+    private boolean isVaultOpen = false;
+    private boolean isKeyFileValid = false;
 
+    Vault vaultRef;
+
+
+        /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PasswordVaultUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PasswordVaultUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PasswordVaultUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PasswordVaultUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PasswordVaultUI().setVisible(true);
+//                PasswordVault pwv = new PasswordVault();
+            }
+        });
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -938,7 +986,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 //                changeCard("panelDEBUGMSG");
 //                tempPW = "";
 
-            
+            openVault();
             
             
         } catch (IOException ex) {
@@ -1026,41 +1074,6 @@ public class PasswordVaultUI extends javax.swing.JFrame {
             jMenuItemFileClose.setEnabled(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PasswordVaultUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PasswordVaultUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PasswordVaultUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PasswordVaultUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PasswordVaultUI().setVisible(true);
-//                PasswordVault pwv = new PasswordVault();
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAuthCancel;
@@ -1152,13 +1165,6 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelHome;
     private javax.swing.JPanel panelLoad;
     // End of variables declaration//GEN-END:variables
-
-    // CUSTOM VARS
-    private String goBackToCard = "panelBase";
-//    private String keyFilePath = "";
-    private boolean isVaultOpen = false;
-    private boolean isKeyFileValid = false;
-
     
     // CHANGES CARD IN mainPanel TO cardName   
     private void changeCard(String cardName) {
@@ -1220,8 +1226,9 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private void closeVault() {
         if (isVaultOpen) {
             debugMsg("CLOSING VAULT");
+            vaultRef = null;
             isVaultOpen = false;
-            isKeyFileValid = false;
+//            isKeyFileValid = false;
             jMenuItemFileLoad.setEnabled(true);
             jMenuItemFileClose.setEnabled(false);
             changeCard("panelBase");

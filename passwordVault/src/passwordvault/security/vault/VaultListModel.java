@@ -22,11 +22,14 @@ import passwordvault.security.vault.Vault.VaultListener;
  * This class acts as an interface, so that Swing can access the Vault.
  */
 public class VaultListModel extends AbstractListModel implements VaultListener {
-//    ArrayList<ListDataListener> listeners;
     ArrayList<VaultEntry> entries;
     
+    /**
+     * Make a new VaultListModel. This allows the Swing UI to interface with 
+     * the Vault.
+     * @param vault Vault to wrap with a ListModel
+     */
     public VaultListModel(Vault vault) {
-//        listeners = new ArrayList<>();
         entries = new ArrayList<>();
         
         // Get all entries that are already inside the vault
@@ -44,21 +47,6 @@ public class VaultListModel extends AbstractListModel implements VaultListener {
     public Object getElementAt(int index) {
         return entries.get(index);
     }
-
-    /*
-    @Override
-    public void addListDataListener(ListDataListener l) {
-        super.addListDataListener(l);
-        if (!listeners.contains(l))
-            listeners.add(l);
-    }
-
-    @Override
-    public void removeListDataListener(ListDataListener l) {
-        super.removeListDataListener(l);
-        listeners.remove(l);
-    }
-    */
 
     //*********************/
     

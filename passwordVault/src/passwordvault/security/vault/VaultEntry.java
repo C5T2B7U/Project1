@@ -170,10 +170,20 @@ public class VaultEntry {
     }
     
     // For now, I'm planning on having VaultEntries be a doubly-linked list.
+    /**
+     * Returns the previous entry. If it doesn't exist, returns null.
+     * Notice: The Vault is arranged as a doubly-linked list.
+     * @return Previous entry
+     */
     public VaultEntry getPreviousEntry() {
         int prevId = getPreviousEntryId();
         return vault.getEntry(prevId);
     }
+    /**
+     * Returns the next entry. If it doesn't exist, returns null.
+     * Notice: The Vault is arranged as a doubly-linked list.
+     * @return Next entry
+     */
     public VaultEntry getNextEntry() {
         int nextId = getNextEntryId();
         return vault.getEntry(nextId);
@@ -202,6 +212,14 @@ public class VaultEntry {
     public void setPassword(char password[]) {
         vault.keyStore.addKey(aliasPassword, password);
         alertListenerOnChange();
+    }
+    /**
+     * WARNING: SHOULD NOT CALL THIS METHOD. THIS IS JUST FOR QUICKLY MAKING THE UI.
+     * TODO: Properly set password from the UI
+     * @param password 
+     */
+    public void setPasswordAsStr(String password) {
+        setPassword(password.toCharArray());
     }
     
     /**

@@ -173,8 +173,20 @@ public class Vault {
     }
     
     interface VaultListener {
+        /**
+         * This method is called after an entry is added to the Vault.
+         * @param entry Entry that was added
+         */
         void onEntryAdded(VaultEntry entry);
+        /**
+         * This method is called after an entry in the Vault is changed.
+         * @param entry Entry that was changed
+         */
         void onEntryChanged(VaultEntry entry);
+        /**
+         * This method is called after an entry is removed from the Vault.
+         * @param entry Entry that was removed
+         */
         void onEntryRemoved(VaultEntry entry);
     }
 }

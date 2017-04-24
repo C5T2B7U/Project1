@@ -17,6 +17,7 @@ import static passwordvault.security.Hashing.getHash;
 import static passwordvault.security.Hashing.getCharHash;
 import static passwordvault.security.Hashing.getFileHash;
 import passwordvault.security.vault.Vault;
+import passwordvault.security.vault.VaultEntry;
 import passwordvault.security.vault.VaultListModel;
 
 
@@ -146,6 +147,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jButtonHomeAdd = new javax.swing.JButton();
         jButtonHomeUpdate = new javax.swing.JButton();
         jButtonHomeDelete = new javax.swing.JButton();
+        jButtonHomeSave = new javax.swing.JButton();
         jButtonHomeClose = new javax.swing.JButton();
         jPanelHomeTextFields = new javax.swing.JPanel();
         jLabelHomeEntryLabel = new javax.swing.JLabel();
@@ -162,7 +164,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jMenuItemFileLoad = new javax.swing.JMenuItem();
         jMenuItemFileClose = new javax.swing.JMenuItem();
         jSeparatorMenuFile1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItemFileSettings = new javax.swing.JMenuItem();
+        jMenuItemFileChPw = new javax.swing.JMenuItem();
         jSeparatorMenuFile2 = new javax.swing.JPopupMenu.Separator();
         jMenuItemFileExit = new javax.swing.JMenuItem();
         jMenuHelp = new javax.swing.JMenu();
@@ -625,10 +627,27 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         });
 
         jButtonHomeUpdate.setText("Update Entry");
+        jButtonHomeUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHomeUpdateActionPerformed(evt);
+            }
+        });
 
-        jButtonHomeDelete.setText("Delete Entry");
+        jButtonHomeDelete.setText("Confirm Delete");
+        jButtonHomeDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHomeDeleteActionPerformed(evt);
+            }
+        });
 
-        jButtonHomeClose.setText("Close Vault");
+        jButtonHomeSave.setText("Confirm Save");
+        jButtonHomeSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHomeSaveActionPerformed(evt);
+            }
+        });
+
+        jButtonHomeClose.setText("Confirm Close");
         jButtonHomeClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonHomeCloseActionPerformed(evt);
@@ -643,9 +662,10 @@ public class PasswordVaultUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelHomeButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonHomeClose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonHomeDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonHomeUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonHomeAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonHomeAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonHomeSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonHomeDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelHomeButtonsLayout.setVerticalGroup(
@@ -653,11 +673,13 @@ public class PasswordVaultUI extends javax.swing.JFrame {
             .addGroup(jPanelHomeButtonsLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jButtonHomeAdd)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jButtonHomeUpdate)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonHomeDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonHomeSave)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonHomeClose)
                 .addContainerGap())
         );
@@ -715,16 +737,17 @@ public class PasswordVaultUI extends javax.swing.JFrame {
             .addGroup(panelHomeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelHomeTextFields, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelHomeLayout.createSequentialGroup()
+                        .addComponent(jPanelHomeTextFields, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(panelHomeLayout.createSequentialGroup()
                         .addGroup(panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPaneHomeEntryList, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                            .addComponent(jScrollPaneHomeEntryList, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                             .addGroup(panelHomeLayout.createSequentialGroup()
                                 .addComponent(jLabelHomeEntryList)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelHomeButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jPanelHomeButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         panelHomeLayout.setVerticalGroup(
             panelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -763,14 +786,14 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jMenuFile.add(jMenuItemFileClose);
         jMenuFile.add(jSeparatorMenuFile1);
 
-        jMenuItemFileSettings.setText("Change Vault Password");
-        jMenuItemFileSettings.setEnabled(false);
-        jMenuItemFileSettings.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemFileChPw.setText("Change Password");
+        jMenuItemFileChPw.setEnabled(false);
+        jMenuItemFileChPw.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemFileSettingsActionPerformed(evt);
+                jMenuItemFileChPwActionPerformed(evt);
             }
         });
-        jMenuFile.add(jMenuItemFileSettings);
+        jMenuFile.add(jMenuItemFileChPw);
         jMenuFile.add(jSeparatorMenuFile2);
 
         jMenuItemFileExit.setText("Exit");
@@ -1020,7 +1043,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         // RESET INPUTS
         jPasswordFieldAuthPW.setText("");
         // GO BACK TO BASE
-        changeCard("panelBase");
+        changeCard("panelLoad");
     }//GEN-LAST:event_jButtonAuthCancelActionPerformed
 
     private void jMenuItemFileLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileLoadActionPerformed
@@ -1040,6 +1063,19 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
     private void jButtonHomeAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeAddActionPerformed
         // TODO add your handling code here:
+//        try {
+            debugMsg("ADDING NEW ITEM");
+            VaultEntry entry = new VaultEntry(
+                    vaultRef, 
+                    jTextFieldHomeEntryLabel.getText(),
+                    jTextFieldHomeEntryUsername.getText(),
+                    jTextFieldHomeEntryPW.getText()
+            );        
+           
+//        } catch (ArrayIndexOutOfBoundsException ex) {
+//            debugMsg("INDEX ERROR:  " + jListHomeEntryList.getSelectedIndex());
+//        }
+        
     }//GEN-LAST:event_jButtonHomeAddActionPerformed
 
     private void jButtonHomeCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeCloseActionPerformed
@@ -1079,12 +1115,23 @@ public class PasswordVaultUI extends javax.swing.JFrame {
 
     private void jListHomeEntryListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListHomeEntryListValueChanged
         // TODO add your handling code here:
+        try {
+            debugMsg("SELECTED ITEM:  " + jListHomeEntryList.getSelectedIndex());
+            VaultEntry entry = (VaultEntry) vaultListModelRef.getElementAt(jListHomeEntryList.getSelectedIndex());        
+            
+            jTextFieldHomeEntryLabel.setText(entry.getLabel());
+            jTextFieldHomeEntryUsername.setText(entry.getUsername());
+            jTextFieldHomeEntryPW.setText(entry.getPasswordAsStr());
+            
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            debugMsg("INDEX ERROR:  " + jListHomeEntryList.getSelectedIndex());
+        }
         
     }//GEN-LAST:event_jListHomeEntryListValueChanged
 
-    private void jMenuItemFileSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileSettingsActionPerformed
+    private void jMenuItemFileChPwActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileChPwActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemFileSettingsActionPerformed
+    }//GEN-LAST:event_jMenuItemFileChPwActionPerformed
 
     private void jButtonLoadCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadCancelActionPerformed
         // TODO add your handling code here:
@@ -1113,6 +1160,41 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonLoadNameActionPerformed
 
+    private void jButtonHomeUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeUpdateActionPerformed
+        // TODO add your handling code here:
+        try {
+            debugMsg("UPDATING SELECTED ITEM:  " + jListHomeEntryList.getSelectedIndex());
+            VaultEntry entry = (VaultEntry) vaultListModelRef.getElementAt(jListHomeEntryList.getSelectedIndex());        
+            
+            entry.setLabel(jTextFieldHomeEntryLabel.getText());
+            entry.setUsername(jTextFieldHomeEntryUsername.getText());
+            entry.setPasswordAsStr(jTextFieldHomeEntryPW.getText());
+            
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            debugMsg("INDEX ERROR:  " + jListHomeEntryList.getSelectedIndex());
+        }
+        
+    }//GEN-LAST:event_jButtonHomeUpdateActionPerformed
+
+    private void jButtonHomeSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeSaveActionPerformed
+        // TODO add your handling code here:
+        saveVault();
+    }//GEN-LAST:event_jButtonHomeSaveActionPerformed
+
+    private void jButtonHomeDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeDeleteActionPerformed
+        // TODO add your handling code here:
+        try {
+            debugMsg("DELETING SELECTED ITEM:  " + jListHomeEntryList.getSelectedIndex());
+            VaultEntry entry = (VaultEntry) vaultListModelRef.getElementAt(jListHomeEntryList.getSelectedIndex());        
+            
+            entry.delete();
+            
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            debugMsg("INDEX ERROR:  " + jListHomeEntryList.getSelectedIndex());
+        }
+        
+    }//GEN-LAST:event_jButtonHomeDeleteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAuthCancel;
@@ -1126,6 +1208,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonHomeAdd;
     private javax.swing.JButton jButtonHomeClose;
     private javax.swing.JButton jButtonHomeDelete;
+    private javax.swing.JButton jButtonHomeSave;
     private javax.swing.JButton jButtonHomeUpdate;
     private javax.swing.JButton jButtonLoadCancel;
     private javax.swing.JButton jButtonLoadDir;
@@ -1175,10 +1258,10 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemDebugSelPanelStore;
     private javax.swing.JMenuItem jMenuItemDebugSetVarOpenFalse;
     private javax.swing.JMenuItem jMenuItemDebugSetVarOpenTrue;
+    private javax.swing.JMenuItem jMenuItemFileChPw;
     private javax.swing.JMenuItem jMenuItemFileClose;
     private javax.swing.JMenuItem jMenuItemFileExit;
     private javax.swing.JMenuItem jMenuItemFileLoad;
-    private javax.swing.JMenuItem jMenuItemFileSettings;
     private javax.swing.JMenuItem jMenuItemHelpAbout;
     private javax.swing.JMenuItem jMenuItemHelpHelp;
     private javax.swing.JPanel jPanel2;
@@ -1328,6 +1411,7 @@ public class PasswordVaultUI extends javax.swing.JFrame {
     {
         jTextFieldAuthKeyfilePath.setText(null);
         jPasswordFieldAuthPW.setText(null);
+        jCheckBoxAuthUseKeyfile.setSelected(true);
     }
 
     private void resetLoadCard()
@@ -1336,11 +1420,26 @@ public class PasswordVaultUI extends javax.swing.JFrame {
         jTextFieldLoadTextPath.setText(null);
     }
     
+    private void saveVault() {
+        if (isVaultOpen) {
+            debugMsg("SAVING VAULT");
+            try {
+                vaultRef.save();
+            } catch (IOException ex) {
+                showFailure("ERROR:  CANNOT SAVE VAULT", "panelHome");
+            }
+        }
+    }
+    
     private void closeVault() {
         if (isVaultOpen) {
             debugMsg("CLOSING VAULT");
+                        
             vaultRef = null;
             vaultListModelRef = null;
+            
+            resetLoadCard();
+            
             isVaultOpen = false;
             jMenuItemFileLoad.setEnabled(true);
             jMenuItemFileClose.setEnabled(false);

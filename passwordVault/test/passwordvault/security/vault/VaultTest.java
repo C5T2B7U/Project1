@@ -22,6 +22,10 @@ public class VaultTest {
     public static final String PASSWORD_STR = "pass";
     public static final char[] PASSWORD = Hashing.getHash(PASSWORD_STR.toCharArray());
     
+    static {
+        System.out.println(PASSWORD);
+    }
+    
     public static final String TEMP_TEST_FILENAME = "build\\TempVaultTest.st";
     public static final File TEMP_TEST_FILE = new File(TEMP_TEST_FILENAME);
     

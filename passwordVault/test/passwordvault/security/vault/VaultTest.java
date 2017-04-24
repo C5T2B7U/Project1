@@ -240,7 +240,7 @@ public class VaultTest {
     @Test
     public void testChangePassword() {
         System.out.println("change vault password");
-        char[] newPass = (PASSWORD_STR +"__NEW").toCharArray();
+        char[] newPass = Hashing.getHash((PASSWORD_STR +"__NEW").toCharArray());
         
         if (TEMP_TEST_FILE.isFile())
             TEMP_TEST_FILE.delete();

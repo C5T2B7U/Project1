@@ -1,13 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class' responsibility is to denote when an Entry couldn't be found.
+ * It's thrown by KeyStoreWrapper.
  */
 package passwordvault.security.vault;
 
 /**
- *
- * @author oKevi
+ * This class is thrown when an entry wasn't found in the KeyStore.
  */
 public class InstanceNotFoundException extends Exception {
     

@@ -9,8 +9,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author oKevi
+ * This class runs various tests on VaultEntry.
+ * These tests only impact one VaultEntry.
  */
 public class VaultEntryTest {
     

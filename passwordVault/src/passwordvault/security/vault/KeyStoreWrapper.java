@@ -30,6 +30,7 @@ import java.security.UnrecoverableEntryException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.SecretKey;
@@ -78,7 +79,6 @@ class KeyStoreWrapper implements Closeable {
         // Initialize the keyStore
         try {
             try (InputStream istream = new FileInputStream(file)) { // File exists
-                // TODO: Figure out when password is invalid & throw error
                 try {
                     keyStore.load(istream, password);
                 } catch(IOException ioex) {
@@ -207,11 +207,32 @@ class KeyStoreWrapper implements Closeable {
     
     /**
      * Change the KeyStore's password
-     * @param password New password
+     * @param newPassword New password
      */
-    public void setPassword(char[] password) {
-        this.password = password;
-        // TODO: Also re-encrypt all entries with this password
+    public void setPassword(char[] newPassword) {
+        try {
+            if (keyStore != null) { // Only change entries if keyStore already initialized
+                KeyStore.ProtectionParameter newContentProtection = new KeyStore.PasswordProtection(newPassword);
+                for (Enumeration<String> iter =keyStore.aliases(); iter.hasMoreElements();) {
+                    String alias = iter.nextElement();
+                    // Overwrite old key's protection
+                    try {
+                        KeyStore.Entry entry = keyStore.getEntry(alias, contentProtection);
+                        keyStore.setEntry(alias, entry, newContentProtection);
+
+                    } catch (NoSuchAlgorithmException ex) {
+                        Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (UnrecoverableEntryException ex) {
+                        Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                contentProtection = newContentProtection;
+            }
+            
+            password = newPassword;
+        } catch (KeyStoreException ex) { // Shouldn't happen...
+            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**

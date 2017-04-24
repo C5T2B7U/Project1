@@ -162,7 +162,6 @@ public class VaultEntry {
     }
     
     // For now, I'm planning on having VaultEntries be a doubly-linked list.
-    // TODO: Test
     public VaultEntry getPreviousEntry() {
         int prevId = getPreviousEntryId();
         return vault.getEntry(prevId);
@@ -200,7 +199,6 @@ public class VaultEntry {
     /**
      * Delete this entry from the Vault.
      * After this has been called, the VaultEntry can no longer be changed.
-     *     TODO: remove ability to change VaultEntry after deleted
      */
     public void delete() {
         // Fix vault pointers
@@ -231,7 +229,7 @@ public class VaultEntry {
         vault.keyStore.deleteKey(aliasPassword);
         vault.keyStore.deleteKey(aliasNextEntry);
         vault.keyStore.deleteKey(aliasPrevEntry);
-        vault = null;
+        vault = null; // TODO: test change entry after deleted
     }
     
     //**************************/
@@ -297,6 +295,12 @@ public class VaultEntry {
         return id;
     }
     
+    // Used to display the entry in a JList.
+    @Override
+    public String toString() {
+        return getLabel();
+    }
+    
     //**************************/
     
     /**
@@ -304,20 +308,20 @@ public class VaultEntry {
      */
     void alertListenerOnAdd() {
         if (vault.listener != null && vault.listener.get() != null)
-            vault.listener.get().onKeyAdded(this);
+            vault.listener.get().onEntryAdded(this);
     }
     /**
      * Tell the listener that a VaultEntry has been changed.
      */
     void alertListenerOnChange() {
         if (alertChanges && vault.listener != null && vault.listener.get() != null)
-            vault.listener.get().onKeyChanged(this);
+            vault.listener.get().onEntryChanged(this);
     }
     /**
      * Tell the listener that a VaultEntry has been removed from the list.
      */
     void alertListenerOnRemove() {
         if (vault.listener != null && vault.listener.get() != null)
-            vault.listener.get().onKeyRemoved(this);
+            vault.listener.get().onEntryRemoved(this);
     }
 }

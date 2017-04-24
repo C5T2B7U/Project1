@@ -19,15 +19,14 @@ import javax.swing.event.ListDataListener;
 import passwordvault.security.vault.Vault.VaultListener;
 
 /**
- *
- * @author oKevi
+ * This class acts as an interface, so that Swing can access the Vault.
  */
 public class VaultListModel extends AbstractListModel implements VaultListener {
-    ArrayList<ListDataListener> listeners;
+//    ArrayList<ListDataListener> listeners;
     ArrayList<VaultEntry> entries;
     
     public VaultListModel(Vault vault) {
-        listeners = new ArrayList<>();
+//        listeners = new ArrayList<>();
         entries = new ArrayList<>();
         
         // Get all entries that are already inside the vault
@@ -46,39 +45,47 @@ public class VaultListModel extends AbstractListModel implements VaultListener {
         return entries.get(index);
     }
 
+    /*
     @Override
     public void addListDataListener(ListDataListener l) {
+        super.addListDataListener(l);
         if (!listeners.contains(l))
             listeners.add(l);
     }
 
     @Override
     public void removeListDataListener(ListDataListener l) {
+        super.removeListDataListener(l);
         listeners.remove(l);
     }
+    */
 
     //*********************/
     
     @Override
-    public void onKeyAdded(VaultEntry entry) {
+    public void onEntryAdded(VaultEntry entry) {
         entries.add(entry);
         this.fireIntervalAdded(this, entries.size() -1, entries.size() -1);
     }
 
     @Override
-    public void onKeyChanged(VaultEntry entry) {
+    public void onEntryChanged(VaultEntry entry) {
         for (int index = 0; index < entries.size(); ++index) {
-            if (entries.get(index).equals(entry))
+            if (entries.get(index).equals(entry)) {
                 this.fireContentsChanged(this, index, index);
+//                System.out.println("detected change in index "+ index +", aka Entry: "+ e);
+                break;
+            }
         }
     }
 
     @Override
-    public void onKeyRemoved(VaultEntry entry) {
+    public void onEntryRemoved(VaultEntry entry) {
         for (int index = 0; index < entries.size(); ++index) {
             if (entries.get(index).equals(entry)) {
-                this.fireIntervalRemoved(this, index, index);
                 entries.remove(index);
+                this.fireIntervalRemoved(this, index, index);
+                break;
             }
         }
     }

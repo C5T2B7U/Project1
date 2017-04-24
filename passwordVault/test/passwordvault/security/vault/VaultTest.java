@@ -12,12 +12,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * This class runs various tests on the Vault.
+ * The methods tested impact more than one VaultEntry.
  */
 public class VaultTest {
     public static final String TEST_FILENAME = "build\\VaultTest.st";
     public static final File TEST_FILE = new File(TEST_FILENAME);
-    public static final char[] PASSWORD = "pass".toCharArray();
+    public static final String PASSWORD_STR = "pass";
+    public static final char[] PASSWORD = PASSWORD_STR.toCharArray();
     
     public static final String TEMP_TEST_FILENAME = "build\\TempVaultTest.st";
     public static final File TEMP_TEST_FILE = new File(TEMP_TEST_FILENAME);
@@ -35,9 +37,9 @@ public class VaultTest {
     @Test
     public void testSaveVault() {
         System.out.println("save filled vault");
-        makeVault();
+        remakeVault();
     }
-    public static Vault makeVault() {
+    public static Vault remakeVault() {
         System.out.println("\tmaking vault");
         if (TEST_FILE.isFile()) // Remake the test vault
             TEST_FILE.delete();
@@ -45,7 +47,6 @@ public class VaultTest {
         try {
             Vault vault = new Vault(TEST_FILENAME, PASSWORD);
             VaultEntry firstEntry = new VaultEntry(vault, "label1", "user1", "pass1".toCharArray());
-            VaultEntry vEntry = vault.getFirstEntry();
             assertTrue("vault's firstEntry set?", vault.getFirstEntry().equals(firstEntry));
             assertTrue("vault's lastEntry set?", vault.getLastEntry().equals(firstEntry));
             assertTrue("firstEntry's prev == null?", firstEntry.getPreviousEntry() == null);
@@ -87,6 +88,10 @@ public class VaultTest {
             assertTrue("getEntry(third) found?", vault.getEntry(thirdId).equals(thirdEntry));
             assertTrue("getEntry(fourth) not set?", vault.getEntry(thirdId +1) == null);
             
+            assertTrue("firstEntry != second?", !firstEntry.equals(secondEntry));
+            assertTrue("firstEntry != third?", !firstEntry.equals(thirdEntry));
+            assertTrue("secondEntry != third?", !secondEntry.equals(thirdEntry));
+            
             vault.save();
             assertTrue("vault saved?", TEST_FILE.isFile());
             return vault;
@@ -102,7 +107,7 @@ public class VaultTest {
         // Delete first entry
         if (TEST_FILE.isFile()) // Remake the test vault
             TEST_FILE.delete();
-        Vault vault = makeVault();
+        Vault vault = remakeVault();
         VaultEntry firstEntry = vault.getFirstEntry();
         VaultEntry secondEntry = firstEntry.getNextEntry();
         VaultEntry thirdEntry = secondEntry.getNextEntry();
@@ -126,7 +131,7 @@ public class VaultTest {
         
         // Delete second entry
         TEST_FILE.delete(); // Remake the test vault
-        vault = makeVault();
+        vault = remakeVault();
         firstEntry = vault.getFirstEntry();
         secondEntry = firstEntry.getNextEntry();
         thirdEntry = secondEntry.getNextEntry();
@@ -146,7 +151,7 @@ public class VaultTest {
         
         // Delete third entry
         TEST_FILE.delete(); // Remake the test vault
-        vault = makeVault();
+        vault = remakeVault();
         firstEntry = vault.getFirstEntry();
         secondEntry = firstEntry.getNextEntry();
         thirdEntry = secondEntry.getNextEntry();
@@ -160,7 +165,7 @@ public class VaultTest {
         
         // ... and keep a clean copy of test vault
         TEST_FILE.delete(); // Remake the test vault
-        makeVault();
+        remakeVault();
     }
 
     /*
@@ -227,12 +232,14 @@ public class VaultTest {
         }
     }
     
-    /*
-    // FAILS BECAUSE KEYSTORE ENTRIES ARE ENCRYPTED WITH OLD PASSWORD ALSO
+    /**
+     * Tests changing the password.
+     * Also tests to see if exception is thrown when Vault is opened.
+     */
     @Test
     public void testChangePassword() {
         System.out.println("change vault password");
-        char[] newPass = (PASSWORD +"__NEW").toCharArray();
+        char[] newPass = (PASSWORD_STR +"__NEW").toCharArray();
         
         if (TEMP_TEST_FILE.isFile())
             TEMP_TEST_FILE.delete();
@@ -240,8 +247,13 @@ public class VaultTest {
         try {
             // Open vault...
             Vault vault = new Vault(TEMP_TEST_FILENAME, PASSWORD);
+            VaultEntry entry = new VaultEntry(vault, "lab", "usr", "123pass".toCharArray());
             // And change the password
-            vault.keyStore.setPassword(newPass);
+            vault.setPassword(newPass);
+            assertTrue("pass changed, can still get entry?", vault.getFirstEntry().equals(entry));
+            String newUser = "user";
+            entry.setUsername(newUser);
+            assertTrue("pass changed, can still change entry?", entry.getUsername().equals(newUser));
             vault.save();
             
             // Then try to open it
@@ -253,11 +265,13 @@ public class VaultTest {
                 // Then with the new one
                 Vault vault2 = new Vault(TEMP_TEST_FILENAME, newPass);
                 assertTrue("vault opened with new password?", true); // If this line was reached, test succeeded
+                VaultEntry entry2 = vault.getFirstEntry();
+                assertTrue("vault re-opened, can still get entry?", entry.equals(entry2));
+                assertTrue("pass changed, can still get values?", entry2.getUsername().equals(newUser));
             }
             
         } catch (UnrecoverableKeyException | IOException ex) {
             fail(ex.getClass().getName() +": "+ ex.getMessage());
         }
     }
-*/
 }

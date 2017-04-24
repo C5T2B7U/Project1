@@ -94,31 +94,44 @@ public class Vault {
         return VaultEntry.getEntry(this, id);
     }
     
-    // Might be useful for prompting to change keyFiles.
     /**
-     * Get the keyFile associated with this vault.
-     * If vault doesn't use a keyFile, returns null.
-     * @return Key file used for the password to lock/unlock this vault
+     * Change the password that this vault uses.
+     * @param newPassword 
      */
-    public String getKeyFile() {
-        try {
-            return new String(keyStore.getKey(KEYFILE_ALIAS));
-        } catch (InstanceNotFoundException ex) { // If keyfile not found, it doesn't exist
-            return null;
-        }
+    public void setPassword(char[] newPassword) {
+        keyStore.setPassword(newPassword);
     }
     
+    // Might be useful for prompting to change keyFiles.
+//    /**
+//     * Get the keyFile associated with this vault.
+//     * If vault doesn't use a keyFile, returns null.
+//     * @return Key file used for the password to lock/unlock this vault
+//     */
+//    public String getKeyFile() {
+//        try {
+//            return new String(keyStore.getKey(KEYFILE_ALIAS));
+//        } catch (InstanceNotFoundException ex) { // If keyfile not found, it doesn't exist
+//            return null;
+//        }
+//    }
+    
     // For use with getKeyFile. Might just be a path to the keyFile.
-    /**
-     * Change the vault's password to use this keyFile.
-     * If keyFile is null, the keyFile will be removed.
-     * @param keyFile 
-     */
-    public void setKeyFile(String keyFile) {
-        if (keyFile != null)
-            keyStore.addKey(KEYFILE_ALIAS, keyFile.toCharArray());
-        // TODO: delete keyfile
-    }
+//    /**
+//     * Change the vault's password to use this keyFile.
+//     * If keyFile is null, the keyFile will be removed.
+//     * @param keyFile 
+//     */
+//    public void setKeyFile(String keyFile) {
+//        if (keyFile != null) { // Set keyfile
+//            keyStore.addKey(KEYFILE_ALIAS, keyFile.toCharArray());
+//            setPassword(...? Dont have starting password);
+//            
+//        } else { // Delete keyfile
+//            keyStore.deleteKey(KEYFILE_ALIAS);
+//            setPassword(..? Dont have starting password);
+//        }
+//    }
     
     /**
      * Save the vault to a file.
@@ -160,8 +173,8 @@ public class Vault {
     }
     
     interface VaultListener {
-        void onKeyAdded(VaultEntry entry);
-        void onKeyChanged(VaultEntry entry);
-        void onKeyRemoved(VaultEntry entry);
+        void onEntryAdded(VaultEntry entry);
+        void onEntryChanged(VaultEntry entry);
+        void onEntryRemoved(VaultEntry entry);
     }
 }

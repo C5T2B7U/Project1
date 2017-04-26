@@ -13,8 +13,8 @@ import java.security.UnrecoverableKeyException;
 import javax.swing.JFileChooser;
 import static passwordvault.Debug.debugMsg;
 import static passwordvault.security.Hashing.getHash;
-import static passwordvault.security.Hashing.getCharHash;
-import static passwordvault.security.Hashing.getFileHash;
+//import static passwordvault.security.Hashing.getCharHash;
+//import static passwordvault.security.Hashing.getFileHash;
 import passwordvault.security.vault.Vault;
 import passwordvault.security.vault.VaultEntry;
 import passwordvault.security.vault.VaultListModel;
@@ -39,6 +39,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private String goBackToCard = "panelBase";
     private String vaultFilename = "";
     private boolean isVaultOpen = false;
+    private boolean doCreateNewVault = false;
 //    private boolean isKeyFileValid = false;
 
     // USED FOR panelHome BUTTON CONFIRMATION STATES
@@ -122,7 +123,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jFileChooser = new javax.swing.JFileChooser();
+        jFileChooserLoad = new javax.swing.JFileChooser();
         mainPanel = new javax.swing.JPanel();
         jPanelBase = new javax.swing.JPanel();
         jLabelBase = new javax.swing.JLabel();
@@ -344,6 +345,13 @@ public class PasswordVaultUI extends javax.swing.JFrame
         });
 
         jButtonLoadDir.setText("Choose Directory");
+        jButtonLoadDir.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButtonLoadDirActionPerformed(evt);
+            }
+        });
 
         jButtonLoadName.setText("Choose Filename");
         jButtonLoadName.addActionListener(new java.awt.event.ActionListener()
@@ -949,11 +957,13 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void jButtonBaseNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBaseNewActionPerformed
         // TODO add your handling code here:
         debugMsg("panelBase:  CREATE NEW VAULT BUTTON PRESSED");
+        doCreateNewVault = true;
     }//GEN-LAST:event_jButtonBaseNewActionPerformed
 
     private void jButtonBaseOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBaseOpenActionPerformed
         // TODO add your handling code here:
         debugMsg("panelBase:  OPEN EXISTING VAULT BUTTON PRESSED");
+        doCreateNewVault = false;
         changeCard("panelLoad");
     }//GEN-LAST:event_jButtonBaseOpenActionPerformed
 
@@ -1009,10 +1019,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
     }//GEN-LAST:event_jMenuItemFileLoadActionPerformed
 
     private void jButtonAuthChooseKeyfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthChooseKeyfileActionPerformed
-        int returnVal = jFileChooser.showOpenDialog(this);
+        int returnVal = jFileChooserLoad.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
-            File file = jFileChooser.getSelectedFile();
+            File file = jFileChooserLoad.getSelectedFile();
             String keyFilePath = file.getAbsolutePath();
             jTextFieldAuthKeyfilePath.setText(keyFilePath);
         }
@@ -1054,12 +1064,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 newLabel,
                 newUsername,
                 newPW
-//                jTextFieldHomeEntryLabel.getText(),
-//                jTextFieldHomeEntryUsername.getText(),
-//                jTextFieldHomeEntryPW.getText()
         );
 
-//        System.out.println(vaultListModelRef.getSize());
         jListHomeEntryList.setSelectedIndex(vaultListModelRef.getSize() - 1);
         
         resetPanelHomeButtons();
@@ -1153,16 +1159,26 @@ public class PasswordVaultUI extends javax.swing.JFrame
     }//GEN-LAST:event_jButtonLoadCancelActionPerformed
 
     private void jButtonLoadSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadSubmitActionPerformed
-        // TODO add your handling code here:
+        
+        // IF doCreateNewVault THEN VERIFY:
+            // DIRECTORY EXISTS AND FILENAME NOT NULL
+        // IF NOT doCreateNewVault THEN VERIFY:
+            // PREEXISTING VAULT FILE CAN BE OPENED
+        // IF VERIFICATION SUCCESSFUL, CHANGE TO AUTH CARD
+        
         changeCard("panelAuth", "panelLoad");
     }//GEN-LAST:event_jButtonLoadSubmitActionPerformed
 
     private void jButtonLoadNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadNameActionPerformed
         // TODO add your handling code here:
-        int returnVal = jFileChooser.showOpenDialog(this);
+
+        jFileChooserLoad.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        jFileChooserLoad.setAcceptAllFileFilterUsed(true);        
+        
+        int returnVal = jFileChooserLoad.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
-            File file = jFileChooser.getSelectedFile();
+            File file = jFileChooserLoad.getSelectedFile();
             String fileName = file.getName();
             String fileDir = file.getParent();
             jTextFieldLoadTextName.setText(fileName);
@@ -1221,7 +1237,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 {
                     entry.setPasswordAsStr("[NO PASSWORD ENTERED]");
                     jTextFieldHomeEntryPW.setText(entry.getPasswordAsStr());
-        
                 }
                 else
                 {
@@ -1300,6 +1315,25 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
     }//GEN-LAST:event_jButtonHomeDeleteActionPerformed
 
+    private void jButtonLoadDirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonLoadDirActionPerformed
+    {//GEN-HEADEREND:event_jButtonLoadDirActionPerformed
+        // TODO add your handling code here:
+        jFileChooserLoad.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        jFileChooserLoad.setAcceptAllFileFilterUsed(false);
+
+        int returnVal = jFileChooserLoad.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            File file = jFileChooserLoad.getSelectedFile();
+            jTextFieldLoadTextPath.setText(file.getAbsolutePath());
+        }
+        else
+        {
+            debugMsg("panelAuth:  VAULT FILE SELECTION CANCELLED");
+        }
+
+    }//GEN-LAST:event_jButtonLoadDirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAuthCancel;
@@ -1319,7 +1353,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JButton jButtonLoadName;
     private javax.swing.JButton jButtonLoadSubmit;
     private javax.swing.JCheckBox jCheckBoxAuthUseKeyfile;
-    private javax.swing.JFileChooser jFileChooser;
+    private javax.swing.JFileChooser jFileChooserLoad;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelAuthKeyfilePath;
     private javax.swing.JLabel jLabelAuthPW;
@@ -1411,56 +1445,24 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
     }
 
-//    // 
-//    private boolean isSuccessful(String caller, String args)
-//    {
-//
-//        debugMsg("RAN SOF FROM:  " + caller);
-//
-//
-//        // INIT RESULT
-//        boolean result = false;
-//        String reason = "ERROR...";
-//
-//        // NOTE: SWITCH OVER STRING NOT UNIVERSALLY COMPATIBLE
-//        // USE IF/ELSE INSTEAD
-//        if (caller.equals("panelLoad")) {
-//            debugMsg(caller + ":  SUBMITTED VAULT NAME:  " + jTextFieldLoadTextName.getText());
-//            debugMsg(caller + ":  SUBMITTED VAULT PATH:  " + jTextFieldLoadTextPath.getText());
-//
-//            result = true;
-////            showFailure(reason, originator);
-//        }
-//        else if (caller.equals("panelAuth")) {
-//            result = true;
-//        }
-//        else {
-//            showFailure(reason, caller);
-//        }
-//
-//        // RETURN RESULT
-//        return result;
-//    }
+    
+    
     private void tryOpenVault()
     {
         if (!isVaultOpen)
         {
             debugMsg("OPENING VAULT");
 
-//            String vaultFilename = new(jTextFieldLoadTextPath.getText() + file.separator + jTextFieldLoadTextName.getText());
             vaultFilename = (jTextFieldLoadTextPath.getText() + File.separator + jTextFieldLoadTextName.getText());
 
             try
             {
                 if (jCheckBoxAuthUseKeyfile.isSelected())
                 {
+                    // THROW EXCEPTION IF FILE INVALID
                     File file = new File(jTextFieldAuthKeyfilePath.getText());
                     FileInputStream keyFile = new FileInputStream(file);
                     
-//                    String keyFilePath = jTextFieldAuthKeyfilePath.getText();
-
-//                    System.err.println("PASSWORD + KEYFILE HASH = ");
-//                    System.out.println(getHash(jPasswordFieldAuthPW.getPassword(), keyFilePath));
                     keyFile.close();
 
                     debugMsg("TRYING TO OPEN VAULT AT:  " + vaultFilename);
@@ -1470,9 +1472,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 }
                 else
                 {
-//                    System.err.println("PASSWORD + PASSWORD HASH = ");
-//                    System.out.println(getHash(jPasswordFieldAuthPW.getPassword()));
-
                     // TRY OPEN VAULT
                     vaultRef = new Vault(vaultFilename, getHash(jPasswordFieldAuthPW.getPassword()));
                 }
@@ -1592,6 +1591,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
             resetLoadCard();
 
             isVaultOpen = false;
+            doCreateNewVault = false;
             jMenuItemFileLoad.setEnabled(true);
             jMenuItemFileClose.setEnabled(false);
             jMenuItemFileChPw.setEnabled(false);

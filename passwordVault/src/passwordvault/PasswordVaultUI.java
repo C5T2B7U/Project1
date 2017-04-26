@@ -1119,35 +1119,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
             debugMsg("SELECTED ITEM:  " + jListHomeEntryList.getSelectedIndex());
             VaultEntry entry = (VaultEntry) vaultListModelRef.getElementAt(jListHomeEntryList.getSelectedIndex());
 
+            jTextFieldHomeEntryLabel.setText(entry.getLabel());
+            jTextFieldHomeEntryUsername.setText(entry.getUsername());
+            jTextFieldHomeEntryPW.setText(entry.getPasswordAsStr());
             
-            if (jTextFieldHomeEntryLabel.getText().length() < 1)
-            {
-                entry.setLabel("[NO LABEL ENTERED]");
-            }
-            else
-            {
-                entry.setLabel(jTextFieldHomeEntryLabel.getText());
-            }
-
-            
-            if (jTextFieldHomeEntryUsername.getText().length() < 1)
-            {
-                entry.setUsername("[NO USERNAME ENTERED]");
-            }
-            else
-            {
-                entry.setUsername(jTextFieldHomeEntryUsername.getText());
-            }
-
-            
-            if (jTextFieldHomeEntryPW.getText().length() < 1)
-            {
-                entry.setPasswordAsStr("[NO PASSWORD ENTERED]");
-            }
-            else
-            {
-                entry.setPasswordAsStr(jTextFieldHomeEntryPW.getText());
-            }
 
         }
         catch (ArrayIndexOutOfBoundsException ex)

@@ -1034,16 +1034,19 @@ public class PasswordVaultUI extends javax.swing.JFrame
         if (jTextFieldHomeEntryLabel.getText().length() < 1)
         {
             newLabel = "[NO LABEL ENTERED]";
+            jTextFieldHomeEntryLabel.setText(newLabel);
         }
 
         if (jTextFieldHomeEntryUsername.getText().length() < 1)
         {
             newUsername = "[NO USERNAME ENTERED]";
+            jTextFieldHomeEntryUsername.setText(newUsername);
         }
 
         if (jTextFieldHomeEntryPW.getText().length() < 1)
         {
             newPW = "[NO PASSWORD ENTERED]";
+            jTextFieldHomeEntryPW.setText(newPW);
         }
         
         VaultEntry entry = new VaultEntry(
@@ -1056,6 +1059,9 @@ public class PasswordVaultUI extends javax.swing.JFrame
 //                jTextFieldHomeEntryPW.getText()
         );
 
+//        System.out.println(vaultListModelRef.getSize());
+        jListHomeEntryList.setSelectedIndex(vaultListModelRef.getSize() - 1);
+        
         resetPanelHomeButtons();
         
 //        } catch (ArrayIndexOutOfBoundsException ex) {
@@ -1189,9 +1195,42 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 debugMsg("UPDATING SELECTED ITEM:  " + jListHomeEntryList.getSelectedIndex());
                 VaultEntry entry = (VaultEntry) vaultListModelRef.getElementAt(jListHomeEntryList.getSelectedIndex());
 
-                entry.setLabel(jTextFieldHomeEntryLabel.getText());
-                entry.setUsername(jTextFieldHomeEntryUsername.getText());
-                entry.setPasswordAsStr(jTextFieldHomeEntryPW.getText());
+                if (jTextFieldHomeEntryLabel.getText().length() < 1)
+                {
+                    entry.setLabel("[NO LABEL ENTERED]");
+                    jTextFieldHomeEntryLabel.setText(entry.getLabel());
+                }
+                else
+                {
+                    entry.setLabel(jTextFieldHomeEntryLabel.getText());
+                }
+
+
+                if (jTextFieldHomeEntryUsername.getText().length() < 1)
+                {
+                    entry.setUsername("[NO USERNAME ENTERED]");
+                    jTextFieldHomeEntryUsername.setText(entry.getUsername());
+                }
+                else
+                {
+                    entry.setUsername(jTextFieldHomeEntryUsername.getText());
+                }
+
+
+                if (jTextFieldHomeEntryPW.getText().length() < 1)
+                {
+                    entry.setPasswordAsStr("[NO PASSWORD ENTERED]");
+                    jTextFieldHomeEntryPW.setText(entry.getPasswordAsStr());
+        
+                }
+                else
+                {
+                    entry.setPasswordAsStr(jTextFieldHomeEntryPW.getText());
+                }
+
+//                entry.setLabel(jTextFieldHomeEntryLabel.getText());
+//                entry.setUsername(jTextFieldHomeEntryUsername.getText());
+//                entry.setPasswordAsStr(jTextFieldHomeEntryPW.getText());
                 
                 resetPanelHomeButtons();
             }
@@ -1245,6 +1284,11 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 debugMsg("DELETING SELECTED ITEM:  " + jListHomeEntryList.getSelectedIndex());
                 VaultEntry entry = (VaultEntry) vaultListModelRef.getElementAt(jListHomeEntryList.getSelectedIndex());
                 entry.delete();
+                
+                jTextFieldHomeEntryLabel.setText("");
+                jTextFieldHomeEntryUsername.setText("");
+                jTextFieldHomeEntryPW.setText("");
+
                 
                 resetPanelHomeButtons();
             }

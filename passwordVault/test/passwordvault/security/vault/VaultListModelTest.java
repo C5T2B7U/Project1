@@ -10,6 +10,9 @@
  */
 package passwordvault.security.vault;
 
+import org.junit.Test;
+import static org.junit.Assert.*;
+
 /**
  *
  * @author oKevi
@@ -129,6 +132,11 @@ public class VaultListModelTest extends javax.swing.JFrame {
             }
         });
     }
+    
+    // Blank test, so I can run all the other test classes
+    // To see what this class does, you have to run this file by itself.
+    @Test
+    public void BLANK_TEST() { }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -2,9 +2,6 @@
  * This class' responsibility is to abstract away the indicies/values inside
  * the KeyStore.
  * It's also the interface the end-user employs to modify the Vault.
- * TODO: Throw errors if vault, label, username, pass == null
- *      Currently, you can make Entries with null...
- *      but calling other methods causes a crash.
  *
  * Sites:
  * VaultEntry.reserveFreeId() inspiration
@@ -56,11 +53,18 @@ public class VaultEntry {
     /**
      * Make a new VaultEntry.
      * @param vault
+     * @param label
      * @param username
-     * @param password 
+     * @param password
+     * @throws NullPointerException If any parameter is null
      */
-    public VaultEntry(Vault vault, String label, String username, char password[]) {
+    public VaultEntry(Vault vault, String label, String username, char password[]) throws NullPointerException {
         this(vault, reserveFreeId(vault));
+        // Don't add any keys if a parameter is null
+        // vault is checked in the constructor call above
+        if (label == null || username == null || password == null)
+            throw new NullPointerException();
+        
         alertChanges = false;
         setLabel(label);
         setUsername(username);
@@ -117,9 +121,12 @@ public class VaultEntry {
     /**
      * Only for private use. Sets up aliases based on this id.
      * @param vault
-     * @param id 
+     * @param id
+     * @throws NullPointerException If vault is null
      */
-    private VaultEntry(Vault vault, int id) {
+    private VaultEntry(Vault vault, int id) throws NullPointerException {
+        if (vault == null)
+            throw new NullPointerException();
         this.id = id;
         aliasLabel = ALIAS_LABEL + id;
         aliasUser = ALIAS_USER + id;
@@ -208,24 +215,33 @@ public class VaultEntry {
     /**
      * Changes the label associated with this entry.
      * @param label 
+     * @throws NullPointerException If label is null
      */
-    public void setLabel(String label) {
+    public void setLabel(String label) throws NullPointerException {
+        if (label == null)
+            throw new NullPointerException();
         vault.keyStore.addKey(aliasLabel, label.toCharArray());
         alertListenerOnChange();
     }
     /**
      * Changes the username associated with this entry.
      * @param username 
+     * @throws NullPointerException If username is null
      */
-    public void setUsername(String username) {
+    public void setUsername(String username) throws NullPointerException {
+        if (username == null)
+            throw new NullPointerException();
         vault.keyStore.addKey(aliasUser, username.toCharArray());
         alertListenerOnChange();
     }
     /**
      * Changes the password associated with this entry.
-     * @param password 
+     * @param password
+     * @throws NullPointerException If password is null
      */
-    public void setPassword(char password[]) {
+    public void setPassword(char password[]) throws NullPointerException {
+        if (password == null)
+            throw new NullPointerException();
         vault.keyStore.addKey(aliasPassword, password);
         alertListenerOnChange();
     }
@@ -233,8 +249,9 @@ public class VaultEntry {
      * WARNING: SHOULD NOT CALL THIS METHOD. THIS IS JUST FOR QUICKLY MAKING THE UI.
      * TODO: Properly set password from the UI
      * @param password 
+     * @throws NullPointerException If password is null
      */
-    public void setPasswordAsStr(String password) {
+    public void setPasswordAsStr(String password) throws NullPointerException {
         setPassword(password.toCharArray());
     }
     

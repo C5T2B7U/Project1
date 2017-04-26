@@ -46,7 +46,8 @@ public class Vault {
      * @throws UnrecoverableKeyException 
      */
     public Vault(String filename, char password[]) throws UnrecoverableKeyException {
-        keyStore = new KeyStoreWrapper(new File(filename), password);
+        File vaultFile = new File(filename);
+        keyStore = new KeyStoreWrapper(vaultFile, password);
         try {
             firstEntryId = keyStore.getIdKey(FIRST_ENTRY_ALIAS);
         } catch (InstanceNotFoundException ex) { // Set default firstEntryId

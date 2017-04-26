@@ -17,9 +17,72 @@ public class VaultEntryTest {
     public VaultEntryTest() {
     }
 
-    @Test // Just to prevent this empty class from causing errors
-    public void blankTest() {
-        assert(true);
+    /**
+     * This test checks to see that NullPointerExceptions are thrown when
+     * params are null...
+     */
+    @Test
+    public void testEntryTestNullParams() {
+        Vault vault = VaultTest.remakeVault();
+        String label = "label";
+        String user = "user";
+        String pass = "pass";
+        
+        // Null vault
+        try {
+            new VaultEntry(null, label, user, pass);
+            fail("Didn't catch null Vault");
+        } catch(NullPointerException ex) { }
+        // Null label
+        try {
+            new VaultEntry(vault, null, user, pass);
+            fail("Didn't catch null label");
+        } catch(NullPointerException ex) { }
+        // Null username
+        try {
+            new VaultEntry(vault, label, null, pass);
+            fail("Didn't catch null username");
+        } catch(NullPointerException ex) { }
+        // Null pass
+        try {
+            char ch[] = null;
+            new VaultEntry(vault, label, user, ch);
+            fail("Didn't catch null password");
+        } catch(NullPointerException ex) { }
+        try {
+            String str = null;
+            new VaultEntry(vault, label, user, str);
+            fail("Didn't catch null password (string)");
+        } catch(NullPointerException ex) { }
+    }
+    
+    /**
+     * Try all the set_ methods with null.
+     * They should throw NullPointerExceptions.
+     */
+    @Test
+    public void testSetNull() {
+        Vault vault = VaultTest.remakeVault();
+        VaultEntry entry = vault.getFirstEntry();
+        // Label
+        try {
+            entry.setLabel(null);
+            fail("Didn't catch setLabel(null)");
+        } catch(NullPointerException ex) { }
+        // Username
+        try {
+            entry.setUsername(null);
+            fail("Didn't catch setUsername(null)");
+        } catch(NullPointerException ex) { }
+        // Password
+        try {
+            entry.setPassword(null);
+            fail("Didn't catch setPassword(null)");
+        } catch(NullPointerException ex) { }
+        try {
+            entry.setPasswordAsStr(null);
+            fail("Didn't catch setPasswordAsStr(null)");
+        } catch(NullPointerException ex) { }
     }
     
     /*

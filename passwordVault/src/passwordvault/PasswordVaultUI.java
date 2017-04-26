@@ -156,13 +156,13 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jLabel2 = new javax.swing.JLabel();
         jLabelAuthPW = new javax.swing.JLabel();
         jPasswordFieldAuthPW = new javax.swing.JPasswordField();
+        jLabelAuthKeyfilePath = new javax.swing.JLabel();
+        jTextFieldAuthKeyfilePath = new javax.swing.JTextField();
+        jCheckBoxAuthUseKeyfile = new javax.swing.JCheckBox();
         jPanelAuthButtons = new javax.swing.JPanel();
         jButtonAuthCancel = new javax.swing.JButton();
         jButtonAuthChooseKeyfile = new javax.swing.JButton();
         jButtonAuthSubmit = new javax.swing.JButton();
-        jLabelAuthKeyfilePath = new javax.swing.JLabel();
-        jTextFieldAuthKeyfilePath = new javax.swing.JTextField();
-        jCheckBoxAuthUseKeyfile = new javax.swing.JCheckBox();
         panelFail = new javax.swing.JPanel();
         jLabelFailReason = new javax.swing.JLabel();
         jButtonFail = new javax.swing.JButton();
@@ -547,6 +547,11 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         jLabelAuthPW.setText("Enter Password:");
 
+        jLabelAuthKeyfilePath.setText("Keyfile Path:");
+
+        jCheckBoxAuthUseKeyfile.setSelected(true);
+        jCheckBoxAuthUseKeyfile.setText("Use Keyfile for Two-Factor Authentication");
+
         jButtonAuthCancel.setText("Cancel");
         jButtonAuthCancel.addActionListener(new java.awt.event.ActionListener()
         {
@@ -597,11 +602,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
                     .addComponent(jButtonAuthChooseKeyfile))
                 .addContainerGap())
         );
-
-        jLabelAuthKeyfilePath.setText("Keyfile Path:");
-
-        jCheckBoxAuthUseKeyfile.setSelected(true);
-        jCheckBoxAuthUseKeyfile.setText("Use Keyfile for Two-Factor Authentication");
 
         javax.swing.GroupLayout panelAuthLayout = new javax.swing.GroupLayout(panelAuth);
         panelAuth.setLayout(panelAuthLayout);
@@ -660,10 +660,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
         panelFail.setLayout(panelFailLayout);
         panelFailLayout.setHorizontalGroup(
             panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFailLayout.createSequentialGroup()
-                .addContainerGap(177, Short.MAX_VALUE)
+            .addGroup(panelFailLayout.createSequentialGroup()
+                .addGap(175, 175, 175)
                 .addComponent(jButtonFail)
-                .addGap(172, 172, 172))
+                .addContainerGap(174, Short.MAX_VALUE))
             .addGroup(panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelFailLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1277,6 +1277,9 @@ public class PasswordVaultUI extends javax.swing.JFrame
     }//GEN-LAST:event_jMenuItemFileLoadActionPerformed
 
     private void jButtonAuthChooseKeyfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthChooseKeyfileActionPerformed
+        jFileChooserLoad.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        jFileChooserLoad.setAcceptAllFileFilterUsed(true);
+
         int returnVal = jFileChooserLoad.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
@@ -1568,7 +1571,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButtonLoadNameActionPerformed
         // TODO add your handling code here:
 
-        jFileChooserLoad.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        jFileChooserLoad.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jFileChooserLoad.setAcceptAllFileFilterUsed(true);
 
         int returnVal = jFileChooserLoad.showOpenDialog(this);

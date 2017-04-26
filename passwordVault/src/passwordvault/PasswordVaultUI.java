@@ -1026,11 +1026,34 @@ public class PasswordVaultUI extends javax.swing.JFrame
         // TODO add your handling code here:
 //        try {
         debugMsg("ADDING NEW ITEM");
+
+        String newLabel = new String(jTextFieldHomeEntryLabel.getText());
+        String newUsername = new String(jTextFieldHomeEntryUsername.getText());
+        String newPW = new String(jTextFieldHomeEntryPW.getText());
+
+        if (jTextFieldHomeEntryLabel.getText().length() < 1)
+        {
+            newLabel = "[NO LABEL ENTERED]";
+        }
+
+        if (jTextFieldHomeEntryUsername.getText().length() < 1)
+        {
+            newUsername = "[NO USERNAME ENTERED]";
+        }
+
+        if (jTextFieldHomeEntryPW.getText().length() < 1)
+        {
+            newPW = "[NO PASSWORD ENTERED]";
+        }
+        
         VaultEntry entry = new VaultEntry(
                 vaultRef,
-                jTextFieldHomeEntryLabel.getText(),
-                jTextFieldHomeEntryUsername.getText(),
-                jTextFieldHomeEntryPW.getText()
+                newLabel,
+                newUsername,
+                newPW
+//                jTextFieldHomeEntryLabel.getText(),
+//                jTextFieldHomeEntryUsername.getText(),
+//                jTextFieldHomeEntryPW.getText()
         );
 
         resetPanelHomeButtons();
@@ -1096,15 +1119,42 @@ public class PasswordVaultUI extends javax.swing.JFrame
             debugMsg("SELECTED ITEM:  " + jListHomeEntryList.getSelectedIndex());
             VaultEntry entry = (VaultEntry) vaultListModelRef.getElementAt(jListHomeEntryList.getSelectedIndex());
 
-            jTextFieldHomeEntryLabel.setText(entry.getLabel());
-            jTextFieldHomeEntryUsername.setText(entry.getUsername());
-            jTextFieldHomeEntryPW.setText(entry.getPasswordAsStr());
+            
+            if (jTextFieldHomeEntryLabel.getText().length() < 1)
+            {
+                entry.setLabel("[NO LABEL ENTERED]");
+            }
+            else
+            {
+                entry.setLabel(jTextFieldHomeEntryLabel.getText());
+            }
+
+            
+            if (jTextFieldHomeEntryUsername.getText().length() < 1)
+            {
+                entry.setUsername("[NO USERNAME ENTERED]");
+            }
+            else
+            {
+                entry.setUsername(jTextFieldHomeEntryUsername.getText());
+            }
+
+            
+            if (jTextFieldHomeEntryPW.getText().length() < 1)
+            {
+                entry.setPasswordAsStr("[NO PASSWORD ENTERED]");
+            }
+            else
+            {
+                entry.setPasswordAsStr(jTextFieldHomeEntryPW.getText());
+            }
 
         }
         catch (ArrayIndexOutOfBoundsException ex)
         {
             debugMsg("INDEX ERROR:  " + jListHomeEntryList.getSelectedIndex());
         }
+        
         resetPanelHomeButtons();
     }//GEN-LAST:event_jListHomeEntryListValueChanged
 

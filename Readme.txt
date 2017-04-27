@@ -1,7 +1,3 @@
-# Project1
-
-This is a repository for our Cybersecurity Group at UC Denver. 
-
 Login Secrets
 +--------------------------------------------------+
 This program makes a password vault.
@@ -59,4 +55,3 @@ https://docs.oracle.com/javase/7/docs/api/java/lang/ref/WeakReference.html
 
 http://stackoverflow.com/questions/6694715/junit-testing-private-variables
 	This website showed me how to use Netbean's Unit Tests feature.
-

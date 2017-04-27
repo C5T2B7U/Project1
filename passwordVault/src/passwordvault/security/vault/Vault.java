@@ -21,8 +21,7 @@ import static passwordvault.Debug.debugMsg;
  * This class opens a KeyStore from a file. Once opened, it lets people view the
  * usernames/passwords stored inside.
  * 
- * KeyStore can throw a lot of errors. Not sure whether I should just capture them,
- * or re-throw them.
+ * TODO: triple-check all exceptions properly handled
  */
 public class Vault {
     /* Note to self: Vault shouldn't hold references to VaultEntries.
@@ -43,9 +42,10 @@ public class Vault {
      * Char[] is used to ensure that it won't be cached.
      * @param filename File to read from
      * @param password Password the file was encrypted with
-     * @throws UnrecoverableKeyException 
+     * @throws IOException Thrown when the file can't be opened for some reason
+     * @throws UnrecoverableKeyException Thrown when the password is incorrect
      */
-    public Vault(String filename, char password[]) throws UnrecoverableKeyException {
+    public Vault(String filename, char password[]) throws IOException, UnrecoverableKeyException {
         File vaultFile = new File(filename);
         keyStore = new KeyStoreWrapper(vaultFile, password);
         try {

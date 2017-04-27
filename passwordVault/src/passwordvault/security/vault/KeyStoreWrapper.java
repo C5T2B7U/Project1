@@ -63,9 +63,10 @@ class KeyStoreWrapper implements Closeable {
      * Load a vault from a file. If file doesn't exist, an empty vault will be made.
      * @param file File to load KeyStore from
      * @param password Password used to encrypt KeyStore
+     * @throws IOException If file failed to open
      * @throws UnrecoverableKeyException If password was incorrect
      */
-    public KeyStoreWrapper(File file, char password[]) throws UnrecoverableKeyException {
+    public KeyStoreWrapper(File file, char password[]) throws IOException, UnrecoverableKeyException {
         this.file = file;
         setPassword(password);
         // Make a new KeyStore
@@ -96,8 +97,6 @@ class KeyStoreWrapper implements Closeable {
             } catch(FileNotFoundException ex) { // File doesn't exist
                 keyStore.load(null);
             }
-        } catch (IOException ex) { // Read fail
-            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchAlgorithmException ex) { // TODO: Handle properly
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CertificateException ex) {

@@ -212,7 +212,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jButtonSaveAsDir = new javax.swing.JButton();
         jButtonSaveAsName = new javax.swing.JButton();
         jButtonSaveAsSubmit = new javax.swing.JButton();
-        panelAbout = new javax.swing.JPanel();
+        panelInfo = new javax.swing.JPanel();
         jPanelInfoButtons = new javax.swing.JPanel();
         jButtonInfoBack = new javax.swing.JButton();
         jScrollPaneInfo = new javax.swing.JScrollPane();
@@ -1058,28 +1058,30 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         jTextPaneInfo.setBorder(null);
         jTextPaneInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextPaneInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextPaneInfo.setFocusable(false);
         jScrollPaneInfo.setViewportView(jTextPaneInfo);
 
-        javax.swing.GroupLayout panelAboutLayout = new javax.swing.GroupLayout(panelAbout);
-        panelAbout.setLayout(panelAboutLayout);
-        panelAboutLayout.setHorizontalGroup(
-            panelAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelInfoLayout = new javax.swing.GroupLayout(panelInfo);
+        panelInfo.setLayout(panelInfoLayout);
+        panelInfoLayout.setHorizontalGroup(
+            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelInfoButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelAboutLayout.createSequentialGroup()
+            .addGroup(panelInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPaneInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        panelAboutLayout.setVerticalGroup(
-            panelAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAboutLayout.createSequentialGroup()
+        panelInfoLayout.setVerticalGroup(
+            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPaneInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelInfoButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        mainPanel.add(panelAbout, "panelInfo");
+        mainPanel.add(panelInfo, "panelInfo");
 
         jMenuFile.setText("File");
 
@@ -1847,10 +1849,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JTextField jTextFieldSaveAsPath;
     private javax.swing.JTextPane jTextPaneInfo;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JPanel panelAbout;
     private javax.swing.JPanel panelAuth;
     private javax.swing.JPanel panelFail;
     private javax.swing.JPanel panelHome;
+    private javax.swing.JPanel panelInfo;
     private javax.swing.JPanel panelLoad;
     private javax.swing.JPanel panelNew;
     private javax.swing.JPanel panelSaveAs;
@@ -2117,6 +2119,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         
         jTextPaneInfo.setText(infoText);
+        jTextPaneInfo.setCaretPosition(0);
         
         changeCard("panelInfo", activeCard);
     }
@@ -2127,6 +2130,14 @@ public class PasswordVaultUI extends javax.swing.JFrame
         if (activeCard == "panelBase")
         {
             showInfo(panelBaseHelp);
+        }
+        if (activeCard == "panelNew")
+        {
+            showInfo(panelNewHelp);
+        }
+        if (activeCard == "panelLoad")
+        {
+            showInfo(panelLoadHelp);
         }
     }
     
@@ -2140,6 +2151,12 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
     // TEXT DEFINITIONS
     String aboutText = new String("\n\nLoginSecrets:   Secure Password Vault\n\n\nLoginSecrets is a portable, cross-platform solution for securely storing lists of account login credentials.  Users can create new or open existing encrypted password vaults, then view, add, update, and delete entries before saving and closing the password vaults.  Vault files can then be safely transferred over non-secure mediums.  By default, password vaults rely on both a password and a keyfile for (optional) two-factor authentication to access the encrypted data stored within.  \n\nYou can trust LoginSecrets to keep your login details secret*.\n\n\n*NOTE:  Due to platform limitations, for maximum protection it is highly recommended to reboot the computer after using LoginSecrets!\n\n\nLoginSecrets was developed by Brian Sumner, Kevin Yang, and John Crosby of UCDenver.  Copyright 2017.");
-    String panelBaseHelp = new String("\n\nHELP:");
+
+    String panelBaseHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Exit Program\":\n\nClick on this button to exit the program.\n\n\n\"Create New Vault\": \n\nClick on this button if you do not have an existing password vault to open.\n\n\n\"Open Existing Vault\": \n\nClick on this button if you would like to open a password vault that has previously been created with LoginSecrets.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
+
+    String panelNewHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Cancel\":\n\nClick on this button to cancel creating a new password vault.\n\n\n\"Choose Directory for New Vault\": \n\nClick on this button to select a directory for saving a new password vault.\n\n\n\"Submit\": \n\nClick on this button after selecting a directory and typing out a filename to try to create a new password vault.  If the directory and filename is valid and does not refer to any existing file, a new password vault will be created (but not yet saved).\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
+
+    String panelLoadHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Cancel\":\n\nClick on this button to cancel opening an existing password vault.\n\n\n\"Choose Filename of Existing Vault\": \n\nClick on this button to select an existing password vault from the filesystem.\n\n\n\"Submit\": \n\nClick on this button to try to open an existing password vault that you have selected.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
     
+
 }

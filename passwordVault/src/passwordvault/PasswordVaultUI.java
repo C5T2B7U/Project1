@@ -1603,27 +1603,55 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
     private void jButtonNewSubmitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonNewSubmitActionPerformed
     {//GEN-HEADEREND:event_jButtonNewSubmitActionPerformed
-        // IF DIR IS VALID AND FILENAME.LENGTH > 0
+
+        // IF IF FILE DOES NOT EXIST AND DIR IS VALID AND FILENAME.LENGTH > 0
         // THEN CHANGE TO AUTH CARD
 
-        if (jTextFieldNewName.getText().length() > 0)
+        boolean doesFileAlreadyExist = false;
+
+        try
         {
-            File dir = new File(jTextFieldNewPath.getText());
+            // THROW EXCEPTION IF FILE INVALID
+            vaultFilename = (jTextFieldNewPath.getText() + File.separator + jTextFieldNewName.getText());
             
-            if (dir.isDirectory())
+            File file = new File(vaultFilename);
+            FileInputStream vaultFile = new FileInputStream(file);
+
+            // RUN ONLY IF FILE EXISTS AND CAN BE OPENED
+            doesFileAlreadyExist = true;
+        }
+        catch (IOException ex)
+        {
+            // FILE DOES NOT ALREADY EXIST
+            // NOTE: THIS IS WHAT WE WANT
+            doesFileAlreadyExist = false;
+        }
+        
+
+        if (!doesFileAlreadyExist)
+        {
+            if (jTextFieldNewName.getText().length() > 0)
             {
-                changeCard("panelAuth", "panelNew");   
+                File dir = new File(jTextFieldNewPath.getText());
+
+                if (dir.isDirectory())
+                {
+                    changeCard("panelAuth", "panelNew");   
+                }
+                else
+                {
+                    showFailure("ERROR:  INVALID DIRECTORY", activeCard);
+                }
             }
             else
             {
-                showFailure("ERROR:  INVALID DIRECTORY", activeCard);
+                showFailure("ERROR:  INVALID FILENAME", activeCard);
             }
         }
         else
         {
-            showFailure("ERROR:  INVALID FILENAME", activeCard);
+            showFailure("ERROR:  FILE ALREADY EXISTS", activeCard);
         }
-
     }//GEN-LAST:event_jButtonNewSubmitActionPerformed
 
     private void jButtonNewDirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonNewDirActionPerformed

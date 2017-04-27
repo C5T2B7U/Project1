@@ -198,7 +198,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemFileLoad = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItemSave = new javax.swing.JMenuItem();
+        jMenuItemSaveAs = new javax.swing.JMenuItem();
         jMenuItemFileClose = new javax.swing.JMenuItem();
         jSeparatorMenuFile1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemFileChPw = new javax.swing.JMenuItem();
@@ -966,9 +967,27 @@ public class PasswordVaultUI extends javax.swing.JFrame
         });
         jMenuFile.add(jMenuItemFileLoad);
 
-        jMenuItem5.setText("Save Vault As...");
-        jMenuItem5.setEnabled(false);
-        jMenuFile.add(jMenuItem5);
+        jMenuItemSave.setText("Save Vault");
+        jMenuItemSave.setEnabled(false);
+        jMenuItemSave.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItemSaveActionPerformed(evt);
+            }
+        });
+        jMenuFile.add(jMenuItemSave);
+
+        jMenuItemSaveAs.setText("Save Vault As...");
+        jMenuItemSaveAs.setEnabled(false);
+        jMenuItemSaveAs.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItemSaveAsActionPerformed(evt);
+            }
+        });
+        jMenuFile.add(jMenuItemSaveAs);
 
         jMenuItemFileClose.setText("Close Vault");
         jMenuItemFileClose.setEnabled(false);
@@ -1536,6 +1555,17 @@ public class PasswordVaultUI extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNewPathActionPerformed
 
+    private void jMenuItemSaveAsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveAsActionPerformed
+    {//GEN-HEADEREND:event_jMenuItemSaveAsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemSaveAsActionPerformed
+
+    private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveActionPerformed
+    {//GEN-HEADEREND:event_jMenuItemSaveActionPerformed
+        // TODO add your handling code here:
+        saveVault();
+    }//GEN-LAST:event_jMenuItemSaveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAuthCancel;
@@ -1581,13 +1611,14 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenu jMenuHelp;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItemFileChPw;
     private javax.swing.JMenuItem jMenuItemFileClose;
     private javax.swing.JMenuItem jMenuItemFileExit;
     private javax.swing.JMenuItem jMenuItemFileLoad;
     private javax.swing.JMenuItem jMenuItemHelpAbout;
     private javax.swing.JMenuItem jMenuItemHelpHelp;
+    private javax.swing.JMenuItem jMenuItemSave;
+    private javax.swing.JMenuItem jMenuItemSaveAs;
     private javax.swing.JPanel jPanelAuthButtons;
     private javax.swing.JPanel jPanelBase;
     private javax.swing.JPanel jPanelBaseButtons;
@@ -1681,6 +1712,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
                 isVaultOpen = true;
                 jMenuItemFileLoad.setEnabled(false);
+                jMenuItemSave.setEnabled(true);
+                jMenuItemSaveAs.setEnabled(true);
                 jMenuItemFileClose.setEnabled(true);
                 jMenuItemFileChPw.setEnabled(true);
                 
@@ -1692,7 +1725,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 showFailure("AUTHENTICATION ERROR", "panelAuth");
                 debugMsg("panelAuth:  AUTHENTICATION ERROR");
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 // CATCHES EXCEPTION IF FILE IS NOT VALID VAULT FILE
                 resetAll();
@@ -1779,7 +1812,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         resetPanelHomeButtons();
 
         isVaultOpen = false;
-        doCreateNewVault = false;
+//        doCreateNewVault = false;
 
         activeCard = "panelBase";
         goBackToCard = "panelBase";
@@ -1790,6 +1823,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         
         jMenuItemFileLoad.setEnabled(true);
+        jMenuItemSave.setEnabled(false);
+        jMenuItemSaveAs.setEnabled(false);
         jMenuItemFileClose.setEnabled(false);
         jMenuItemFileChPw.setEnabled(false);
 

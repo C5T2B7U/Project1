@@ -21,7 +21,7 @@ Download the jar file.
 
 Just double click the jar file to execute it.
 If that doesn't work, run the command:
-	java LoginSecrets.jar
+	java -jar LoginSecrets.jar
 
 1. When you start the program, a welcome screen will appear.
 	You can choose whether to make a Vault file, or load an existing one.

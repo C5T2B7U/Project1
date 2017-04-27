@@ -10,6 +10,9 @@ You can trust LoginSecrets to keep your login details secret*.
 
 LoginSecrets was developed by Brian Sumner, Kevin Yang, and John Crosby of UCDenver.  Copyright 2017.
 
+Github repository:
+https://github.com/CyberGroup1/Project1
+
 +-------------------------
 | Setup:
 +-------------------------

@@ -26,6 +26,16 @@ import passwordvault.security.vault.VaultListModel;
 /**
  *
  * @author Brian Sumner et al.
+ * 
+ * 
+ * RESOURCES REFERENCED:
+ * 
+ * http://stackoverflow.com/questions/3213045/centering-text-in-a-jtextarea-or-jtextpane-horizontal-text-alignment#3213361
+ * 
+ * https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
+ * 
+ * http://www.rgagnon.com/javadetails/java-0370.html
+ * 
  */
 public class PasswordVaultUI extends javax.swing.JFrame
 {
@@ -44,7 +54,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private String activeCard = "panelBase";
     private String vaultFilename = "";
     private boolean isVaultOpen = false;
-    private boolean doCreateNewVault = false;
+//    private boolean doCreateNewVault = false;
 //    private boolean isKeyFileValid = false;
 
     // USED FOR panelHome BUTTON CONFIRMATION STATES
@@ -136,6 +146,12 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jButtonBaseExit = new javax.swing.JButton();
         jButtonBaseNew = new javax.swing.JButton();
         jButtonBaseOpen = new javax.swing.JButton();
+        jLabelBase1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabelBase5 = new javax.swing.JLabel();
+        jLabelBase4 = new javax.swing.JLabel();
+        jLabelBase3 = new javax.swing.JLabel();
+        jLabelBase2 = new javax.swing.JLabel();
         panelNew = new javax.swing.JPanel();
         jPanelNewText = new javax.swing.JPanel();
         jTextFieldNewName = new javax.swing.JTextField();
@@ -231,6 +247,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         mainPanel.setLayout(new java.awt.CardLayout());
 
         jLabelBase.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabelBase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelBase.setText("Welcome to LoginSecrets");
 
         jButtonBaseExit.setText("Exit Program");
@@ -284,27 +301,74 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabelBase1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelBase1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelBase1.setText("Secure Password Vault");
+
+        jLabelBase5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelBase5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelBase5.setText("after using LoginSecrets!");
+
+        jLabelBase4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelBase4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelBase4.setText("please reboot the computer");
+
+        jLabelBase3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelBase3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelBase3.setText("For maximum protection,");
+
+        jLabelBase2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelBase2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelBase2.setText("IMPORTANT NOTE:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelBase5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelBase4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelBase3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelBase2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelBase2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jLabelBase3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelBase4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelBase5)
+                .addGap(5, 5, 5))
+        );
+
         javax.swing.GroupLayout jPanelBaseLayout = new javax.swing.GroupLayout(jPanelBase);
         jPanelBase.setLayout(jPanelBaseLayout);
         jPanelBaseLayout.setHorizontalGroup(
             jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelBaseButtons, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelBaseLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabelBase)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(jPanelBaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelBase1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBaseLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanelBaseLayout.setVerticalGroup(
             jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBaseLayout.createSequentialGroup()
-                .addGap(0, 356, Short.MAX_VALUE)
+                .addGap(57, 57, 57)
+                .addComponent(jLabelBase)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelBase1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
                 .addComponent(jPanelBaseButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelBaseLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabelBase)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         mainPanel.add(jPanelBase, "panelBase");
@@ -637,6 +701,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         mainPanel.add(panelAuth, "panelAuth");
 
+        jLabelFailReason.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelFailReason.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelFailReason.setText("...");
 
         jButtonFail.setText("Go Back");
@@ -659,10 +725,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 .addComponent(jButtonFail)
                 .addContainerGap(174, Short.MAX_VALUE))
             .addGroup(panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelFailLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabelFailReason)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFailLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabelFailReason, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         panelFailLayout.setVerticalGroup(
             panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -671,10 +737,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 .addComponent(jButtonFail)
                 .addGap(89, 89, 89))
             .addGroup(panelFailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelFailLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFailLayout.createSequentialGroup()
+                    .addContainerGap(192, Short.MAX_VALUE)
                     .addComponent(jLabelFailReason)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap(192, Short.MAX_VALUE)))
         );
 
         mainPanel.add(panelFail, "panelFail");
@@ -988,7 +1054,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         jTextPane1.setBorder(null);
         jTextPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextPane1.setText("\n\nLoginSecrets:   Secure Password Vault\n\n\nLoginSecrets is a portable, cross-platform solution for securely storing lists of account login credentials.  Users can create new or open existing encrypted password vaults, then view, add, update, and delete entries before saving and closing the password vaults.  Vault files can then be safely transferred over non-secure mediums.  By default, password vaults rely on both a password and a keyfile for (optional) two-factor authentication to access the encrypted data stored within.  \nYou can trust LoginSecrets to keep your login details secret*.\n\n* NOTE:  Due to platform limitations, for maximum protection it is highly recommended to reboot the computer after using LoginSecrets!\n\n\nLoginSecrets was developed by Brian Sumner, Kevin Yang, and John Crosby of UCDenver.  Copyright 2017.");
+        jTextPane1.setText("\n\nLoginSecrets:   Secure Password Vault\n\n\nLoginSecrets is a portable, cross-platform solution for securely storing lists of account login credentials.  Users can create new or open existing encrypted password vaults, then view, add, update, and delete entries before saving and closing the password vaults.  Vault files can then be safely transferred over non-secure mediums.  By default, password vaults rely on both a password and a keyfile for (optional) two-factor authentication to access the encrypted data stored within.  \n\nYou can trust LoginSecrets to keep your login details secret*.\n\n\n*NOTE:  Due to platform limitations, for maximum protection it is highly recommended to reboot the computer after using LoginSecrets!\n\n\nLoginSecrets was developed by Brian Sumner, Kevin Yang, and John Crosby of UCDenver.  Copyright 2017.");
         jScrollPane1.setViewportView(jTextPane1);
 
         javax.swing.GroupLayout panelAboutLayout = new javax.swing.GroupLayout(panelAbout);
@@ -1070,7 +1136,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jMenuFile.add(jMenuItemFileChPw);
         jMenuFile.add(jSeparatorMenuFile2);
 
-        jMenuItemFileExit.setText("Exit");
+        jMenuItemFileExit.setText("Exit Immediately!");
         jMenuItemFileExit.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -1137,14 +1203,12 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void jButtonBaseNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBaseNewActionPerformed
         // TODO add your handling code here:
         debugMsg("panelBase:  CREATE NEW VAULT BUTTON PRESSED");
-        doCreateNewVault = true;
         changeCard("panelNew", "panelBase");
     }//GEN-LAST:event_jButtonBaseNewActionPerformed
 
     private void jButtonBaseOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBaseOpenActionPerformed
         // TODO add your handling code here:
         debugMsg("panelBase:  OPEN EXISTING VAULT BUTTON PRESSED");
-        doCreateNewVault = false;
         changeCard("panelLoad", "panelBase");
     }//GEN-LAST:event_jButtonBaseOpenActionPerformed
 
@@ -1676,6 +1740,11 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JLabel jLabelAuthKeyfilePath;
     private javax.swing.JLabel jLabelAuthPW;
     private javax.swing.JLabel jLabelBase;
+    private javax.swing.JLabel jLabelBase1;
+    private javax.swing.JLabel jLabelBase2;
+    private javax.swing.JLabel jLabelBase3;
+    private javax.swing.JLabel jLabelBase4;
+    private javax.swing.JLabel jLabelBase5;
     private javax.swing.JLabel jLabelFailReason;
     private javax.swing.JLabel jLabelHomeEntryLabel;
     private javax.swing.JLabel jLabelHomeEntryList;
@@ -1700,6 +1769,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuItemSave;
     private javax.swing.JMenuItem jMenuItemSaveAs;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelAuthButtons;
     private javax.swing.JPanel jPanelBase;
     private javax.swing.JPanel jPanelBaseButtons;
@@ -1763,8 +1833,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void showFailure(String reason, String goBackTo)
     {
         jLabelFailReason.setText(reason);
-        goBackToCard = goBackTo;
-        changeCard("panelFail");
+//        goBackToCard = goBackTo;
+        changeCard("panelFail", goBackTo);
     }
 
     
@@ -1774,7 +1844,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
         if (!isVaultOpen)
         {
             debugMsg("OPENING VAULT");
-
             try
             {
                 debugMsg("TRYING TO OPEN VAULT AT:  " + vaultFilename);
@@ -1806,7 +1875,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
             catch (UnrecoverableKeyException ex)
             {
                 // EXCEPTION THROWN IF VAULT NOT AUTHENTICATED PROPERLY
-                showFailure("AUTHENTICATION ERROR", "panelAuth");
+                resetAll();
+                showFailure("AUTHENTICATION ERROR", "panelBase");
                 debugMsg("panelAuth:  AUTHENTICATION ERROR");
             }
             catch (IOException ex)

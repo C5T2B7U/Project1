@@ -211,6 +211,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jMenuItemHelpAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("LoginSecrets:  Secure Password Vault");
         addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowClosing(java.awt.event.WindowEvent evt)
@@ -242,7 +243,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
             }
         });
 
-        jButtonBaseOpen.setText("Select Existing Vault");
+        jButtonBaseOpen.setText("Open Existing Vault");
         jButtonBaseOpen.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -258,9 +259,9 @@ public class PasswordVaultUI extends javax.swing.JFrame
             .addGroup(jPanelBaseButtonsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonBaseExit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(jButtonBaseNew)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(jButtonBaseOpen)
                 .addContainerGap())
         );

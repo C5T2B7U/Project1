@@ -219,7 +219,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jTextPaneInfo = new javax.swing.JTextPane();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
-        jMenuItemFileLoad = new javax.swing.JMenuItem();
+        jMenuItemFileOpen = new javax.swing.JMenuItem();
         jMenuItemSave = new javax.swing.JMenuItem();
         jMenuItemSaveAs = new javax.swing.JMenuItem();
         jMenuItemFileClose = new javax.swing.JMenuItem();
@@ -1085,15 +1085,15 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         jMenuFile.setText("File");
 
-        jMenuItemFileLoad.setText("Open Vault");
-        jMenuItemFileLoad.addActionListener(new java.awt.event.ActionListener()
+        jMenuItemFileOpen.setText("Open Vault");
+        jMenuItemFileOpen.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jMenuItemFileLoadActionPerformed(evt);
+                jMenuItemFileOpenActionPerformed(evt);
             }
         });
-        jMenuFile.add(jMenuItemFileLoad);
+        jMenuFile.add(jMenuItemFileOpen);
 
         jMenuItemSave.setText("Save Vault");
         jMenuItemSave.setEnabled(false);
@@ -1294,10 +1294,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
         changeCard("panelBase");
     }//GEN-LAST:event_jButtonAuthCancelActionPerformed
 
-    private void jMenuItemFileLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileLoadActionPerformed
+    private void jMenuItemFileOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileOpenActionPerformed
         resetAll();
         changeCard("panelBase");
-    }//GEN-LAST:event_jMenuItemFileLoadActionPerformed
+    }//GEN-LAST:event_jMenuItemFileOpenActionPerformed
 
     private void jButtonAuthChooseKeyfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthChooseKeyfileActionPerformed
         jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -1672,6 +1672,11 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void jButtonSaveAsCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonSaveAsCancelActionPerformed
     {//GEN-HEADEREND:event_jButtonSaveAsCancelActionPerformed
         // TODO add your handling code here:
+        jMenuItemSave.setEnabled(true);
+        jMenuItemSaveAs.setEnabled(true);
+        jMenuItemFileClose.setEnabled(true);
+        jMenuItemFileChPw.setEnabled(true);
+        
         changeCard("panelHome", "panelHome");
     }//GEN-LAST:event_jButtonSaveAsCancelActionPerformed
 
@@ -1679,7 +1684,12 @@ public class PasswordVaultUI extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButtonSaveAsSubmitActionPerformed
         // TODO add your handling code here:
         saveAsVault();
-        changeCard("panelHome", "panelHome");
+        
+        jMenuItemSave.setEnabled(true);
+        jMenuItemSaveAs.setEnabled(true);
+        jMenuItemFileClose.setEnabled(true);
+        jMenuItemFileChPw.setEnabled(true);
+        
     }//GEN-LAST:event_jButtonSaveAsSubmitActionPerformed
 
     private void jButtonSaveAsDirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonSaveAsDirActionPerformed
@@ -1732,7 +1742,15 @@ public class PasswordVaultUI extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jMenuItemSaveAsActionPerformed
         // TODO add your handling code here:
         resetHomeCard();
+        resetSaveAsCard();
+
+        jMenuItemSave.setEnabled(false);
+        jMenuItemSaveAs.setEnabled(false);
+        jMenuItemFileClose.setEnabled(false);
+        jMenuItemFileChPw.setEnabled(false);
+
         changeCard("panelSaveAs", "panelHome");
+
     }//GEN-LAST:event_jMenuItemSaveAsActionPerformed
 
     private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveActionPerformed
@@ -1813,7 +1831,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuItemFileChPw;
     private javax.swing.JMenuItem jMenuItemFileClose;
     private javax.swing.JMenuItem jMenuItemFileExit;
-    private javax.swing.JMenuItem jMenuItemFileLoad;
+    private javax.swing.JMenuItem jMenuItemFileOpen;
     private javax.swing.JMenuItem jMenuItemHelpAbout;
     private javax.swing.JMenuItem jMenuItemHelpHelp;
     private javax.swing.JMenuItem jMenuItemSave;
@@ -1915,7 +1933,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 jListHomeEntryList.setModel(vaultListModelRef);
 
                 isVaultOpen = true;
-                jMenuItemFileLoad.setEnabled(false);
+                jMenuItemFileOpen.setEnabled(false);
                 jMenuItemSave.setEnabled(true);
                 jMenuItemSaveAs.setEnabled(true);
                 jMenuItemFileClose.setEnabled(true);
@@ -2042,7 +2060,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         vaultRef = null;
         vaultListModelRef = null;
 
-        jMenuItemFileLoad.setEnabled(true);
+        jMenuItemFileOpen.setEnabled(true);
         jMenuItemSave.setEnabled(false);
         jMenuItemSaveAs.setEnabled(false);
         jMenuItemFileClose.setEnabled(false);
@@ -2080,21 +2098,48 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
     private void saveAsVault()
     {
+        debugMsg("ATTEMPTING SAVE AS");
         if (isVaultOpen)
         {
-            String oldFilepath = vaultRef.getFilepath();
+            
+            if (jTextFieldSaveAsName.getText().length() > 0)
+            {
+                debugMsg("FILENAME NOT EMPTY");
+                File dir = new File(jTextFieldSaveAsPath.getText());
 
-            debugMsg("SAVING AS DIFFERENT VAULT");
-            try
-            {
-                vaultRef.setFilepath(jTextFieldSaveAsPath.getText() + File.separator + jTextFieldSaveAsName.getText());
-                vaultRef.save();
-                vaultFilename = vaultRef.getFilepath();
+                if (dir.isDirectory())
+                {
+
+                    debugMsg("DIRECTORY EXISTS");
+                    // ATTEMPT TO SAVE AS DIFFERENT 
+                    String oldFilepath = vaultRef.getFilepath();
+
+                    debugMsg("SAVING AS DIFFERENT VAULT");
+                    try
+                    {
+                        vaultRef.setFilepath(jTextFieldSaveAsPath.getText() + File.separator + jTextFieldSaveAsName.getText());
+                        vaultRef.save();
+                        vaultFilename = vaultRef.getFilepath();
+
+                        changeCard("panelHome", "panelHome");
+                    }
+                    catch (IOException ex)
+                    {
+                        vaultRef.setFilepath(oldFilepath);
+                        showFailure("ERROR:  CANNOT SAVE AS DIFFERENT VAULT", "panelHome");
+                    }
+
+                }
+                else
+                {
+                    debugMsg("ERROR: INVALID DIRECTORY");
+                    showFailure("ERROR:  INVALID DIRECTORY", "panelHome");
+                }
             }
-            catch (IOException ex)
+            else
             {
-                vaultRef.setFilepath(oldFilepath);
-                showFailure("ERROR:  CANNOT SAVE AS DIFFERENT VAULT", "panelHome");
+                debugMsg("ERROR: INVALID FILENAME");
+                showFailure("ERROR:  INVALID FILENAME", "panelHome");
             }
         }
 
@@ -2172,6 +2217,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
     String panelAuthHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Enter Password\":\n\nType a password to use for authentication.\n\n\n\"Keyfile Path\":\n\nThis field holds the path to a keyfile used for two-factor authentication (if applicable).  You can use the \"Choose Keyfile\" button to select a keyfile from the filesystem.\n\n\n\"Use Keyfile for Two-Factor Authentication\":\n\nIf this box is checked, authentication will be performed with both a password and a keyfile.  If it is unchecked, only a password will be used.  Please note that if you are loading an existing password vault that uses a keyfile for authentication, you will be required to select the same (unchanged) keyfile to open the vault.\n\n\n\"Cancel\":\n\nClick on this button to cancel the authentication process.\n\n\n\"Choose Keyfile\":\n\nClick on this button to select a keyfile from the filesystem.\n\n\n\"Submit\": \n\nClick on this button to attempt authentication.  If you are changing the password of an existing password vault, the new authentication values will take effect only after saving the vault.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
     
     String panelHomeHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Vault Entries\" List:\n\nIf there are entries in the password vault, click the entry from the list to populate its stored values into the Vault Entry Label, Vault Entry Account Username, and Vault Entry Account Password text fields.\n\n\n\"Add Entry\":\n\nClick this button to add a new entry to the vault.  The current values in the three text fields at the top will be stored into the entry.  If any of the text fields are empty, default values will be used instead.\n\n\n\"Update Entry\":\n\nAfter selecting an entry from the list to update, click this button to bring up a confirmation.  Click the button again to confirm that you want to replace the values in the entry with the current values shown in the three text fields at the top.\n\n\n\"Delete Entry\":\n\nAfter selecting an entry from the list to delete, click this button to bring up a confirmation.  Click the button again to confirm that you want to delete the entry from the password vault.\n\n\n\"Save Vault\":\n\nTo save the password vault, click this button to bring up a confirmation.  Click the button again to confirm that you want to save the password vault.\n\n\n\"Close Vault\": \n\nTo close the password vault, click this button to bring up a confirmation.  Click the button again to confirm that you want to close the password vault.  Please note that if you have not first saved the vault, all changes will be discarded!\n\n\nFile Menu - \"Save Vault\":\n\nClick this menu item to save the password vault.\n\n\nFile Menu - \"Save Vault As...\":\n\nClick this menu item to save the password vault as a different file.  Please note that after you save the vault as a different file, all future changes will be saved to the new file and not the original.\n\n\nFile Menu - \"Close Vault\":\n\nClick this menu item to close the password vault.  Please note that if you have not first saved the vault, all changes will be discarded!\n\n\nFile Menu - \"Change Password\":\n\nClick this menu item to change the password and keyfile used to save the vault.  Please note that the changes will not go into effect until you have saved the password vault.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program without saving the vault!");
+    
+    String panelSaveAsHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Cancel\":\n\nClick on this button to cancel opening an existing password vault.\n\n\n\"Choose Filename of Existing Vault\": \n\nClick on this button to select an existing password vault from the filesystem.\n\n\n\"Submit\": \n\nClick on this button to try to open an existing password vault that you have selected.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
     
 
 }

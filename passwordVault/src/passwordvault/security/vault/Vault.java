@@ -135,6 +135,16 @@ public class Vault {
 //    }
     
     /**
+     * Changes where the file will be saved to.
+     * @param filename New location to save Vault to
+     * @throws NullPointerException If filename is null
+     */
+    public void setFilepath(String filename) throws NullPointerException {
+        File vaultFile = new File(filename);
+        keyStore.setFilepath(vaultFile);
+    }
+    
+    /**
      * Save the vault to a file.
      * @throws IOException If failed to save for some reason.
      */

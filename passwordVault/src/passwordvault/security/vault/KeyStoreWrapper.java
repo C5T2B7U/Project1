@@ -242,6 +242,15 @@ class KeyStoreWrapper implements Closeable {
     }
     
     /**
+     * Changes the location the Vault will be saved at.
+     * Doesn't error until the vault is saved.
+     * @param newFile 
+     */
+    public void setFilepath(File newFile) {
+        file = newFile;
+    }
+    
+    /**
      * Tries to save the file.
      * @throws IOException If failed to save the file for some reason.
      *      Might be an instance of FileNotFoundException.

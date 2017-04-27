@@ -1231,7 +1231,17 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void jButtonFailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFailActionPerformed
         // TODO add your handling code here:
         debugMsg("FAILURE ACCEPTED");
-        changeCard(goBackToCard);
+        if (isVaultOpen)
+        {
+            changeCard("panelHome");
+        }
+        else
+        {
+            changeCard(goBackToCard);
+        }       
+        jMenuItemHelpHelp.setEnabled(true);
+        jMenuItemHelpAbout.setEnabled(true);
+
     }//GEN-LAST:event_jButtonFailActionPerformed
 
     private void jMenuItemFileCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileCloseActionPerformed
@@ -1268,6 +1278,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
                     // SET NEW PASSWORD WITHOUT KEYFILE
                     vaultRef.setPassword(getHash(jPasswordFieldAuthPW.getPassword()));
                 }
+                
                 changeCard(goBackToCard);
             }
             else
@@ -1282,16 +1293,30 @@ public class PasswordVaultUI extends javax.swing.JFrame
             debugMsg("panelAuth:  KEYFILE ERROR:  "); // + jTextFieldAuthKeyfilePath.getText());
         }
 
-        
     }//GEN-LAST:event_jButtonAuthSubmitActionPerformed
 
     private void jButtonAuthCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthCancelActionPerformed
         debugMsg("panelAuth:  CANCELLING AUTHENTICATION");
-        // RESET ALL
-        resetAll();
-        
-        // GO BACK
-        changeCard("panelBase");
+
+        if (isVaultOpen)
+        {
+            jMenuItemSave.setEnabled(false);
+            jMenuItemSaveAs.setEnabled(false);
+            jMenuItemFileClose.setEnabled(false);
+            jMenuItemFileChPw.setEnabled(false);
+
+            jMenuItemHelpHelp.setEnabled(true);
+            jMenuItemHelpAbout.setEnabled(true);
+            changeCard("panelHome");
+        }
+        else
+        {
+            // RESET ALL
+            resetAll();
+
+            // GO BACK
+            changeCard("panelBase");
+        }
     }//GEN-LAST:event_jButtonAuthCancelActionPerformed
 
     private void jMenuItemFileOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileOpenActionPerformed
@@ -1403,6 +1428,12 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void jMenuItemFileChPwActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileChPwActionPerformed
         // TODO add your handling code here:
         resetPanelHomeButtons();
+
+        jMenuItemSave.setEnabled(false);
+        jMenuItemSaveAs.setEnabled(false);
+        jMenuItemFileClose.setEnabled(false);
+        jMenuItemFileChPw.setEnabled(false);
+        
         changePassword();
     }//GEN-LAST:event_jMenuItemFileChPwActionPerformed
 
@@ -1672,11 +1703,9 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void jButtonSaveAsCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonSaveAsCancelActionPerformed
     {//GEN-HEADEREND:event_jButtonSaveAsCancelActionPerformed
         // TODO add your handling code here:
-        jMenuItemSave.setEnabled(true);
-        jMenuItemSaveAs.setEnabled(true);
-        jMenuItemFileClose.setEnabled(true);
-        jMenuItemFileChPw.setEnabled(true);
-        
+        jMenuItemHelpHelp.setEnabled(true);
+        jMenuItemHelpAbout.setEnabled(true);
+
         changeCard("panelHome", "panelHome");
     }//GEN-LAST:event_jButtonSaveAsCancelActionPerformed
 
@@ -1685,10 +1714,9 @@ public class PasswordVaultUI extends javax.swing.JFrame
         // TODO add your handling code here:
         saveAsVault();
         
-        jMenuItemSave.setEnabled(true);
-        jMenuItemSaveAs.setEnabled(true);
-        jMenuItemFileClose.setEnabled(true);
-        jMenuItemFileChPw.setEnabled(true);
+        jMenuItemHelpHelp.setEnabled(true);
+        jMenuItemHelpAbout.setEnabled(true);
+
         
     }//GEN-LAST:event_jButtonSaveAsSubmitActionPerformed
 
@@ -1764,13 +1792,16 @@ public class PasswordVaultUI extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButtonInfoBackActionPerformed
         // TODO add your handling code here:
         changeCard(goBackToCard);
+        jMenuItemHelpHelp.setEnabled(true);
         jMenuItemHelpAbout.setEnabled(true);
     }//GEN-LAST:event_jButtonInfoBackActionPerformed
 
     private void jMenuItemHelpAboutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemHelpAboutActionPerformed
     {//GEN-HEADEREND:event_jMenuItemHelpAboutActionPerformed
         // TODO add your handling code here:
+        jMenuItemHelpHelp.setEnabled(false);
         jMenuItemHelpAbout.setEnabled(false);
+
         showInfo(aboutText);
     }//GEN-LAST:event_jMenuItemHelpAboutActionPerformed
 
@@ -1886,6 +1917,14 @@ public class PasswordVaultUI extends javax.swing.JFrame
         CardLayout card = (CardLayout) mainPanel.getLayout();
         card.show(mainPanel, cardName);
         activeCard = cardName;
+        
+        if (cardName == "panelHome")
+        {
+            jMenuItemSave.setEnabled(true);
+            jMenuItemSaveAs.setEnabled(true);
+            jMenuItemFileClose.setEnabled(true);
+            jMenuItemFileChPw.setEnabled(true);
+        }
     }
 
     // CHANGES CARD IN mainPanel TO cardName 
@@ -1897,15 +1936,38 @@ public class PasswordVaultUI extends javax.swing.JFrame
         CardLayout card = (CardLayout) mainPanel.getLayout();
         card.show(mainPanel, cardName);
         activeCard = cardName;
+        
+        if (cardName == "panelHome")
+        {
+            jMenuItemSave.setEnabled(true);
+            jMenuItemSaveAs.setEnabled(true);
+            jMenuItemFileClose.setEnabled(true);
+            jMenuItemFileChPw.setEnabled(true);
+        }
     }
     
 
     // DISPLAYS CUSTOM ERROR MESSAGE WITH BACK BUTTON
     private void showFailure(String reason, String goBackTo)
     {
+        jMenuItemHelpHelp.setEnabled(false);
+        jMenuItemHelpAbout.setEnabled(false);
+        
         jLabelFailReason.setText(reason);
-//        goBackToCard = goBackTo;
-        changeCard("panelFail", goBackTo);
+    
+        if (isVaultOpen)
+        {
+            jMenuItemSave.setEnabled(false);
+            jMenuItemSaveAs.setEnabled(false);
+            jMenuItemFileClose.setEnabled(false);
+            jMenuItemFileChPw.setEnabled(false);
+
+            changeCard("panelFail", "panelHome");
+        }
+        else
+        {
+            changeCard("panelFail", goBackTo);
+        }       
     }
 
     
@@ -1936,11 +1998,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
                 isVaultOpen = true;
                 jMenuItemFileOpen.setEnabled(false);
-                jMenuItemSave.setEnabled(true);
-                jMenuItemSaveAs.setEnabled(true);
-                jMenuItemFileClose.setEnabled(true);
-                jMenuItemFileChPw.setEnabled(true);
-                
+
                 changeCard("panelHome");
             }
             catch (UnrecoverableKeyException ex)
@@ -2067,7 +2125,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jMenuItemSaveAs.setEnabled(false);
         jMenuItemFileClose.setEnabled(false);
         jMenuItemFileChPw.setEnabled(false);
-        
+
+        jMenuItemHelpHelp.setEnabled(true);
+        jMenuItemHelpAbout.setEnabled(true);
+
         jTextPaneInfo.setText(null);
         
         changeCard("panelBase");
@@ -2168,14 +2229,26 @@ public class PasswordVaultUI extends javax.swing.JFrame
         
         jTextPaneInfo.setText(infoText);
         jTextPaneInfo.setCaretPosition(0);
+
+        jMenuItemHelpHelp.setEnabled(false);
+        jMenuItemHelpAbout.setEnabled(false);
         
+        if (isVaultOpen)
+        {
+            jMenuItemSave.setEnabled(false);
+            jMenuItemSaveAs.setEnabled(false);
+            jMenuItemFileClose.setEnabled(false);
+            jMenuItemFileChPw.setEnabled(false);
+        }
+
         changeCard("panelInfo", activeCard);
     }
     
     
     private void helpHandler()
     {
-        jMenuItemHelpAbout.setEnabled(false);
+//        jMenuItemHelpHelp.setEnabled(false);
+//        jMenuItemHelpAbout.setEnabled(false);
 
         if (activeCard == "panelBase")
         {
@@ -2203,6 +2276,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         } 
         else
         {
+            jMenuItemHelpHelp.setEnabled(true);
             jMenuItemHelpAbout.setEnabled(true);
         }
         

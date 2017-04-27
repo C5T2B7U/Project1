@@ -327,7 +327,7 @@ public class VaultEntry {
     int getNextEntryId() {
         try {
             return vault.keyStore.getIdKey(aliasNextEntry);
-        } catch (InstanceNotFoundException ex) {
+        } catch (InstanceNotFoundException ex) { // Again, shouldn't happen normally
             return MISSING_ID;
         }
     }

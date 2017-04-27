@@ -97,7 +97,7 @@ class KeyStoreWrapper implements Closeable {
             } catch(FileNotFoundException ex) { // File doesn't exist
                 keyStore.load(null);
             }
-        } catch (NoSuchAlgorithmException ex) { // TODO: Handle properly
+        } catch (NoSuchAlgorithmException ex) { // ... Shouldn't happen
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CertificateException ex) {
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,7 +128,7 @@ class KeyStoreWrapper implements Closeable {
             
         } catch (InvalidKeySpecException ex) { // Failed to make key
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (KeyStoreException ex) { // KeyStore not loaded
+        } catch (KeyStoreException ex) { // KeyStore not loaded (shouldn't happen)
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
 //        } catch (InvalidKeyException ex) { // Key is too short
 //            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
@@ -170,15 +170,16 @@ class KeyStoreWrapper implements Closeable {
 //            System.out.println("\tspec class: "+ keyFactory.getKeySpec(key, PBEKeySpec.class).getClass());
             
             return spec.getPassword();
-        } catch (KeyStoreException ex) {
+        } catch (KeyStoreException ex) { // Keystore not loaded (shouldn't happen)
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (NoSuchAlgorithmException ex) { // Shouldn't happen
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
+        // Wrong entry password (shouldn't happen)
         } catch (UnrecoverableKeyException ex) {
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnrecoverableEntryException ex) {
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeySpecException ex) {
+        } catch (InvalidKeySpecException ex) { // Wanted key type doesn't match key
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
 //        } catch (UnsupportedEncodingException ex) { // DEBUG
 //            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,7 +204,7 @@ class KeyStoreWrapper implements Closeable {
     public void deleteKey(String alias) {
         try {
             keyStore.deleteEntry(alias);
-        } catch (KeyStoreException ex) {
+        } catch (KeyStoreException ex) { // Keystore not init. (shouldn't happen)
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -225,9 +226,9 @@ class KeyStoreWrapper implements Closeable {
                         KeyStore.Entry entry = keyStore.getEntry(alias, contentProtection);
                         keyStore.setEntry(alias, entry, newContentProtection);
 
-                    } catch (NoSuchAlgorithmException ex) {
+                    } catch (NoSuchAlgorithmException ex) { // Shouldn't happen
                         Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (UnrecoverableEntryException ex) {
+                    } catch (UnrecoverableEntryException ex) { // Wrong password for entry. (shouldn't happen)
                         Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -251,12 +252,12 @@ class KeyStoreWrapper implements Closeable {
             
             try(OutputStream ostream = new FileOutputStream(file)) {
                 keyStore.store(ostream, password);
-            } catch (NoSuchAlgorithmException ex) {
+            } catch (NoSuchAlgorithmException ex) { // Shouldn't happen
                 Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CertificateException ex) { // Login fail
+            } catch (CertificateException ex) { // Login fail (shouldn't happen)
                 Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (KeyStoreException ex) { // KeyStore not loaded
+        } catch (KeyStoreException ex) { // KeyStore not loaded (shouldn't happen)
             Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -265,13 +266,9 @@ class KeyStoreWrapper implements Closeable {
      * Calls save()
      */
     @Override
-    public void close() {
-        try {
-            if (keyStore != null)
-                save();
-        } catch (IOException ex) {
-            Logger.getLogger(KeyStoreWrapper.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void close() throws IOException {
+        if (keyStore != null)
+            save();
         keyStore = null;
     }
 }

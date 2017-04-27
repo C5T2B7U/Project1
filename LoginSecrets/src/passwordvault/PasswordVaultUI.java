@@ -1384,6 +1384,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         }
         catch (ArrayIndexOutOfBoundsException ex)
         {
+            resetHomeCard();
             debugMsg("INDEX ERROR:  " + jListHomeEntryList.getSelectedIndex());
         }
         

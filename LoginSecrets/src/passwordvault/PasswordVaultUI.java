@@ -1295,6 +1295,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     }//GEN-LAST:event_jButtonAuthCancelActionPerformed
 
     private void jMenuItemFileLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileLoadActionPerformed
+        resetAll();
         changeCard("panelBase");
     }//GEN-LAST:event_jMenuItemFileLoadActionPerformed
 
@@ -2131,14 +2132,20 @@ public class PasswordVaultUI extends javax.swing.JFrame
         {
             showInfo(panelBaseHelp);
         }
-        if (activeCard == "panelNew")
+        else if (activeCard == "panelNew")
         {
             showInfo(panelNewHelp);
         }
-        if (activeCard == "panelLoad")
+        else if (activeCard == "panelLoad")
         {
             showInfo(panelLoadHelp);
         }
+        else if (activeCard == "panelAuth")
+        {
+            showInfo(panelAuthHelp);
+        }
+        
+        
     }
     
     private void exitProgram()
@@ -2157,6 +2164,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
     String panelNewHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Cancel\":\n\nClick on this button to cancel creating a new password vault.\n\n\n\"Choose Directory for New Vault\": \n\nClick on this button to select a directory for saving a new password vault.\n\n\n\"Submit\": \n\nClick on this button after selecting a directory and typing out a filename to try to create a new password vault.  If the directory and filename is valid and does not refer to any existing file, a new password vault will be created (but not yet saved).\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
 
     String panelLoadHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Cancel\":\n\nClick on this button to cancel opening an existing password vault.\n\n\n\"Choose Filename of Existing Vault\": \n\nClick on this button to select an existing password vault from the filesystem.\n\n\n\"Submit\": \n\nClick on this button to try to open an existing password vault that you have selected.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
+    
+    String panelAuthHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Enter Password\":\n\nType a password to use for authentication.\n\n\n\"Keyfile Path\":\n\nThis field holds the path to a keyfile used for two-factor authentication (if applicable).  You can use the \"Choose Keyfile\" button to select a keyfile from the filesystem.\n\n\n\"Use Keyfile for Two-Factor Authentication\":\n\nIf this box is checked, authentication will be performed with both a password and a keyfile.  If it is unchecked, only a password will be used.  Please note that if you are loading an existing password vault that uses a keyfile for authentication, you will be required to select the same (unchanged) keyfile to open the vault.\n\n\n\"Cancel\":\n\nClick on this button to cancel the authentication process.\n\n\n\"Choose Keyfile\":\n\nClick on this button to select a keyfile from the filesystem.\n\n\n\"Submit\": \n\nClick on this button to attempt authentication.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
     
 
 }

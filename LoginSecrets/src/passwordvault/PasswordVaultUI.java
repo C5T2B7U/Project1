@@ -213,10 +213,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jButtonSaveAsName = new javax.swing.JButton();
         jButtonSaveAsSubmit = new javax.swing.JButton();
         panelAbout = new javax.swing.JPanel();
-        jPanelAboutButtons = new javax.swing.JPanel();
-        jButtonAboutBack = new javax.swing.JButton();
-        jScrollPaneAboutText = new javax.swing.JScrollPane();
-        jTextPaneAboutText = new javax.swing.JTextPane();
+        jPanelInfoButtons = new javax.swing.JPanel();
+        jButtonInfoBack = new javax.swing.JButton();
+        jScrollPaneInfo = new javax.swing.JScrollPane();
+        jTextPaneInfo = new javax.swing.JTextPane();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemFileLoad = new javax.swing.JMenuItem();
@@ -1028,59 +1028,58 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         mainPanel.add(panelSaveAs, "panelSaveAs");
 
-        jButtonAboutBack.setText("Go Back");
-        jButtonAboutBack.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButtonAboutBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonAboutBack.addActionListener(new java.awt.event.ActionListener()
+        jButtonInfoBack.setText("Go Back");
+        jButtonInfoBack.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        jButtonInfoBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonInfoBack.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jButtonAboutBackActionPerformed(evt);
+                jButtonInfoBackActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanelAboutButtonsLayout = new javax.swing.GroupLayout(jPanelAboutButtons);
-        jPanelAboutButtons.setLayout(jPanelAboutButtonsLayout);
-        jPanelAboutButtonsLayout.setHorizontalGroup(
-            jPanelAboutButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelAboutButtonsLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelInfoButtonsLayout = new javax.swing.GroupLayout(jPanelInfoButtons);
+        jPanelInfoButtons.setLayout(jPanelInfoButtonsLayout);
+        jPanelInfoButtonsLayout.setHorizontalGroup(
+            jPanelInfoButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInfoButtonsLayout.createSequentialGroup()
                 .addGap(171, 171, 171)
-                .addComponent(jButtonAboutBack)
+                .addComponent(jButtonInfoBack)
                 .addContainerGap(178, Short.MAX_VALUE))
         );
-        jPanelAboutButtonsLayout.setVerticalGroup(
-            jPanelAboutButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAboutButtonsLayout.createSequentialGroup()
+        jPanelInfoButtonsLayout.setVerticalGroup(
+            jPanelInfoButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInfoButtonsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonAboutBack)
+                .addComponent(jButtonInfoBack)
                 .addContainerGap())
         );
 
-        jTextPaneAboutText.setBorder(null);
-        jTextPaneAboutText.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextPaneAboutText.setText("\n\nLoginSecrets:   Secure Password Vault\n\n\nLoginSecrets is a portable, cross-platform solution for securely storing lists of account login credentials.  Users can create new or open existing encrypted password vaults, then view, add, update, and delete entries before saving and closing the password vaults.  Vault files can then be safely transferred over non-secure mediums.  By default, password vaults rely on both a password and a keyfile for (optional) two-factor authentication to access the encrypted data stored within.  \n\nYou can trust LoginSecrets to keep your login details secret*.\n\n\n*NOTE:  Due to platform limitations, for maximum protection it is highly recommended to reboot the computer after using LoginSecrets!\n\n\nLoginSecrets was developed by Brian Sumner, Kevin Yang, and John Crosby of UCDenver.  Copyright 2017.");
-        jScrollPaneAboutText.setViewportView(jTextPaneAboutText);
+        jTextPaneInfo.setBorder(null);
+        jTextPaneInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jScrollPaneInfo.setViewportView(jTextPaneInfo);
 
         javax.swing.GroupLayout panelAboutLayout = new javax.swing.GroupLayout(panelAbout);
         panelAbout.setLayout(panelAboutLayout);
         panelAboutLayout.setHorizontalGroup(
             panelAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelAboutButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelInfoButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelAboutLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPaneAboutText, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPaneInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelAboutLayout.setVerticalGroup(
             panelAboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAboutLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPaneAboutText, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                .addComponent(jScrollPaneInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelAboutButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanelInfoButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        mainPanel.add(panelAbout, "panelAbout");
+        mainPanel.add(panelAbout, "panelInfo");
 
         jMenuFile.setText("File");
 
@@ -1155,6 +1154,13 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jMenuHelp.setText("Help");
 
         jMenuItemHelpHelp.setText("Help");
+        jMenuItemHelpHelp.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItemHelpHelpActionPerformed(evt);
+            }
+        });
         jMenuHelp.add(jMenuItemHelpHelp);
         jMenuHelp.add(jSeparatorMenuHelp1);
 
@@ -1733,21 +1739,26 @@ public class PasswordVaultUI extends javax.swing.JFrame
         saveVault();
     }//GEN-LAST:event_jMenuItemSaveActionPerformed
 
-    private void jButtonAboutBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonAboutBackActionPerformed
-    {//GEN-HEADEREND:event_jButtonAboutBackActionPerformed
+    private void jButtonInfoBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonInfoBackActionPerformed
+    {//GEN-HEADEREND:event_jButtonInfoBackActionPerformed
         // TODO add your handling code here:
         changeCard(goBackToCard);
-    }//GEN-LAST:event_jButtonAboutBackActionPerformed
+    }//GEN-LAST:event_jButtonInfoBackActionPerformed
 
     private void jMenuItemHelpAboutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemHelpAboutActionPerformed
     {//GEN-HEADEREND:event_jMenuItemHelpAboutActionPerformed
         // TODO add your handling code here:
-        showAbout();
+        showInfo(aboutText);
     }//GEN-LAST:event_jMenuItemHelpAboutActionPerformed
+
+    private void jMenuItemHelpHelpActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemHelpHelpActionPerformed
+    {//GEN-HEADEREND:event_jMenuItemHelpHelpActionPerformed
+        // TODO add your handling code here:
+        helpHandler();
+    }//GEN-LAST:event_jMenuItemHelpHelpActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAboutBack;
     private javax.swing.JButton jButtonAuthCancel;
     private javax.swing.JButton jButtonAuthChooseKeyfile;
     private javax.swing.JButton jButtonAuthSubmit;
@@ -1760,6 +1771,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JButton jButtonHomeDelete;
     private javax.swing.JButton jButtonHomeSave;
     private javax.swing.JButton jButtonHomeUpdate;
+    private javax.swing.JButton jButtonInfoBack;
     private javax.swing.JButton jButtonLoadCancel;
     private javax.swing.JButton jButtonLoadName;
     private javax.swing.JButton jButtonLoadSubmit;
@@ -1804,13 +1816,13 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuItemSave;
     private javax.swing.JMenuItem jMenuItemSaveAs;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanelAboutButtons;
     private javax.swing.JPanel jPanelAuthButtons;
     private javax.swing.JPanel jPanelAuthText;
     private javax.swing.JPanel jPanelBase;
     private javax.swing.JPanel jPanelBaseButtons;
     private javax.swing.JPanel jPanelHomeButtons;
     private javax.swing.JPanel jPanelHomeTextFields;
+    private javax.swing.JPanel jPanelInfoButtons;
     private javax.swing.JPanel jPanelLoadButtons;
     private javax.swing.JPanel jPanelLoadText;
     private javax.swing.JPanel jPanelNewButtons;
@@ -1818,8 +1830,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JPanel jPanelSaveAsButtons;
     private javax.swing.JPanel jPanelSaveAsText;
     private javax.swing.JPasswordField jPasswordFieldAuthPW;
-    private javax.swing.JScrollPane jScrollPaneAboutText;
     private javax.swing.JScrollPane jScrollPaneHomeEntryList;
+    private javax.swing.JScrollPane jScrollPaneInfo;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuFile1;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuFile2;
     private javax.swing.JPopupMenu.Separator jSeparatorMenuHelp1;
@@ -1833,7 +1845,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JTextField jTextFieldNewPath;
     private javax.swing.JTextField jTextFieldSaveAsName;
     private javax.swing.JTextField jTextFieldSaveAsPath;
-    private javax.swing.JTextPane jTextPaneAboutText;
+    private javax.swing.JTextPane jTextPaneInfo;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelAbout;
     private javax.swing.JPanel panelAuth;
@@ -2033,6 +2045,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jMenuItemFileClose.setEnabled(false);
         jMenuItemFileChPw.setEnabled(false);
         
+        jTextPaneInfo.setText(null);
+        
         changeCard("panelBase");
     }
     
@@ -2095,16 +2109,26 @@ public class PasswordVaultUI extends javax.swing.JFrame
     }
 
     
-    private void showAbout()
+    private void showInfo(String infoText)
     {
-        StyledDocument doc = jTextPaneAboutText.getStyledDocument();
+        StyledDocument doc = jTextPaneInfo.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         
-        changeCard("panelAbout", activeCard);
+        jTextPaneInfo.setText(infoText);
+        
+        changeCard("panelInfo", activeCard);
     }
     
+    
+    private void helpHandler()
+    {
+        if (activeCard == "panelBase")
+        {
+            showInfo(panelBaseHelp);
+        }
+    }
     
     private void exitProgram()
     {
@@ -2112,4 +2136,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
         debugMsg("PROGRAM EXECUTION TERMINATED");
         System.exit(0);
     }
+
+
+    // TEXT DEFINITIONS
+    String aboutText = new String("\n\nLoginSecrets:   Secure Password Vault\n\n\nLoginSecrets is a portable, cross-platform solution for securely storing lists of account login credentials.  Users can create new or open existing encrypted password vaults, then view, add, update, and delete entries before saving and closing the password vaults.  Vault files can then be safely transferred over non-secure mediums.  By default, password vaults rely on both a password and a keyfile for (optional) two-factor authentication to access the encrypted data stored within.  \n\nYou can trust LoginSecrets to keep your login details secret*.\n\n\n*NOTE:  Due to platform limitations, for maximum protection it is highly recommended to reboot the computer after using LoginSecrets!\n\n\nLoginSecrets was developed by Brian Sumner, Kevin Yang, and John Crosby of UCDenver.  Copyright 2017.");
+    String panelBaseHelp = new String("\n\nHELP:");
+    
 }

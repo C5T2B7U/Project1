@@ -1770,6 +1770,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void jMenuItemHelpAboutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemHelpAboutActionPerformed
     {//GEN-HEADEREND:event_jMenuItemHelpAboutActionPerformed
         // TODO add your handling code here:
+        jMenuItemHelpAbout.setEnabled(false);
         showInfo(aboutText);
     }//GEN-LAST:event_jMenuItemHelpAboutActionPerformed
 

@@ -1764,6 +1764,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButtonInfoBackActionPerformed
         // TODO add your handling code here:
         changeCard(goBackToCard);
+        jMenuItemHelpAbout.setEnabled(true);
     }//GEN-LAST:event_jButtonInfoBackActionPerformed
 
     private void jMenuItemHelpAboutActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemHelpAboutActionPerformed
@@ -2173,6 +2174,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
     
     private void helpHandler()
     {
+        jMenuItemHelpAbout.setEnabled(false);
+
         if (activeCard == "panelBase")
         {
             showInfo(panelBaseHelp);
@@ -2197,6 +2200,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
         {
             showInfo(panelSaveAsHelp);
         } 
+        else
+        {
+            jMenuItemHelpAbout.setEnabled(true);
+        }
         
     }
     

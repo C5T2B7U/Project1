@@ -1920,6 +1920,16 @@ public class PasswordVaultUI extends javax.swing.JFrame
     }
 
     
+    private void resetHomeCard()
+    {
+        jTextFieldHomeEntryLabel.setText(null);
+        jTextFieldHomeEntryUsername.setText(null);
+        jTextFieldHomeEntryPW.setText(null);
+        jListHomeEntryList.setSelectedIndex(-1);
+        resetPanelHomeButtons();
+    }
+    
+    
     private void resetUpdateButton()
     {
         showConfirmUpdateEntry = false;
@@ -1963,10 +1973,9 @@ public class PasswordVaultUI extends javax.swing.JFrame
         resetLoadCard();
         resetAuthCard();
         resetSaveAsCard();
-        resetPanelHomeButtons();
+        resetHomeCard();
 
         isVaultOpen = false;
-//        doCreateNewVault = false;
 
         activeCard = "panelBase";
         goBackToCard = "panelBase";
@@ -1981,7 +1990,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jMenuItemSaveAs.setEnabled(false);
         jMenuItemFileClose.setEnabled(false);
         jMenuItemFileChPw.setEnabled(false);
-
+        
+        changeCard("panelBase");
     }
     
     
@@ -2013,10 +2023,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         if (isVaultOpen)
         {
             debugMsg("CLOSING VAULT");
-
             resetAll();
-            
-            changeCard("panelBase");
         }
     }
 
@@ -2030,6 +2037,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         
         changeCard("panelAbout", activeCard);
     }
+    
     
     private void exitProgram()
     {

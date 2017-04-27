@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.KeyStoreException;
 import java.security.UnrecoverableKeyException;
 import javax.swing.JFileChooser;
 import static passwordvault.Debug.debugMsg;
@@ -1083,8 +1084,46 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private void jButtonAuthSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthSubmitActionPerformed
         // TODO add your handling code here:
 
-        tryOpenVault();
+        try
+        {
+            // DETERMINE IF KEYFILE IS INVALID
+            if (jCheckBoxAuthUseKeyfile.isSelected())
+            {
+                // THROW EXCEPTION IF FILE INVALID
+                File file = new File(jTextFieldAuthKeyfilePath.getText());
+                FileInputStream keyFile = new FileInputStream(file);
 
+                keyFile.close();
+            }
+            
+            // RUN IF NO KEYFILE EXCEPTION
+            if (isVaultOpen)
+            {
+                if (jCheckBoxAuthUseKeyfile.isSelected())
+                {
+                    // SET NEW PASSWORD WITH KEYFILE
+                    vaultRef.setPassword(getHash(jPasswordFieldAuthPW.getPassword(), jTextFieldAuthKeyfilePath.getText()));
+                }
+                else
+                {
+                    // SET NEW PASSWORD WITHOUT KEYFILE
+                    vaultRef.setPassword(getHash(jPasswordFieldAuthPW.getPassword()));
+                }
+                changeCard(goBackToCard);
+            }
+            else
+            {
+                // VAULT NOT YET OPEN
+                tryOpenVault();                
+            }
+        }
+        catch (IOException ex)
+        {
+            showFailure("panelAuth:  KEYFILE ERROR:  \n" + jTextFieldAuthKeyfilePath.getText(), "panelAuth");
+            debugMsg("panelAuth:  KEYFILE ERROR:  " + jTextFieldAuthKeyfilePath.getText());
+        }
+
+        
     }//GEN-LAST:event_jButtonAuthSubmitActionPerformed
 
     private void jButtonAuthCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthCancelActionPerformed
@@ -1623,16 +1662,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
             try
             {
+                debugMsg("TRYING TO OPEN VAULT AT:  " + vaultFilename);
+
                 if (jCheckBoxAuthUseKeyfile.isSelected())
                 {
-                    // THROW EXCEPTION IF FILE INVALID
-                    File file = new File(jTextFieldAuthKeyfilePath.getText());
-                    FileInputStream keyFile = new FileInputStream(file);
-                    
-                    keyFile.close();
-
-                    debugMsg("TRYING TO OPEN VAULT AT:  " + vaultFilename);
-
                     // TRY OPEN VAULT
                     vaultRef = new Vault(vaultFilename, getHash(jPasswordFieldAuthPW.getPassword(), jTextFieldAuthKeyfilePath.getText()));
                 }
@@ -1661,8 +1694,8 @@ public class PasswordVaultUI extends javax.swing.JFrame
             }
             catch (IOException ex)
             {
-                showFailure("panelAuth:  KEYFILE ERROR:  \n" + jTextFieldAuthKeyfilePath.getText(), "panelAuth");
-                debugMsg("panelAuth:  KEYFILE ERROR:  " + jTextFieldAuthKeyfilePath.getText());
+                showFailure("ERROR:  NOT A VALID VAULT FILE", "panelBase");
+                debugMsg("ERROR:  NOT A VALID VAULT FILE:  " + jTextFieldAuthKeyfilePath.getText());
             }
 
             // RESET AUTH FIELDS

@@ -80,6 +80,9 @@ Note: The logins in these vaults are completely made up.
 +-------------------------
 | Referenced Websites:
 +-------------------------
+LoginSecrets was inspired by Keepass:
+	http://keepass.info/features.html
+
 http://docs.oracle.com/javase/7/docs/technotes/guides/security/index.html
 https://docs.oracle.com/javase/7/docs/api/overview-summary.html
 	The javadocs explained how to use the KeyStore class.

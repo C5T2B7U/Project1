@@ -1278,7 +1278,7 @@ public class PasswordVaultUI extends javax.swing.JFrame
         }
         catch (IOException ex)
         {
-            showFailure("panelAuth:  KEYFILE ERROR", "panelAuth");
+            showFailure("KEYFILE ERROR", "panelAuth");
             debugMsg("panelAuth:  KEYFILE ERROR:  "); // + jTextFieldAuthKeyfilePath.getText());
         }
 

@@ -207,23 +207,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
         jMenuItemHelpHelp = new javax.swing.JMenuItem();
         jSeparatorMenuHelp1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemHelpAbout = new javax.swing.JMenuItem();
-        jMenuDebug = new javax.swing.JMenu();
-        jMenuDebugSelPanel = new javax.swing.JMenu();
-        jMenuItemDebugSelPanelStore = new javax.swing.JMenuItem();
-        jMenuItemDebugSelPanelLoad = new javax.swing.JMenuItem();
-        jMenuItemDebugSelPanelAuth = new javax.swing.JMenuItem();
-        jMenuItemDebugSelPanelFail = new javax.swing.JMenuItem();
-        jMenuItemDebugSelPanelHome = new javax.swing.JMenuItem();
-        jMenuDebugSetVar = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItemDebugSetVarOpenTrue = new javax.swing.JMenuItem();
-        jMenuItemDebugSetVarOpenFalse = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter()
@@ -1033,140 +1016,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         jMenuBar.add(jMenuHelp);
 
-        jMenuDebug.setText("DEBUG");
-
-        jMenuDebugSelPanel.setText("SELECT PANEL");
-
-        jMenuItemDebugSelPanelStore.setText("panelBase");
-        jMenuItemDebugSelPanelStore.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItemDebugSelPanelStoreActionPerformed(evt);
-            }
-        });
-        jMenuDebugSelPanel.add(jMenuItemDebugSelPanelStore);
-
-        jMenuItemDebugSelPanelLoad.setText("panelLoad");
-        jMenuItemDebugSelPanelLoad.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItemDebugSelPanelLoadActionPerformed(evt);
-            }
-        });
-        jMenuDebugSelPanel.add(jMenuItemDebugSelPanelLoad);
-
-        jMenuItemDebugSelPanelAuth.setText("panelAuth");
-        jMenuItemDebugSelPanelAuth.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItemDebugSelPanelAuthActionPerformed(evt);
-            }
-        });
-        jMenuDebugSelPanel.add(jMenuItemDebugSelPanelAuth);
-
-        jMenuItemDebugSelPanelFail.setText("panelFail");
-        jMenuItemDebugSelPanelFail.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItemDebugSelPanelFailActionPerformed(evt);
-            }
-        });
-        jMenuDebugSelPanel.add(jMenuItemDebugSelPanelFail);
-
-        jMenuItemDebugSelPanelHome.setText("panelHome");
-        jMenuItemDebugSelPanelHome.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItemDebugSelPanelHomeActionPerformed(evt);
-            }
-        });
-        jMenuDebugSelPanel.add(jMenuItemDebugSelPanelHome);
-
-        jMenuDebug.add(jMenuDebugSelPanel);
-
-        jMenuDebugSetVar.setText("SET VAR");
-
-        jMenu1.setText("isVaultOpen");
-
-        jMenuItemDebugSetVarOpenTrue.setText("isVaultOpen = true;");
-        jMenuItemDebugSetVarOpenTrue.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItemDebugSetVarOpenTrueActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemDebugSetVarOpenTrue);
-
-        jMenuItemDebugSetVarOpenFalse.setText("isVaultOpen = false;");
-        jMenuItemDebugSetVarOpenFalse.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItemDebugSetVarOpenFalseActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemDebugSetVarOpenFalse);
-
-        jMenuDebugSetVar.add(jMenu1);
-
-        jMenu2.setText("OpenVault Menu Item");
-
-        jMenuItem1.setText("enabled");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem1);
-
-        jMenuItem2.setText("disabled");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem2);
-
-        jMenuDebugSetVar.add(jMenu2);
-
-        jMenu3.setText("CloseVault Menu Item");
-
-        jMenuItem3.setText("enabled");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem3);
-
-        jMenuItem4.setText("disabled");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem4);
-
-        jMenuDebugSetVar.add(jMenu3);
-
-        jMenuDebug.add(jMenuDebugSetVar);
-
-        jMenuBar.add(jMenuDebug);
-
         setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1182,16 +1031,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItemDebugSelPanelLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSelPanelLoadActionPerformed
-        // TODO add your handling code here:
-        changeCard("panelLoad");
-    }//GEN-LAST:event_jMenuItemDebugSelPanelLoadActionPerformed
-
-    private void jMenuItemDebugSelPanelAuthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSelPanelAuthActionPerformed
-        // TODO add your handling code here:
-        changeCard("panelAuth");
-    }//GEN-LAST:event_jMenuItemDebugSelPanelAuthActionPerformed
 
     private void jMenuItemFileExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileExitActionPerformed
         // TODO add your handling code here:
@@ -1235,26 +1074,11 @@ public class PasswordVaultUI extends javax.swing.JFrame
         changeCard(goBackToCard);
     }//GEN-LAST:event_jButtonFailActionPerformed
 
-    private void jMenuItemDebugSelPanelFailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSelPanelFailActionPerformed
-        // TODO add your handling code here:
-        changeCard("panelFail");
-    }//GEN-LAST:event_jMenuItemDebugSelPanelFailActionPerformed
-
     private void jMenuItemFileCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFileCloseActionPerformed
         debugMsg("CLOSING VAULT FROM MENU ITEM");
         closeVault();
         changeCard("panelBase");
     }//GEN-LAST:event_jMenuItemFileCloseActionPerformed
-
-    private void jMenuItemDebugSelPanelHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSelPanelHomeActionPerformed
-        // TODO add your handling code here:
-        changeCard("panelHome");
-    }//GEN-LAST:event_jMenuItemDebugSelPanelHomeActionPerformed
-
-    private void jMenuItemDebugSelPanelStoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSelPanelStoreActionPerformed
-        // TODO add your handling code here:
-        changeCard("panelBase");
-    }//GEN-LAST:event_jMenuItemDebugSelPanelStoreActionPerformed
 
     private void jButtonAuthSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAuthSubmitActionPerformed
         // TODO add your handling code here:
@@ -1354,36 +1178,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 closeVault();
             }
     }//GEN-LAST:event_jButtonHomeCloseActionPerformed
-
-    private void jMenuItemDebugSetVarOpenTrueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSetVarOpenTrueActionPerformed
-        // TODO add your handling code here:
-        isVaultOpen = true;
-    }//GEN-LAST:event_jMenuItemDebugSetVarOpenTrueActionPerformed
-
-    private void jMenuItemDebugSetVarOpenFalseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDebugSetVarOpenFalseActionPerformed
-        // TODO add your handling code here:
-        isVaultOpen = false;
-    }//GEN-LAST:event_jMenuItemDebugSetVarOpenFalseActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        jMenuItemFileLoad.setEnabled(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        jMenuItemFileLoad.setEnabled(false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        jMenuItemFileClose.setEnabled(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-        jMenuItemFileClose.setEnabled(false);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jListHomeEntryListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListHomeEntryListValueChanged
         // TODO add your handling code here:
@@ -1745,27 +1539,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
     private javax.swing.JLabel jLabelSaveAsTextName;
     private javax.swing.JLabel jLabelSaveAsTextPath;
     private javax.swing.JList<String> jListHomeEntryList;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar;
-    private javax.swing.JMenu jMenuDebug;
-    private javax.swing.JMenu jMenuDebugSelPanel;
-    private javax.swing.JMenu jMenuDebugSetVar;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenu jMenuHelp;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItemDebugSelPanelAuth;
-    private javax.swing.JMenuItem jMenuItemDebugSelPanelFail;
-    private javax.swing.JMenuItem jMenuItemDebugSelPanelHome;
-    private javax.swing.JMenuItem jMenuItemDebugSelPanelLoad;
-    private javax.swing.JMenuItem jMenuItemDebugSelPanelStore;
-    private javax.swing.JMenuItem jMenuItemDebugSetVarOpenFalse;
-    private javax.swing.JMenuItem jMenuItemDebugSetVarOpenTrue;
     private javax.swing.JMenuItem jMenuItemFileChPw;
     private javax.swing.JMenuItem jMenuItemFileClose;
     private javax.swing.JMenuItem jMenuItemFileExit;
@@ -1969,7 +1746,13 @@ public class PasswordVaultUI extends javax.swing.JFrame
         isVaultOpen = false;
         doCreateNewVault = false;
 
+        activeCard = "panelBase";
+        goBackToCard = "panelBase";
+        
         vaultFilename = null;
+        vaultRef = null;
+        vaultListModelRef = null;
+
         
         jMenuItemFileLoad.setEnabled(true);
         jMenuItemFileClose.setEnabled(false);
@@ -2006,9 +1789,6 @@ public class PasswordVaultUI extends javax.swing.JFrame
         if (isVaultOpen)
         {
             debugMsg("CLOSING VAULT");
-
-            vaultRef = null;
-            vaultListModelRef = null;
 
             resetAll();
             

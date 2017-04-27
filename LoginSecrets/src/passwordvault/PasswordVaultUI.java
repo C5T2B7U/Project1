@@ -2144,13 +2144,17 @@ public class PasswordVaultUI extends javax.swing.JFrame
         {
             showInfo(panelAuthHelp);
         }
-        
+        else if (activeCard == "panelHome")
+        {
+            showInfo(panelHomeHelp);
+        } 
         
     }
     
     private void exitProgram()
     {
         closeVault();
+        resetAll();
         debugMsg("PROGRAM EXECUTION TERMINATED");
         System.exit(0);
     }
@@ -2165,7 +2169,9 @@ public class PasswordVaultUI extends javax.swing.JFrame
 
     String panelLoadHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Cancel\":\n\nClick on this button to cancel opening an existing password vault.\n\n\n\"Choose Filename of Existing Vault\": \n\nClick on this button to select an existing password vault from the filesystem.\n\n\n\"Submit\": \n\nClick on this button to try to open an existing password vault that you have selected.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
     
-    String panelAuthHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Enter Password\":\n\nType a password to use for authentication.\n\n\n\"Keyfile Path\":\n\nThis field holds the path to a keyfile used for two-factor authentication (if applicable).  You can use the \"Choose Keyfile\" button to select a keyfile from the filesystem.\n\n\n\"Use Keyfile for Two-Factor Authentication\":\n\nIf this box is checked, authentication will be performed with both a password and a keyfile.  If it is unchecked, only a password will be used.  Please note that if you are loading an existing password vault that uses a keyfile for authentication, you will be required to select the same (unchanged) keyfile to open the vault.\n\n\n\"Cancel\":\n\nClick on this button to cancel the authentication process.\n\n\n\"Choose Keyfile\":\n\nClick on this button to select a keyfile from the filesystem.\n\n\n\"Submit\": \n\nClick on this button to attempt authentication.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
+    String panelAuthHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Enter Password\":\n\nType a password to use for authentication.\n\n\n\"Keyfile Path\":\n\nThis field holds the path to a keyfile used for two-factor authentication (if applicable).  You can use the \"Choose Keyfile\" button to select a keyfile from the filesystem.\n\n\n\"Use Keyfile for Two-Factor Authentication\":\n\nIf this box is checked, authentication will be performed with both a password and a keyfile.  If it is unchecked, only a password will be used.  Please note that if you are loading an existing password vault that uses a keyfile for authentication, you will be required to select the same (unchanged) keyfile to open the vault.\n\n\n\"Cancel\":\n\nClick on this button to cancel the authentication process.\n\n\n\"Choose Keyfile\":\n\nClick on this button to select a keyfile from the filesystem.\n\n\n\"Submit\": \n\nClick on this button to attempt authentication.  If you are changing the password of an existing password vault, the new authentication values will take effect only after saving the vault.\n\n\nFile Menu - \"Open Vault\":\n\nClicking this menu item will return to the base panel.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program.");
+    
+    String panelHomeHelp = new String("\n\nCONTEXT-SPECIFIC HELP:\n\n\n\"Vault Entries\" List:\n\nIf there are entries in the password vault, click the entry from the list to populate its stored values into the Vault Entry Label, Vault Entry Account Username, and Vault Entry Account Password text fields.\n\n\n\"Add Entry\":\n\nClick this button to add a new entry to the vault.  The current values in the three text fields at the top will be stored into the entry.  If any of the text fields are empty, default values will be used instead.\n\n\n\"Update Entry\":\n\nAfter selecting an entry from the list to update, click this button to bring up a confirmation.  Click the button again to confirm that you want to replace the values in the entry with the current values shown in the three text fields at the top.\n\n\n\"Delete Entry\":\n\nAfter selecting an entry from the list to delete, click this button to bring up a confirmation.  Click the button again to confirm that you want to delete the entry from the password vault.\n\n\n\"Save Vault\":\n\nTo save the password vault, click this button to bring up a confirmation.  Click the button again to confirm that you want to save the password vault.\n\n\n\"Close Vault\": \n\nTo close the password vault, click this button to bring up a confirmation.  Click the button again to confirm that you want to close the password vault.  Please note that if you have not first saved the vault, all changes will be discarded!\n\n\nFile Menu - \"Save Vault\":\n\nClick this menu item to save the password vault.\n\n\nFile Menu - \"Save Vault As...\":\n\nClick this menu item to save the password vault as a different file.  Please note that after you save the vault as a different file, all future changes will be saved to the new file and not the original.\n\n\nFile Menu - \"Close Vault\":\n\nClick this menu item to close the password vault.  Please note that if you have not first saved the vault, all changes will be discarded!\n\n\nFile Menu - \"Change Password\":\n\nClick this menu item to change the password and keyfile used to save the vault.  Please note that the changes will not go into effect until you have saved the password vault.\n\n\nFile Menu - \"Exit Immediately\":\n\nClicking this menu item will immediately exit the LoginSecrets program without saving the vault!");
     
 
 }

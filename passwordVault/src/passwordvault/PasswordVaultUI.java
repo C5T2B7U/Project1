@@ -1692,8 +1692,10 @@ public class PasswordVaultUI extends javax.swing.JFrame
                 showFailure("AUTHENTICATION ERROR", "panelAuth");
                 debugMsg("panelAuth:  AUTHENTICATION ERROR");
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
+                // CATCHES EXCEPTION IF FILE IS NOT VALID VAULT FILE
+                resetAll();
                 showFailure("ERROR:  NOT A VALID VAULT FILE", "panelBase");
                 debugMsg("ERROR:  NOT A VALID VAULT FILE:  " + jTextFieldAuthKeyfilePath.getText());
             }

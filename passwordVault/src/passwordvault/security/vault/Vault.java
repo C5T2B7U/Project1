@@ -14,7 +14,6 @@ package passwordvault.security.vault;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.security.KeyStoreException;
 import java.security.UnrecoverableKeyException;
 import static passwordvault.Debug.debugMsg;
 
@@ -45,9 +44,8 @@ public class Vault {
      * @param filename File to read from
      * @param password Password the file was encrypted with
      * @throws UnrecoverableKeyException 
-     * @throws java.io.IOException 
      */
-    public Vault(String filename, char password[]) throws UnrecoverableKeyException, IOException {
+    public Vault(String filename, char password[]) throws UnrecoverableKeyException {
         File vaultFile = new File(filename);
         keyStore = new KeyStoreWrapper(vaultFile, password);
         try {

@@ -54,75 +54,76 @@ If that doesn't work, run the command:
 		3. The button will change to "Really Delete Entry?"
 			Click it again to confirm the deletion.
 5. When you're done with the vault, click "Save Vault"
-	The button will change to "Really Save Vault?"
-	Click it again to confirm.
+	1. The button will change to "Really Save Vault?"
+	2. Click it again to confirm.
 6. Finally, close the program.
+
 	WARNING: If you close the Vault/program without saving the Vault, you WILL lose any changes to the Vault you applied.
+	
 	If you want to open another Vault:
-		1. Click "Close Vault"
-		2. The button will change to "Really Close Vault?"
-		3. Click it again to confirm.
+	1. Click "Close Vault"
+	2. The button will change to "Really Close Vault?"
+	3. Click it again to confirm.
 
 
 ### Examples:
 
 Some sample Vaults are in the Sample Vaults directory.
-	* vault1.st
-		* password = Vault1pass
-		* No Keyfile
-	* vault2.st
-		* password = 2Vaulted
-		* Keyfile = Lock.png
-			* Note: Lock.png is also in the Sample Vaults directory.
+* vault1.st
+	* password = Vault1pass
+	* No Keyfile
+* vault2.st
+	* password = 2Vaulted
+	* Keyfile = Lock.png
+		* Note: Lock.png is also in the Sample Vaults directory.
 
 Note: The logins in these vaults are completely made up.
-
 	Any similarity to real user credentials is completely coincidential.
 
 
 ### Referenced Websites:
 
-http://docs.oracle.com/javase/7/docs/technotes/guides/security/index.html
-https://docs.oracle.com/javase/7/docs/api/overview-summary.html
+* http://docs.oracle.com/javase/7/docs/technotes/guides/security/index.html
+* https://docs.oracle.com/javase/7/docs/api/overview-summary.html
 
 	The javadocs explained how to use the KeyStore class.
 
-http://stackoverflow.com/questions/18243248/java-keystore-setentry-using-an-aes-secretkey#comment26751703_18243248
+* http://stackoverflow.com/questions/18243248/java-keystore-setentry-using-an-aes-secretkey#comment26751703_18243248
 
 	This answer showed me the proper Keystore type to use when making a KeyStore.
 
-http://stackoverflow.com/questions/21250330/decryption-of-aes-encrypted-field-in-java#21250773
+* http://stackoverflow.com/questions/21250330/decryption-of-aes-encrypted-field-in-java#21250773
 
 	This answer showed me how to debug the KeyStore's values.
 	Instead of printing the array, I had to convert the array into a String first.
 
-http://stackoverflow.com/questions/11758440/initialize-final-variable-within-constructor-in-another-method#11758483
+* http://stackoverflow.com/questions/11758440/initialize-final-variable-within-constructor-in-another-method#11758483
 
 	This answer served as inspiration for VaultEntry.reserveFreeId()
 
-http://stackoverflow.com/a/27609
+* http://stackoverflow.com/a/27609
 
 	This answer helped me write VaultEntry.equals(), which is used to display the VaultEntries in a JList.
 
-https://docs.oracle.com/javase/tutorial/uiswing/components/list.html#creating
+* https://docs.oracle.com/javase/tutorial/uiswing/components/list.html#creating
 
 	The javadocs showed me how to integrate my Vault class with Java Swing.
 	
-https://docs.oracle.com/javase/7/docs/api/java/lang/ref/WeakReference.html
+* https://docs.oracle.com/javase/7/docs/api/java/lang/ref/WeakReference.html
 
 	I used the javadocs to figure out how to create a WeakReference to the VaultListModel.
 
-http://stackoverflow.com/questions/6694715/junit-testing-private-variables
+* http://stackoverflow.com/questions/6694715/junit-testing-private-variables
 
 	This website showed me how to use Netbean's Unit Tests feature.
 
-http://stackoverflow.com/questions/3213045/centering-text-in-a-jtextarea-or-jtextpane-horizontal-text-alignment#3213361
-https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
-http://www.rgagnon.com/javadetails/java-0370.html
+* http://stackoverflow.com/questions/3213045/centering-text-in-a-jtextarea-or-jtextpane-horizontal-text-alignment#3213361
+* https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
+* http://www.rgagnon.com/javadetails/java-0370.html
 
 	These websites helped us design the user interface.
 
-https://commons.wikimedia.org/wiki/File:Lock_PD.png
+* https://commons.wikimedia.org/wiki/File:Lock_PD.png
 
 	This is the image (Keyfile) we used to generate vault2.st
 	It's in the public domain. "The right to use this work is granted to anyone for any purpose, without any conditions, unless such conditions are required by law."

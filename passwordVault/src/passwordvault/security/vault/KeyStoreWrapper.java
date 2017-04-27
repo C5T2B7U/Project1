@@ -242,11 +242,18 @@ class KeyStoreWrapper implements Closeable {
     }
     
     /**
+     * Get the file that the KeyStore will be stored in.
+     * @return File the KeyStore will be stored in
+     */
+    public File getFile() {
+        return file;
+    }
+    /**
      * Changes the location the Vault will be saved at.
      * Doesn't error until the vault is saved.
      * @param newFile 
      */
-    public void setFilepath(File newFile) {
+    public void setFile(File newFile) {
         file = newFile;
     }
     

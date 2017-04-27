@@ -135,13 +135,24 @@ public class Vault {
 //    }
     
     /**
-     * Changes where the file will be saved to.
+     * Get the location where the Vault will be saved to.
+     * @return Filepath that the Vault will be saved to
+     */
+    public String getFilepath() {
+        try {
+            return keyStore.getFile().getAbsolutePath();
+        } catch(SecurityException ex) { // If it can't get the system property...
+            return keyStore.getFile().getPath();
+        }
+    }
+    /**
+     * Changes where the Vault will be saved to.
      * @param filename New location to save Vault to
      * @throws NullPointerException If filename is null
      */
     public void setFilepath(String filename) throws NullPointerException {
         File vaultFile = new File(filename);
-        keyStore.setFilepath(vaultFile);
+        keyStore.setFile(vaultFile);
     }
     
     /**

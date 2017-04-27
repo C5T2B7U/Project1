@@ -12,8 +12,8 @@ package passwordvault;
 public class Debug {
 
     // DEBUG MODE:  CHOOSE ONE OF THE FOLLOWING
-    static boolean ENABLE_DEBUG = true;
-//  static boolean ENABLE_DEBUG = false;
+//    static boolean ENABLE_DEBUG = true;
+  static boolean ENABLE_DEBUG = false;
 
     
     public static void debugMsg(String msg) {
